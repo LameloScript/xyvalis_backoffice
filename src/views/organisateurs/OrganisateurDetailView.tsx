@@ -21,6 +21,9 @@ import {
   Key,
   Loader2,
   Copy,
+  CheckCircle2,
+  XCircle,
+  Clock,
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -86,20 +89,74 @@ const fallbackClient = {
   ],
   commandes: [
     { 
-      id: "CMD-2605-999", 
-      reference: "DEV-2605-999", 
-      date: "2026-05-24", 
+      id: "CMD-2605-003", 
+      reference: "DEV-2605-003", 
+      date: "2026-05-20", 
       prestataire: "Marie-Claire Déco", 
       montant: 470000, 
+      statut: "Commissionné",
+      typeeventement: "Mariage",
+      lieu: "Sofitel Abidjan, Cocody",
+      nbInvites: "350",
+      message: "Bonjour, je valide cette version finale (V3) suite à nos échanges sur la réduction de l'arche florale (version simplifiée). Merci de lancer la facturation.",
+      reponsePresta: "Proposition finale acceptée après négociation. L'arche florale a été redimensionnée pour respecter votre budget de 120 000 F. Acompte de 50% reçu, prestation commissionnée.",
+      lignes: [
+        { id: "l003-1", designation: "Décoration florale de table haute couture (Centre de table XXL)", quantite: 10, prixUnitaire: 35000, totalLigne: 350000 },
+        { id: "l003-2", designation: "Arche florale géante simplifiée (Version Négociée)", quantite: 1, prixUnitaire: 120000, totalLigne: 120000 }
+      ],
+      historique: [
+        { date: "2026-05-10T10:00:00", action: "Demande de Devis", description: "Demande initiale créée par l'organisateur." },
+        { date: "2026-05-12T14:30:00", action: "Proposition Envoyée", description: "Devis V1 proposé par Marie-Claire Déco à 600 000 F (Réf. DEV-2605-001)." },
+        { date: "2026-05-14T11:15:00", action: "Demande de Négociation", description: "L'organisateur demande une réduction sur l'arche et retire le bouquet de mariée." },
+        { date: "2026-05-15T16:00:00", action: "Devis Renvoyé (V2)", description: "Nouveau devis V2 proposé à 520 000 F (Réf. DEV-2605-002)." },
+        { date: "2026-05-18T09:45:00", action: "Négociation Finale", description: "L'organisateur demande une arche florale simplifiée à 120 000 F." },
+        { date: "2026-05-20T15:20:00", action: "Devis Accepté & Commissionné", description: "Version finale V3 acceptée et commissionnée (Réf. DEV-2605-003)." }
+      ]
+    },
+    { 
+      id: "CMD-2605-002", 
+      reference: "DEV-2605-002", 
+      date: "2026-05-15", 
+      prestataire: "Marie-Claire Déco", 
+      montant: 520000, 
       statut: "Négociation",
       typeeventement: "Mariage",
       lieu: "Sofitel Abidjan, Cocody",
       nbInvites: "350",
-      message: "Bonjour, je recherche une prestation de décoration florale et d'installation de scène haut de gamme pour mon mariage au Sofitel, tons pastel uniquement.",
-      reponsePresta: "Proposition sur-mesure pour une décoration florale prestige de la salle d'honneur et des tables, avec arche florale d'extérieur. Une réduction commerciale de 10% a été appliquée sur l'ensemble.",
+      message: "Nous souhaiterions baisser le prix de l'arche florale ou trouver une alternative moins onéreuse, notre budget max pour l'arche est de 120 000 F au lieu de 170 000 F. Nous avons également retiré l'option du bouquet de mariée premium.",
+      reponsePresta: "Proposition intermédiaire révisée : nous avons retiré le bouquet de mariée premium. L'arche florale reste en version prestige à 170 000 F. Nous attendons votre retour pour la simplifier si nécessaire.",
       lignes: [
-        { id: "lm1", designation: "Décoration florale de table haute couture (Centre de table XXL)", quantite: 10, prixUnitaire: 35000, totalLigne: 350000 },
-        { id: "lm2", designation: "Arche florale géante pour la cérémonie laïque d'extérieur", quantite: 1, prixUnitaire: 120000, totalLigne: 120000 }
+        { id: "l002-1", designation: "Décoration florale de table haute couture (Centre de table XXL)", quantite: 10, prixUnitaire: 35000, totalLigne: 350000 },
+        { id: "l002-2", designation: "Arche florale prestige d'extérieur (En attente de simplification)", quantite: 1, prixUnitaire: 170000, totalLigne: 170000 }
+      ],
+      historique: [
+        { date: "2026-05-10T10:00:00", action: "Demande de Devis", description: "Demande initiale créée par l'organisateur." },
+        { date: "2026-05-12T14:30:00", action: "Proposition Envoyée", description: "Devis V1 proposé par Marie-Claire Déco à 600 000 F (Réf. DEV-2605-001)." },
+        { date: "2026-05-14T11:15:00", action: "Demande de Négociation", description: "L'organisateur demande une réduction sur l'arche et retire le bouquet de mariée." },
+        { date: "2026-05-15T16:00:00", action: "Devis Renvoyé (V2)", description: "Proposition révisée en cours de négociation active (Réf. DEV-2605-002)." }
+      ]
+    },
+    { 
+      id: "CMD-2605-001", 
+      reference: "DEV-2605-001", 
+      date: "2026-05-10", 
+      prestataire: "Marie-Claire Déco", 
+      montant: 600000, 
+      statut: "Annulé",
+      typeeventement: "Mariage",
+      lieu: "Sofitel Abidjan, Cocody",
+      nbInvites: "350",
+      message: "Bonjour, je recherche une prestation de décoration florale et d'installation de scène haut de gamme pour mon mariage au Sofitel, tons pastel uniquement.",
+      reponsePresta: "Proposition initiale complète avec arche florale d'extérieur prestige, décoration de table haute couture et bouquet de mariée premium.",
+      lignes: [
+        { id: "l001-1", designation: "Décoration florale de table haute couture (Centre de table XXL)", quantite: 10, prixUnitaire: 35000, totalLigne: 350000 },
+        { id: "l001-2", designation: "Arche florale d'extérieur prestige", quantite: 1, prixUnitaire: 170000, totalLigne: 170000 },
+        { id: "l001-3", designation: "Bouquet de mariée premium tons pastel", quantite: 1, prixUnitaire: 80000, totalLigne: 80000 }
+      ],
+      historique: [
+        { date: "2026-05-10T10:00:00", action: "Demande de Devis", description: "Demande initiale créée par l'organisateur." },
+        { date: "2026-05-12T14:30:00", action: "Proposition Envoyée", description: "Devis V1 proposé par Marie-Claire Déco à 600 000 F (Réf. DEV-2605-001)." },
+        { date: "2026-05-14T11:15:00", action: "Remplacé par V2 (Annulé)", description: "Ce devis initial a été annulé et remplacé par le devis révisé V2 suite à négociation." }
       ]
     },
     { 
@@ -172,6 +229,40 @@ const statutCommandeConfig: Record<string, string> = {
   "En cours": "bg-blue-50 text-blue-600 border-blue-200",
   "Livrée": "bg-green-50 text-green-600 border-green-250",
   "Annulée": "bg-red-50 text-red-600 border-red-200",
+}
+
+const getStepState = (currentStatus: string, stepIndex: number) => {
+  const statusLower = currentStatus.toLowerCase()
+  
+  if (statusLower === "annulé" || statusLower === "annulée" || statusLower === "refusé") {
+    if (stepIndex === 1) return "completed"
+    if (stepIndex === 2) return "completed"
+    if (stepIndex === 3) return "failed"
+    return "disabled"
+  }
+  
+  if (statusLower === "nouveau") {
+    if (stepIndex === 1) return "active"
+    return "disabled"
+  }
+  
+  if (statusLower === "répondu" || statusLower === "négociation") {
+    if (stepIndex < 2) return "completed"
+    if (stepIndex === 2) return "active"
+    return "disabled"
+  }
+  
+  if (statusLower === "accepté" || statusLower === "confirmé" || statusLower === "livrée" || statusLower === "en cours") {
+    if (stepIndex < 3) return "completed"
+    if (stepIndex === 3) return "active"
+    return "disabled"
+  }
+  
+  if (statusLower === "exécuté" || statusLower === "commissionné") {
+    return "completed"
+  }
+  
+  return "disabled"
 }
 
 interface OrganisateurDetailViewProps {
@@ -354,7 +445,10 @@ export default function OrganisateurDetailView({ id }: OrganisateurDetailViewPro
               reponsePresta: dev.reponsePresta ?? null,
               lignes: Array.isArray(dev.lignes) ? dev.lignes : [],
               prestations: Array.isArray(dev.prestations) ? dev.prestations : [],
-              eventtTitre: dev.eventt?.titre ?? null
+              eventtTitre: dev.eventt?.titre ?? null,
+              historique: dev.historique ?? [
+                { date: dev.createdAt ? dev.createdAt : "2026-05-10T10:00:00", action: "Demande de Devis", description: "Demande initiale créée par l'organisateur." }
+              ]
             }
           })
 
@@ -1040,6 +1134,109 @@ export default function OrganisateurDetailView({ id }: OrganisateurDetailViewPro
                   <Badge variant="outline" className={`font-semibold text-xs px-2 py-0.5 rounded-sm ${statutCommandeConfig[selectedCommande.statut] || "bg-slate-50 text-slate-600"}`}>
                     {selectedCommande.statut}
                   </Badge>
+                </div>
+              </div>
+
+              {/* Suivi et Progression du Devis */}
+              <div className="space-y-2">
+                <h4 className="font-bold text-xs uppercase tracking-wider text-slate-500">Suivi et Progression</h4>
+                <div className="rounded-xl border border-slate-100 p-4 bg-white space-y-4 shadow-sm">
+                  {/* Stepper horizontal */}
+                  <div className="relative flex items-center justify-between w-full pb-2">
+                    <div className="absolute left-0 right-0 top-4 -translate-y-1/2 h-0.5 bg-slate-100 z-0"></div>
+                    
+                    {[
+                      { index: 1, label: "Demande" },
+                      { index: 2, label: "Proposition" },
+                      { index: 3, label: "Validation" },
+                      { index: 4, label: "Finalisation" }
+                    ].map((step) => {
+                      const state = getStepState(selectedCommande.statut, step.index)
+                      
+                      let circleClass = ""
+                      let icon = null
+                      let labelClass = "text-slate-400 font-medium"
+                      
+                      if (state === "completed") {
+                        circleClass = "bg-emerald-500 text-white ring-4 ring-emerald-50"
+                        icon = <CheckCircle2 className="size-4 shrink-0" />
+                        labelClass = "text-emerald-700 font-semibold"
+                      } else if (state === "active") {
+                        circleClass = "bg-[#023B8A] text-white ring-4 ring-blue-100"
+                        icon = <Clock className="size-4 animate-spin [animation-duration:3s] shrink-0" />
+                        labelClass = "text-[#023B8A] font-bold"
+                      } else if (state === "failed") {
+                        circleClass = "bg-red-500 text-white ring-4 ring-red-50"
+                        icon = <XCircle className="size-4 shrink-0" />
+                        labelClass = "text-red-700 font-semibold"
+                      } else {
+                        circleClass = "bg-slate-100 text-slate-400 border border-slate-200"
+                        icon = <span className="text-[10px] font-bold shrink-0">{step.index}</span>
+                        labelClass = "text-slate-400 font-medium"
+                      }
+                      
+                      return (
+                        <div key={step.index} className="flex flex-col items-center relative z-10 shrink-0 select-none">
+                          <div className={`size-8 rounded-full flex items-center justify-center transition-all duration-300 ${circleClass}`}>
+                            {icon}
+                          </div>
+                          <span className={`text-[10px] mt-1.5 transition-colors duration-300 ${labelClass}`}>
+                            {step.label}
+                          </span>
+                        </div>
+                      )
+                    })}
+                  </div>
+
+                  {/* Vertical History Log */}
+                  {selectedCommande.historique && selectedCommande.historique.length > 0 && (
+                    <div className="pt-3 border-t border-slate-100 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+                          Journal des échanges & Négociations
+                        </p>
+                        <Badge variant="secondary" className="text-[9px] font-bold py-0.5 px-2 bg-slate-100 text-slate-600 rounded-full border-none">
+                          {selectedCommande.historique.length} étapes
+                        </Badge>
+                      </div>
+                      <div className="space-y-3.5 pl-1 max-h-[160px] overflow-y-auto pr-1">
+                        {selectedCommande.historique.map((h: any, idx: number) => {
+                          const isLast = idx === selectedCommande.historique.length - 1;
+                          const isCancelled = selectedCommande.statut.toLowerCase() === "annulé";
+                          
+                          let bulletColor = "border-slate-300 bg-white";
+                          if (isLast) {
+                            bulletColor = isCancelled ? "border-red-500 bg-red-50" : "border-emerald-500 bg-emerald-50";
+                          }
+
+                          return (
+                            <div key={idx} className="flex gap-3 text-xs relative">
+                              {/* Connector Line */}
+                              {idx < selectedCommande.historique.length - 1 && (
+                                <div className="absolute left-[5.5px] top-[14px] bottom-[-16px] w-[1px] bg-slate-200"></div>
+                              )}
+                              
+                              {/* Bullet */}
+                              <div className={`size-3 rounded-full border-2 mt-1 shrink-0 z-10 transition-colors ${bulletColor}`}></div>
+
+                              {/* Details */}
+                              <div className="flex-1 space-y-0.5 min-w-0">
+                                <div className="flex justify-between items-baseline gap-2 flex-wrap">
+                                  <span className="font-bold text-slate-700">{h.action}</span>
+                                  <span className="text-[9px] font-mono text-slate-400 shrink-0">
+                                    {new Intl.DateTimeFormat("fr-FR", {
+                                      day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit"
+                                    }).format(new Date(h.date))}
+                                  </span>
+                                </div>
+                                <p className="text-slate-500 text-[11px] leading-relaxed break-words">{h.description}</p>
+                              </div>
+                            </div>
+                          )
+                        })}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
 

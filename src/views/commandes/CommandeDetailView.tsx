@@ -43,95 +43,11 @@ type TimelineStep = {
   cancelled?: boolean
 }
 
-const commandeDetail = {
-  id: "CMD-2604-002",
-  client: {
-    nom: "Konan Yao",
-    telephone: "+225 01 23 45 67",
-    adresse: "Angré 8ème Tranche",
-    commune: "Cocody",
-    ville: "Abidjan",
-  },
-  colis: {
-    typeColis: "petit",
-    description: "Petit colis — vêtements",
-    poids: "0.8 kg",
-    reperes: "Boîte blanche avec ruban rouge",
-  },
-  pickup: { commune: "Cocody", quartier: "Riviera 3" },
-  dropoff: { commune: "Cocody", quartier: "Angré 8ème Tranche" },
-  vehicule: "moto" as const,
-  urgence: "trois-heures" as const,
-  modeLivraison: "relais" as const,
-  adresseLivraison: null,
-  pointRelais: {
-    id: "PR-001",
-    nom: "Boutique Chez Adjoua",
-    responsable: "Adjoua Kouassi",
-    telephone: "+225 07 12 34 56",
-    adresse: "Rue des Bâtisseurs, Angré",
-    commune: "Cocody",
-    horaires: "08h–20h",
-  },
-  livreur: {
-    id: "LIV-014",
-    nom: "Traoré Moussa",
-    telephone: "+225 07 44 55 66",
-    vehicule: "Moto – AB 2341 CI",
-    zone: "Cocody / Plateau",
-  },
-  fraisLivraison: 1350,
-  montantTotal: 1350,
-  paiement: "a_collecter" as const,
-  methodePaiement: "Paiement à la livraison",
-  statut: "en_cours" as const,
-  dateCreation: "2026-04-25T09:14:00",
-}
+import commandeDetailMock from "@/data/mock/commande_detail.json"
 
-const timelineSteps: TimelineStep[] = [
-  {
-    label: "Colis emballé",
-    description: "La commande a été enregistrée et le colis préparé.",
-    date: "25 avr. 2026, 09h14",
-    done: true,
-    current: false,
-  },
-  {
-    label: "Transféré en entrepôt",
-    description: "Le colis a été déposé en entrepôt de transit.",
-    date: "25 avr. 2026, 09h52",
-    done: true,
-    current: false,
-  },
-  {
-    label: "Pris en charge par le livreur",
-    description: "Traoré Moussa a récupéré le colis.",
-    date: "25 avr. 2026, 11h05",
-    done: true,
-    current: false,
-  },
-  {
-    label: "Transféré pour livraison",
-    description: "Le colis est en route vers le point relais.",
-    date: "25 avr. 2026, 11h47",
-    done: false,
-    current: true,
-  },
-  {
-    label: "Déposé au point relais",
-    description: "Le colis a été déposé et est disponible au retrait.",
-    date: "–",
-    done: false,
-    current: false,
-  },
-  {
-    label: "Livré",
-    description: "Le client a récupéré son colis.",
-    date: "–",
-    done: false,
-    current: false,
-  },
-]
+const commandeDetail = commandeDetailMock.commandeDetail as any
+
+const timelineSteps: TimelineStep[] = commandeDetailMock.timelineSteps as TimelineStep[]
 
 const statutOptions = [
   { value: "en_cours", label: "En cours" },
@@ -156,8 +72,8 @@ interface CommandeDetailViewProps {
 
 export default function CommandeDetailView({ id }: CommandeDetailViewProps) {
   const cmd = commandeDetail
-  const statutCfg = statutConfig[cmd.statut]
-  const paiementCfg = paiementConfig[cmd.paiement]
+  const statutCfg = statutConfig[cmd.statut as keyof typeof statutConfig] || statutConfig.en_cours
+  const paiementCfg = paiementConfig[cmd.paiement as keyof typeof paiementConfig] || paiementConfig.a_collecter
 
   return (
     <div className="px-4 mt-4 lg:px-6 space-y-4">
@@ -367,39 +283,39 @@ export default function CommandeDetailView({ id }: CommandeDetailViewProps) {
           </Card>
         </div>
 
-        {/* RIGHT: Livreur + Point relais */}
+        {/* RIGHT: Prestataire + Point relais */}
         <div className="flex flex-col gap-4">
-          {/* Livreur */}
+          {/* Prestataire */}
           <Card>
             <CardHeader className="pb-3">
               <CardTitle className="text-base flex items-center gap-2">
                 <Truck className="h-4 w-4 text-muted-foreground" />
-                Livreur assigné
+                Prestataire assigné
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3 text-sm">
               <div className="flex items-center gap-3">
                 <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center text-base font-semibold">
-                  {cmd.livreur.nom.charAt(0)}
+                  {cmd.prestataire.nom.charAt(0)}
                 </div>
                 <div>
-                  <p className="font-semibold">{cmd.livreur.nom}</p>
-                  <p className="text-xs text-muted-foreground">{cmd.livreur.id}</p>
+                  <p className="font-semibold">{cmd.prestataire.nom}</p>
+                  <p className="text-xs text-muted-foreground">{cmd.prestataire.id}</p>
                 </div>
               </div>
               <Separator />
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <Phone className="h-3.5 w-3.5 shrink-0" />
-                  <span>{cmd.livreur.telephone}</span>
+                  <span>{cmd.prestataire.telephone}</span>
                 </div>
                 <div className="flex items-start gap-2 text-muted-foreground">
                   <Truck className="h-3.5 w-3.5 shrink-0 mt-0.5" />
-                  <span>{cmd.livreur.vehicule}</span>
+                  <span>{cmd.prestataire.vehicule}</span>
                 </div>
                 <div className="flex items-start gap-2 text-muted-foreground">
                   <MapPin className="h-3.5 w-3.5 shrink-0 mt-0.5" />
-                  <span>Zone : {cmd.livreur.zone}</span>
+                  <span>Zone : {cmd.prestataire.zone}</span>
                 </div>
               </div>
               <Button variant="outline" size="sm" className="w-full">
