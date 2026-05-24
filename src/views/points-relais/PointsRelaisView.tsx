@@ -71,132 +71,13 @@ type PointRelais = {
   colisEnStock: number
   colisExpires: number
   fraisExpires: number
-  revenus: number
+  reventus: number
   statut: StatutRelais
 }
 
-const pointsRelaisData: PointRelais[] = [
-  {
-    id: "PR-001",
-    nomBoutique: "Boutique Chez Adjoua",
-    responsable: "Adjoua Kouassi",
-    telephone: "+225 07 12 34 56",
-    commune: "Cocody",
-    quartier: "Angré",
-    horaires: "08h–20h",
-    capacite: 50,
-    colisEnStock: 12,
-    colisExpires: 2,
-    fraisExpires: 4000,
-    revenus: 185000,
-    statut: "actif",
-  },
-  {
-    id: "PR-002",
-    nomBoutique: "Service Express Yopougon",
-    responsable: "Konan Yao",
-    telephone: "+225 05 98 76 54",
-    commune: "Yopougon",
-    quartier: "Niangon Nord",
-    horaires: "07h30–21h",
-    capacite: 80,
-    colisEnStock: 34,
-    colisExpires: 5,
-    fraisExpires: 10000,
-    revenus: 312000,
-    statut: "actif",
-  },
-  {
-    id: "PR-003",
-    nomBoutique: "Livraison Pro Abobo",
-    responsable: "Traoré Mamadou",
-    telephone: "+225 01 23 45 67",
-    commune: "Abobo",
-    quartier: "PK 18",
-    horaires: "08h–19h",
-    capacite: 60,
-    colisEnStock: 7,
-    colisExpires: 0,
-    fraisExpires: 0,
-    revenus: 98000,
-    statut: "actif",
-  },
-  {
-    id: "PR-004",
-    nomBoutique: "Point Colis Marcory",
-    responsable: "N'Goran Prisca",
-    telephone: "+225 07 65 43 21",
-    commune: "Marcory",
-    quartier: "Résidentiel",
-    horaires: "09h–18h",
-    capacite: 40,
-    colisEnStock: 0,
-    colisExpires: 8,
-    fraisExpires: 16000,
-    revenus: 45000,
-    statut: "suspendu",
-  },
-  {
-    id: "PR-005",
-    nomBoutique: "Transit Koumassi",
-    responsable: "Bamba Issouf",
-    telephone: "+225 05 11 22 33",
-    commune: "Koumassi",
-    quartier: "Zone 4",
-    horaires: "08h–20h30",
-    capacite: 70,
-    colisEnStock: 21,
-    colisExpires: 1,
-    fraisExpires: 2000,
-    revenus: 214000,
-    statut: "actif",
-  },
-  {
-    id: "PR-006",
-    nomBoutique: "Dépôt Central Plateau",
-    responsable: "Diallo Fatoumata",
-    telephone: "+225 07 44 55 66",
-    commune: "Plateau",
-    quartier: "Centre",
-    horaires: "07h–22h",
-    capacite: 100,
-    colisEnStock: 58,
-    colisExpires: 3,
-    fraisExpires: 6000,
-    revenus: 520000,
-    statut: "actif",
-  },
-  {
-    id: "PR-007",
-    nomBoutique: "Point Livraison Adjamé",
-    responsable: "Ouattara Seydou",
-    telephone: "+225 01 77 88 99",
-    commune: "Adjamé",
-    quartier: "Liberty",
-    horaires: "08h–20h",
-    capacite: 55,
-    colisEnStock: 0,
-    colisExpires: 0,
-    fraisExpires: 0,
-    revenus: 0,
-    statut: "en_attente",
-  },
-  {
-    id: "PR-008",
-    nomBoutique: "Relais Attecoubé",
-    responsable: "Coulibaly Mariam",
-    telephone: "+225 05 33 44 55",
-    commune: "Attecoubé",
-    quartier: "Washington",
-    horaires: "08h–19h30",
-    capacite: 45,
-    colisEnStock: 9,
-    colisExpires: 4,
-    fraisExpires: 8000,
-    revenus: 76000,
-    statut: "actif",
-  },
-]
+import pointsRelaisMockData from "@/data/mock/points_relais.json"
+
+const pointsRelaisData: PointRelais[] = pointsRelaisMockData as PointRelais[]
 
 const statutConfig = {
   actif: { label: "Actif", className: "bg-green-600/10 text-green-600" },
@@ -214,7 +95,7 @@ export default function PointsRelaisView() {
   const totalActifs = pointsRelaisData.filter((p) => p.statut === "actif").length
   const totalColisEnStock = pointsRelaisData.reduce((s, p) => s + p.colisEnStock, 0)
   const totalColisExpires = pointsRelaisData.reduce((s, p) => s + p.colisExpires, 0)
-  const totalRevenus = pointsRelaisData.reduce((s, p) => s + p.revenus, 0)
+  const totalReventus = pointsRelaisData.reduce((s, p) => s + p.reventus, 0)
 
   const columns: ColumnDef<PointRelais>[] = React.useMemo(
     () => [
@@ -300,19 +181,19 @@ export default function PointsRelaisView() {
         },
       },
       {
-        accessorKey: "revenus",
+        accessorKey: "reventus",
         header: ({ column }) => (
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Revenus (FCFA)
+            Reventus (FCFA)
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         ),
         cell: ({ row }) => (
           <span className="font-medium">
-            {(row.getValue("revenus") as number).toLocaleString("fr-FR")}
+            {(row.getValue("reventus") as number).toLocaleString("fr-FR")}
           </span>
         ),
       },
@@ -449,9 +330,9 @@ export default function PointsRelaisView() {
         </Card>
         <Card className="@container/card bg-primary border-primary shadow-xs">
           <CardHeader>
-            <CardDescription className="text-white/70">Revenus relais ce mois</CardDescription>
+            <CardDescription className="text-white/70">Reventus relais ce mois</CardDescription>
             <CardTitle className="text-2xl font-semibold tabular-nums text-white">
-              {totalRevenus.toLocaleString("fr-FR")}
+              {totalReventus.toLocaleString("fr-FR")}
               <span className="text-sm font-normal text-white/60 ml-1">FCFA</span>
             </CardTitle>
             <CardAction>

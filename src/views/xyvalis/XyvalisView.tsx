@@ -37,7 +37,7 @@ type StatutImport = "succes" | "erreur" | "en_attente";
 
 type ImportRecord = {
   id: string;
-  XyvalisId: string;
+  eventId: string;
   nom: string;
   email: string;
   telephone: string;
@@ -47,96 +47,9 @@ type ImportRecord = {
   message: string | null;
 };
 
-const importsData: ImportRecord[] = [
-  {
-    id: "IMP-001",
-    XyvalisId: "LP-USR-9842",
-    nom: "Adjoua Bénédicte",
-    email: "adjoua.b@gmail.com",
-    telephone: "+225 07 11 22 33",
-    type: "client",
-    importeLe: "2026-04-26T13:00:00",
-    statut: "succes",
-    message: null,
-  },
-  {
-    id: "IMP-002",
-    XyvalisId: "LP-USR-9841",
-    nom: "Konan Stéphane",
-    email: "konan.s@gmail.com",
-    telephone: "+225 05 44 55 66",
-    type: "client",
-    importeLe: "2026-04-26T13:00:00",
-    statut: "succes",
-    message: null,
-  },
-  {
-    id: "IMP-003",
-    XyvalisId: "LP-VND-2104",
-    nom: "Boutique Elite",
-    email: "boutique.elite@gmail.com",
-    telephone: "+225 27 21 99 88",
-    type: "vendeur",
-    importeLe: "2026-04-26T13:00:00",
-    statut: "succes",
-    message: null,
-  },
-  {
-    id: "IMP-004",
-    XyvalisId: "LP-USR-9840",
-    nom: "Touré Aïcha",
-    email: "toure.aicha@gmail.com",
-    telephone: "+225 01 99 88 77",
-    type: "client",
-    importeLe: "2026-04-26T13:00:00",
-    statut: "erreur",
-    message: "Email déjà associé à un compte Xyvalis existant",
-  },
-  {
-    id: "IMP-005",
-    XyvalisId: "LP-VND-2103",
-    nom: "Studio Photo CI",
-    email: "studio.photo@gmail.com",
-    telephone: "+225 07 88 99 00",
-    type: "vendeur",
-    importeLe: "2026-04-26T07:00:00",
-    statut: "succes",
-    message: null,
-  },
-  {
-    id: "IMP-006",
-    XyvalisId: "LP-USR-9839",
-    nom: "Bah Mamadou",
-    email: "(non renseigné)",
-    telephone: "+225 05 66 77 88",
-    type: "client",
-    importeLe: "2026-04-26T07:00:00",
-    statut: "en_attente",
-    message: "Téléphone à valider — OTP en cours",
-  },
-  {
-    id: "IMP-007",
-    XyvalisId: "LP-USR-9838",
-    nom: "N'Goran Prisca",
-    email: "ngoran.prisca@yahoo.fr",
-    telephone: "+225 07 90 12 34",
-    type: "client",
-    importeLe: "2026-04-26T01:00:00",
-    statut: "succes",
-    message: null,
-  },
-  {
-    id: "IMP-008",
-    XyvalisId: "LP-USR-9837",
-    nom: "Doumbia Cheikh",
-    email: "doumbia.c@gmail.com",
-    telephone: "+225 invalide",
-    type: "client",
-    importeLe: "2026-04-26T01:00:00",
-    statut: "erreur",
-    message: "Format de téléphone invalide",
-  },
-];
+import xyvalisData from "@/data/mock/xyvalis.json";
+
+const importsData: ImportRecord[] = xyvalisData as ImportRecord[];
 
 const statutConfig: Record<StatutImport, { label: string; className: string }> =
   {
@@ -148,7 +61,7 @@ const statutConfig: Record<StatutImport, { label: string; className: string }> =
     },
   };
 
-export default function XyvalisView() {
+export default function eventView() {
   const [syncing, setSyncing] = React.useState(false);
   const [data] = React.useState<ImportRecord[]>(importsData);
 
@@ -172,10 +85,10 @@ export default function XyvalisView() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">
-            Intégration Xyvalis
+            Intégration event
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Synchronisation des comptes importés depuis Xyvalis
+            Synchronisation des comptes importés depuis event
           </p>
         </div>
         <div className="flex gap-2">
@@ -284,7 +197,7 @@ export default function XyvalisView() {
             <div>
               <p className="text-muted-foreground mb-1">Endpoint</p>
               <p className="font-mono text-xs bg-muted px-2 py-1.5 rounded break-all">
-                https://api.Xyvalis.ci/v1/sync/users
+                https://api.event.ci/v1/sync/users
               </p>
             </div>
             <div>
@@ -318,7 +231,7 @@ export default function XyvalisView() {
                     <div className="flex items-center justify-between gap-2 flex-wrap">
                       <p className="font-medium text-sm">{err.nom}</p>
                       <span className="text-xs text-muted-foreground font-mono">
-                        {err.XyvalisId}
+                        {err.eventId}
                       </span>
                     </div>
                     <p className="text-xs text-red-700 mt-1">{err.message}</p>
@@ -344,7 +257,7 @@ export default function XyvalisView() {
             Historique d&apos;importation
           </CardTitle>
           <CardDescription>
-            Tous les comptes importés depuis Xyvalis
+            Tous les comptes importés depuis event
           </CardDescription>
         </CardHeader>
         <CardContent className="p-0">
@@ -353,7 +266,7 @@ export default function XyvalisView() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>ID Xyvalis</TableHead>
+                    <TableHead>ID event</TableHead>
                     <TableHead>Nom</TableHead>
                     <TableHead>Contact</TableHead>
                     <TableHead>Type</TableHead>
@@ -368,7 +281,7 @@ export default function XyvalisView() {
                     return (
                       <TableRow key={row.id}>
                         <TableCell className="font-mono text-xs">
-                          {row.XyvalisId}
+                          {row.eventId}
                         </TableCell>
                         <TableCell className="font-medium">{row.nom}</TableCell>
                         <TableCell>

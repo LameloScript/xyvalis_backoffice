@@ -45,7 +45,7 @@ const litige = {
     telephone: "+225 01 23 45 67",
     email: "konan.yao@gmail.com",
   },
-  livreur: {
+  prestataire: {
     nom: "Traoré Moussa",
     telephone: "+225 07 44 55 66",
     id: "LIV-014",
@@ -80,7 +80,7 @@ const litige = {
       role: "admin",
       date: "2026-04-25T14:12:00",
       message:
-        "Bonjour Konan, nous avons bien reçu votre réclamation et les photos. Nous allons vérifier auprès du livreur et du vendeur. Vous recevrez une réponse sous 48h.",
+        "Bonjour Konan, nous avons bien reçu votre réclamation et les photos. Nous allons vérifier auprès du prestataire et du vendeur. Vous recevrez une réponse sous 48h.",
     },
   ],
 }
@@ -285,26 +285,26 @@ export default function LitigeDetailView({ id }: LitigeDetailViewProps) {
             </CardContent>
           </Card>
 
-          {/* Livreur */}
+          {/* Prestataire */}
           <Card>
             <CardHeader className="pb-3">
               <CardTitle className="text-base flex items-center gap-2">
                 <Truck className="h-4 w-4 text-muted-foreground" />
-                Livreur impliqué
+                Prestataire impliqué
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-2 text-sm">
               <div>
-                <p className="font-semibold">{litige.livreur.nom}</p>
-                <p className="text-xs text-muted-foreground">{litige.livreur.id}</p>
+                <p className="font-semibold">{litige.prestataire.nom}</p>
+                <p className="text-xs text-muted-foreground">{litige.prestataire.id}</p>
               </div>
               <Separator />
               <div>
                 <p className="text-muted-foreground text-xs">Téléphone</p>
-                <p className="font-medium">{litige.livreur.telephone}</p>
+                <p className="font-medium">{litige.prestataire.telephone}</p>
               </div>
               <Button variant="outline" size="sm" className="w-full">
-                Voir le profil livreur
+                Voir le profil prestataire
               </Button>
             </CardContent>
           </Card>

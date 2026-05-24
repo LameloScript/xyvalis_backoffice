@@ -1,0 +1,93 @@
+[
+  {
+    "id": "ORG-001",
+    "nom": "Konan Yao Stéphane",
+    "email": "konan.yao@gmail.com",
+    "telephone": "+225 07 01 23 45",
+    "type": "PARTICULIER",
+    "commune": "Cocody",
+    "devisDemandes": 12,
+    "soldeCashback": 14500,
+    "statut": "actif",
+    "derniereConnexion": "2026-05-22T10:32:00",
+    "initiales": "KS"
+  },
+  {
+    "id": "ORG-002",
+    "nom": "Aya Event Agency",
+    "email": "contact@ayaevent.ci",
+    "telephone": "+225 05 55 66 77",
+    "type": "AGENCE",
+    "commune": "Plateau",
+    "devisDemandes": 48,
+    "soldeCashback": 185000,
+    "statut": "actif",
+    "derniereConnexion": "2026-05-22T14:15:00",
+    "initiales": "AE"
+  },
+  {
+    "id": "ORG-003",
+    "nom": "Adjoua Kouassi Bénédicte",
+    "email": "adjoua.k@yahoo.fr",
+    "telephone": "+225 05 78 90 12",
+    "type": "PARTICULIER",
+    "commune": "Marcory",
+    "devisDemandes": 5,
+    "soldeCashback": 4200,
+    "statut": "actif",
+    "derniereConnexion": "2026-05-21T08:45:00",
+    "initiales": "AK"
+  },
+  {
+    "id": "ORG-004",
+    "nom": "Prestige Galas & Events",
+    "email": "prestige@galas.ci",
+    "telephone": "+225 07 23 45 67",
+    "type": "AGENCE",
+    "commune": "Cocody",
+    "devisDemandes": 32,
+    "soldeCashback": 124000,
+    "statut": "actif",
+    "derniereConnexion": "2026-05-22T16:05:00",
+    "initiales": "PG"
+  },
+  {
+    "id": "ORG-005",
+    "nom": "Bamba Issouf",
+    "email": "bamba.issouf@gmail.com",
+    "telephone": "+225 01 45 67 89",
+    "type": "PARTICULIER",
+    "commune": "Yopougon",
+    "devisDemandes": 8,
+    "soldeCashback": 8900,
+    "statut": "actif",
+    "derniereConnexion": "2026-05-22T11:05:00",
+    "initiales": "BI"
+  },
+  {
+    "id": "ORG-006",
+    "nom": "N'Guessan Kouamé",
+    "email": "nguessan.k@gmail.com",
+    "telephone": "+225 05 34 56 78",
+    "type": "PARTICULIER",
+    "commune": "Adjamé",
+    "devisDemandes": 3,
+    "soldeCashback": 0,
+    "statut": "suspendu",
+    "derniereConnexion": "2026-05-18T14:22:00",
+    "initiales": "NK"
+  },
+  {
+    "id": "ORG-007",
+    "nom": "Vœux de Mariage Agence",
+    "email": "contact@voeuxmariage.ci",
+    "telephone": "+225 27 22 11 22",
+    "type": "AGENCE",
+    "commune": "Cocody",
+    "devisDemandes": 21,
+    "soldeCashback": 67200,
+    "statut": "actif",
+    "derniereConnexion": "2026-05-22T09:30:00",
+    "initiales": "VM"
+  }
+]

@@ -27,55 +27,14 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
 
-// ── Mock data ──────────────────────────────────────────────────────────────
+// ── Mock data ───────────────────
+import faqMockData from "@/data/mock/faq.json"
 
-const faqEntrees = [
-  { id: 1, question: "Comment créer un compte livreur ?", categorie: "Compte", modif: "20 avr. 2026" },
-  { id: 2, question: "Comment suivre mon colis en temps réel ?", categorie: "Livraison", modif: "18 avr. 2026" },
-  { id: 3, question: "Quels sont les délais de livraison standard ?", categorie: "Livraison", modif: "15 avr. 2026" },
-  { id: 4, question: "Comment devenir point relais partenaire ?", categorie: "Relais", modif: "12 avr. 2026" },
-  { id: 5, question: "Comment retirer mes gains sur Mobile Money ?", categorie: "Finance", modif: "10 avr. 2026" },
-  { id: 6, question: "Que faire si mon colis est endommagé ?", categorie: "Réclamation", modif: "8 avr. 2026" },
-  { id: 7, question: "Puis-je modifier une commande après validation ?", categorie: "Commandes", modif: "5 avr. 2026" },
-]
+const faqEntrees = faqMockData.faqEntrees
 
-const cguInitial = `CONDITIONS GÉNÉRALES D'UTILISATION — XYVALIS
+const cguInitial = faqMockData.cguInitial
 
-Dernière mise à jour : 1er avril 2026
-
-1. OBJET
-Les présentes Conditions Générales d'Utilisation (CGU) régissent l'utilisation de la plateforme Xyvalis, accessible via l'application mobile et le site web, permettant la mise en relation entre expéditeurs, livreurs et points relais en Côte d'Ivoire.
-
-2. INSCRIPTION ET COMPTE
-L'accès à la plateforme est soumis à la création d'un compte utilisateur. L'utilisateur s'engage à fournir des informations exactes, complètes et à jour. Toute usurpation d'identité entraînera la suspension immédiate du compte.
-
-3. SERVICES PROPOSÉS
-Xyvalis propose les services suivants :
-- Livraison de colis de particulier à particulier
-- Livraison depuis les commerces partenaires
-- Retrait en point relais agréé
-- Suivi en temps réel des livraisons
-
-4. TARIFICATION
-Les tarifs applicables sont affichés avant toute confirmation de commande. Xyvalis se réserve le droit de modifier ses tarifs avec un préavis de 7 jours notifié par l'application.
-
-5. RESPONSABILITÉ
-Xyvalis agit en qualité d'intermédiaire. La responsabilité de la plateforme est limitée aux dommages directs causés par son fait prouvé. Tout colis dont la valeur déclarée dépasse 500 000 FCFA doit faire l'objet d'une assurance séparée.
-
-6. DONNÉES PERSONNELLES
-Les données collectées sont traitées conformément à la loi ivoirienne n° 2013-450 relative à la protection des données à caractère personnel. L'utilisateur dispose d'un droit d'accès, de rectification et de suppression de ses données.
-
-7. LITIGES
-En cas de litige, une réclamation doit être adressée au service client dans un délai de 7 jours suivant la livraison. À défaut d'accord amiable, le litige sera soumis aux tribunaux compétents d'Abidjan.`
-
-const supportMessages = [
-  { id: 1, expediteur: "Kouamé Brou", sujet: "Colis non récupéré au relais", message: "Mon colis est au relais depuis 5 jours et je n'arrive pas à le récupérer…", date: "24 avr. 2026", statut: "Nouveau" },
-  { id: 2, expediteur: "Aya Touré", sujet: "Remboursement livraison annulée", message: "J'ai annulé ma commande mais je n'ai toujours pas été remboursée…", date: "23 avr. 2026", statut: "Lu" },
-  { id: 3, expediteur: "Ibrahim Koné", sujet: "Problème connexion compte relais", message: "Je ne peux plus me connecter à mon espace relais depuis hier…", date: "22 avr. 2026", statut: "Résolu" },
-  { id: 4, expediteur: "Fatou Diallo", sujet: "Erreur sur le montant facturé", message: "Le montant débité est supérieur à ce qui était affiché lors de la commande…", date: "21 avr. 2026", statut: "Nouveau" },
-  { id: 5, expediteur: "Jean Gnangnan", sujet: "Livreur injoignable", message: "Le livreur assigné à ma commande ne répond plus au téléphone…", date: "20 avr. 2026", statut: "Lu" },
-  { id: 6, expediteur: "Mariam Coulibaly", sujet: "Demande de partenariat relais", message: "Je souhaite devenir point relais partenaire dans la commune de Yopougon…", date: "18 avr. 2026", statut: "Résolu" },
-]
+const supportMessages = faqMockData.supportMessages
 
 // ── Helpers ────────────────────────────────────────────────────────────────
 

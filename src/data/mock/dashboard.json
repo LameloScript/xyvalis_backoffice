@@ -1,0 +1,21 @@
+{
+  "revenueChartData": [
+    { "mois": "Juil", "Abonnements": 1600000, "Commissions": 900000 },
+    { "mois": "Août", "Abonnements": 1800000, "Commissions": 1000000 },
+    { "mois": "Sept", "Abonnements": 1900000, "Commissions": 1200000 },
+    { "mois": "Oct", "Abonnements": 1900000, "Commissions": 1000000 },
+    { "mois": "Nov", "Abonnements": 2100000, "Commissions": 1500000 },
+    { "mois": "Déc", "Abonnements": 2200000, "Commissions": 1800000 },
+    { "mois": "Janv", "Abonnements": 2500000, "Commissions": 2200000 },
+    { "mois": "Févr", "Abonnements": 2300000, "Commissions": 1400000 },
+    { "mois": "Mars", "Abonnements": 2400000, "Commissions": 1600000 },
+    { "mois": "Avri", "Abonnements": 2500000, "Commissions": 1700000 },
+    { "mois": "Mai", "Abonnements": 2700000, "Commissions": 1900000 },
+    { "mois": "Juin", "Abonnements": 2800000, "Commissions": 2100000 }
+  ],
+  "defaults": [
+    { "nom": "DJ Vibes", "plan": "Premium", "categorie": "DJ & Sonorisation", "note": 4.9 },
+    { "nom": "Sommet Audio & Light", "plan": "Premium", "categorie": "DJ & Sonorisation", "note": 4.9 },
+    { "nom": "Ivoire Traiteur Express", "plan": "Premium+", "categorie": "Traiteur", "note": 4.8 }
+  ]
+}

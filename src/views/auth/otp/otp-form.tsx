@@ -11,7 +11,6 @@ import {
   FieldLabel,
 } from "@/components/ui/field"
 import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/components/ui/input-otp"
-import { useAuth } from "@/contexts/auth-context"
 import { getSettings } from "@/lib/settings-store"
 import { useEffect } from "react"
 
@@ -20,7 +19,6 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
   const [error, setError] = useState("")
   const [is2FA, setIs2FA] = useState(false)
   const router = useRouter()
-  const { login } = useAuth()
 
   useEffect(() => {
     const settings = getSettings()
@@ -33,8 +31,6 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
     // Vérifier le code
     // Pour la démo, on accepte "000000" ou n'importe quel code à 6 chiffres si 2FA est activé
     if (otp === "000000" || (is2FA && otp.length === 6)) {
-      // Marquer l'utilisateur comme authentifié
-      login()
       // Rediriger vers le dashboard
       router.push("/dashboard")
     } else {

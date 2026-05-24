@@ -68,8 +68,8 @@ type Commande = {
   id: string
   client: string
   clientTel: string
-  livreur: string
-  livreurTel: string
+  prestataire: string
+  prestataireTel: string
   modeLivraison: ModeLivraison
   pointRelais: string | null
   commune: string
@@ -82,178 +82,9 @@ type Commande = {
   date: string
 }
 
-const commandesData: Commande[] = [
-  {
-    id: "CMD-2604-001",
-    client: "Adjoua Kouassi",
-    clientTel: "+225 07 12 34 56",
-    livreur: "Koffi Akissi",
-    livreurTel: "+225 05 98 11 22",
-    modeLivraison: "domicile",
-    pointRelais: null,
-    commune: "Cocody",
-    vehicule: "moto",
-    typeColis: "petit",
-    urgence: "detendu",
-    montant: 1500,
-    paiement: "collecte",
-    statut: "livree",
-    date: "2026-04-25",
-  },
-  {
-    id: "CMD-2604-002",
-    client: "Konan Yao",
-    clientTel: "+225 01 23 45 67",
-    livreur: "Traoré Moussa",
-    livreurTel: "+225 07 44 55 66",
-    modeLivraison: "relais",
-    pointRelais: "Boutique Chez Adjoua – Angré",
-    commune: "Cocody",
-    vehicule: "moto",
-    typeColis: "documents",
-    urgence: "trois-heures",
-    montant: 1350,
-    paiement: "a_collecter",
-    statut: "en_cours",
-    date: "2026-04-25",
-  },
-  {
-    id: "CMD-2604-003",
-    client: "Bamba Issouf",
-    clientTel: "+225 05 33 44 55",
-    livreur: "Diallo Mamadou",
-    livreurTel: "+225 01 77 88 99",
-    modeLivraison: "domicile",
-    pointRelais: null,
-    commune: "Yopougon",
-    vehicule: "tricycle",
-    typeColis: "moyen",
-    urgence: "urgent",
-    montant: 4900,
-    paiement: "collecte",
-    statut: "en_cours",
-    date: "2026-04-25",
-  },
-  {
-    id: "CMD-2604-004",
-    client: "Fatou Diallo",
-    clientTel: "+225 07 65 43 21",
-    livreur: "Coulibaly Seydou",
-    livreurTel: "+225 05 11 22 33",
-    modeLivraison: "relais",
-    pointRelais: "Service Express – Niangon Nord",
-    commune: "Yopougon",
-    vehicule: "repas",
-    typeColis: "nourriture",
-    urgence: "urgent",
-    montant: 2520,
-    paiement: "a_collecter",
-    statut: "livree",
-    date: "2026-04-24",
-  },
-  {
-    id: "CMD-2604-005",
-    client: "N'Goran Prisca",
-    clientTel: "+225 07 99 00 11",
-    livreur: "Ouattara Drissa",
-    livreurTel: "+225 01 55 66 77",
-    modeLivraison: "domicile",
-    pointRelais: null,
-    commune: "Marcory",
-    vehicule: "camionette",
-    typeColis: "gros",
-    urgence: "detendu",
-    montant: 8000,
-    paiement: "collecte",
-    statut: "annulee",
-    date: "2026-04-24",
-  },
-  {
-    id: "CMD-2604-006",
-    client: "Kouadio Marc",
-    clientTel: "+225 05 22 33 44",
-    livreur: "Koffi Akissi",
-    livreurTel: "+225 05 98 11 22",
-    modeLivraison: "relais",
-    pointRelais: "Dépôt Central – Plateau",
-    commune: "Plateau",
-    vehicule: "camionette",
-    typeColis: "gros",
-    urgence: "urgent",
-    montant: 11200,
-    paiement: "collecte",
-    statut: "livree",
-    date: "2026-04-23",
-  },
-  {
-    id: "CMD-2604-007",
-    client: "Ouattara Seydou",
-    clientTel: "+225 01 88 99 00",
-    livreur: "Traoré Moussa",
-    livreurTel: "+225 07 44 55 66",
-    modeLivraison: "domicile",
-    pointRelais: null,
-    commune: "Abobo",
-    vehicule: "moto",
-    typeColis: "petit",
-    urgence: "trois-heures",
-    montant: 1350,
-    paiement: "a_collecter",
-    statut: "en_cours",
-    date: "2026-04-25",
-  },
-  {
-    id: "CMD-2604-008",
-    client: "Aya Traoré",
-    clientTel: "+225 07 33 44 55",
-    livreur: "Coulibaly Seydou",
-    livreurTel: "+225 05 11 22 33",
-    modeLivraison: "relais",
-    pointRelais: "Transit – Zone 4",
-    commune: "Koumassi",
-    vehicule: "tricycle",
-    typeColis: "moyen",
-    urgence: "detendu",
-    montant: 3500,
-    paiement: "a_collecter",
-    statut: "en_cours",
-    date: "2026-04-25",
-  },
-  {
-    id: "CMD-2604-009",
-    client: "Mariam Coulibaly",
-    clientTel: "+225 05 66 77 88",
-    livreur: "Diallo Mamadou",
-    livreurTel: "+225 01 77 88 99",
-    modeLivraison: "domicile",
-    pointRelais: null,
-    commune: "Attécoubé",
-    vehicule: "moto",
-    typeColis: "documents",
-    urgence: "detendu",
-    montant: 1500,
-    paiement: "collecte",
-    statut: "livree",
-    date: "2026-04-22",
-  },
-  {
-    id: "CMD-2604-010",
-    client: "Koffi Jean-Paul",
-    clientTel: "+225 01 44 55 66",
-    livreur: "Ouattara Drissa",
-    livreurTel: "+225 01 55 66 77",
-    modeLivraison: "relais",
-    pointRelais: "Relais Attécoubé – Washington",
-    commune: "Attécoubé",
-    vehicule: "repas",
-    typeColis: "nourriture",
-    urgence: "trois-heures",
-    montant: 1620,
-    paiement: "a_collecter",
-    statut: "annulee",
-    date: "2026-04-21",
-  },
-]
+import commandesMockData from "@/data/mock/commandes.json"
+
+const commandesData: Commande[] = commandesMockData as Commande[]
 
 const statutConfig = {
   en_cours: { label: "En cours", className: "bg-blue-600/10 text-blue-600" },
@@ -319,12 +150,12 @@ export default function CommandesView() {
         ),
       },
       {
-        accessorKey: "livreur",
-        header: "Livreur",
+        accessorKey: "prestataire",
+        header: "Prestataire",
         cell: ({ row }) => (
           <div>
-            <div>{row.getValue("livreur")}</div>
-            <div className="text-xs text-muted-foreground">{row.original.livreurTel}</div>
+            <div>{row.getValue("prestataire")}</div>
+            <div className="text-xs text-muted-foreground">{row.original.prestataireTel}</div>
           </div>
         ),
       },
@@ -586,7 +417,7 @@ export default function CommandesView() {
       <div className="w-full">
         <div className="flex items-center gap-2 py-4">
           <Input
-            placeholder="Rechercher par ID, client, livreur, commune..."
+            placeholder="Rechercher par ID, client, prestataire, commune..."
             value={globalFilter}
             onChange={(e) => setGlobalFilter(e.target.value)}
             className="max-w-md"
@@ -605,7 +436,7 @@ export default function CommandesView() {
                   const labels: Record<string, string> = {
                     id: "ID",
                     client: "Client",
-                    livreur: "Livreur",
+                    prestataire: "Prestataire",
                     modeLivraison: "Mode livraison",
                     commune: "Commune",
                     montant: "Montant",

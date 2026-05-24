@@ -9,7 +9,7 @@ import { Trophy, Clock, XCircle, Package, MessageSquare, ThumbsUp, TrendingUp } 
 export function SellerPerformance() {
   const performance = {
     globalScore: 92,
-    deliveryRate: 98,
+    RecoRate: 98,
     cancellationRate: 1.2,
     processingTime: "12h",
     responseTime: "2h",
@@ -78,9 +78,9 @@ export function SellerPerformance() {
                   <span className="text-xs text-muted-foreground">Objectif: {">"}95%</span>
                 </div>
               </div>
-              <span className="font-bold">{performance.deliveryRate}%</span>
+              <span className="font-bold">{performance.RecoRate}%</span>
             </div>
-            <Progress value={performance.deliveryRate} className="h-1.5" indicatorClassName="bg-green-600" />
+            <Progress value={performance.RecoRate} className="h-1.5" indicatorClassName="bg-green-600" />
             
             <Separator />
 

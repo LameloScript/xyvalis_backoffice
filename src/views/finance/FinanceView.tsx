@@ -36,33 +36,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 // ── Mock data ──────────────────────────────────────────────────────────────
 
-const transactions = [
-  { id: "TXN-0041", type: "Commission", user: "Kouamé Brou", role: "Livreur", montant: 1200, date: "24 avr. 2026", statut: "Complété" },
-  { id: "TXN-0042", type: "Gain", user: "Aya Touré", role: "Client", montant: 8500, date: "24 avr. 2026", statut: "Complété" },
-  { id: "TXN-0043", type: "Retrait", user: "Ibrahim Koné", role: "Relais", montant: 25000, date: "23 avr. 2026", statut: "En attente" },
-  { id: "TXN-0044", type: "Bonus", user: "Fatou Diallo", role: "Livreur", montant: 3000, date: "23 avr. 2026", statut: "Complété" },
-  { id: "TXN-0045", type: "Commission", user: "Jean Gnangnan", role: "Livreur", montant: 950, date: "22 avr. 2026", statut: "Complété" },
-  { id: "TXN-0046", type: "Retrait", user: "Mariam Coulibaly", role: "Relais", montant: 40000, date: "22 avr. 2026", statut: "Rejeté" },
-  { id: "TXN-0047", type: "Gain", user: "Serge Ahoutou", role: "Client", montant: 12000, date: "21 avr. 2026", statut: "Complété" },
-  { id: "TXN-0048", type: "Bonus", user: "Aminata Sylla", role: "Livreur", montant: 2500, date: "20 avr. 2026", statut: "Complété" },
-]
+import financeMockData from "@/data/mock/finance.json"
 
-const demandesRetrait = [
-  { id: 1, nom: "Ibrahim Koné", role: "Relais", montant: 25000, operateur: "MTN MoMo", date: "23 avr. 2026" },
-  { id: 2, nom: "Kouadio Assi", role: "Livreur", montant: 18500, operateur: "Orange Money", date: "23 avr. 2026" },
-  { id: 3, nom: "Nathalie Yao", role: "Relais", montant: 62000, operateur: "Wave", date: "22 avr. 2026" },
-  { id: 4, nom: "Seydou Traoré", role: "Livreur", montant: 9000, operateur: "MTN MoMo", date: "21 avr. 2026" },
-  { id: 5, nom: "Rose Adjoua", role: "Relais", montant: 33000, operateur: "Moov Money", date: "20 avr. 2026" },
-]
+const transactions = financeMockData.transactions
 
-const portefeuilles = [
-  { user: "Ibrahim Koné", role: "Relais", solde: 25000, activite: "23 avr. 2026" },
-  { user: "Kouamé Brou", role: "Livreur", solde: 7400, activite: "24 avr. 2026" },
-  { user: "Aya Touré", role: "Client", solde: 3200, activite: "24 avr. 2026" },
-  { user: "Fatou Diallo", role: "Livreur", solde: 11800, activite: "23 avr. 2026" },
-  { user: "Nathalie Yao", role: "Relais", solde: 62000, activite: "22 avr. 2026" },
-  { user: "Jean Gnangnan", role: "Livreur", solde: 4950, activite: "22 avr. 2026" },
-]
+const demandesRetrait = financeMockData.demandesRetrait
+
+const portefeuilles = financeMockData.portefeuilles
 
 // ── Helpers ────────────────────────────────────────────────────────────────
 
@@ -91,7 +71,7 @@ function statutBadge(statut: string) {
 
 function roleBadge(role: string) {
   const map: Record<string, string> = {
-    Livreur: "bg-sky-100 text-sky-700",
+    Prestataire: "bg-sky-100 text-sky-700",
     Client: "bg-amber-100 text-amber-700",
     Relais: "bg-violet-100 text-violet-700",
   }
@@ -127,7 +107,7 @@ export default function FinanceView() {
       <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card className="@container/card bg-primary border-primary shadow-xs">
           <CardHeader>
-            <CardDescription className="text-white/70">Revenus plateforme ce mois</CardDescription>
+            <CardDescription className="text-white/70">Reventus plateforme ce mois</CardDescription>
             <CardTitle className="text-2xl font-semibold tabular-nums text-white">
               1 248 500
               <span className="text-sm font-normal text-white/60 ml-1">FCFA</span>

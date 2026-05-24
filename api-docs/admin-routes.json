@@ -1,0 +1,498 @@
+{
+  "prefix": "/admin",
+  "auth": "Bearer JWT",
+  "guards": ["JwtAuthGuard", "RolesGuard"],
+  "roles_available": [
+    "SUPER_ADMIN",
+    "ADMIN",
+    "MODERATOR",
+    "CONTENT_CREATOR",
+    "MARKETING"
+  ],
+  "endpoints": [
+    {
+      "id": 1,
+      "method": "GET",
+      "path": "/admin/dashboard",
+      "description": "KPIs du tableau de bord",
+      "module": "dashboard",
+      "roles": ["SUPER_ADMIN", "ADMIN", "MODERATOR", "CONTENT_CREATOR", "MARKETING"]
+    },
+
+    {
+      "id": 2,
+      "method": "GET",
+      "path": "/admin/prestataires",
+      "description": "Lister les prestataires avec filtres",
+      "module": "prestataires",
+      "query": ["page", "limit", "status", "search"],
+      "roles": ["SUPER_ADMIN", "ADMIN", "MODERATOR", "CONTENT_CREATOR", "MARKETING"]
+    },
+    {
+      "id": 3,
+      "method": "GET",
+      "path": "/admin/prestataires/:id",
+      "description": "Détail d'un prestataire",
+      "module": "prestataires",
+      "roles": ["SUPER_ADMIN", "ADMIN", "MODERATOR", "CONTENT_CREATOR", "MARKETING"]
+    },
+    {
+      "id": 4,
+      "method": "PATCH",
+      "path": "/admin/prestataires/:id/validate",
+      "description": "Valider un prestataire",
+      "module": "prestataires",
+      "body": "ValidatePrestataireDto",
+      "roles": ["SUPER_ADMIN", "ADMIN", "MODERATOR"]
+    },
+    {
+      "id": 5,
+      "method": "PATCH",
+      "path": "/admin/prestataires/:id/reject",
+      "description": "Rejeter un prestataire",
+      "module": "prestataires",
+      "body": "RejectPrestataireDto",
+      "roles": ["SUPER_ADMIN", "ADMIN", "MODERATOR"]
+    },
+    {
+      "id": 6,
+      "method": "PATCH",
+      "path": "/admin/prestataires/:id/suspend",
+      "description": "Suspendre un prestataire",
+      "module": "prestataires",
+      "body": "SuspendPrestataireDto",
+      "roles": ["SUPER_ADMIN", "ADMIN"]
+    },
+    {
+      "id": 7,
+      "method": "PATCH",
+      "path": "/admin/prestataires/:id/badge",
+      "description": "Mettre à jour le badge d'un prestataire",
+      "module": "prestataires",
+      "body": "UpdateBadgeDto",
+      "roles": ["SUPER_ADMIN", "ADMIN"]
+    },
+    {
+      "id": 8,
+      "method": "PATCH",
+      "path": "/admin/prestataires/:id/plan",
+      "description": "Mettre à jour le plan d'un prestataire",
+      "module": "prestataires",
+      "body": "UpdatePlanDto",
+      "roles": ["SUPER_ADMIN", "ADMIN"]
+    },
+    {
+      "id": 9,
+      "method": "GET",
+      "path": "/admin/validations",
+      "description": "File d'attente des validations en cours",
+      "module": "prestataires",
+      "roles": ["SUPER_ADMIN", "ADMIN", "MODERATOR", "CONTENT_CREATOR", "MARKETING"]
+    },
+
+    {
+      "id": 10,
+      "method": "GET",
+      "path": "/admin/organisateurs",
+      "description": "Lister les organisateurs avec filtres",
+      "module": "organisateurs",
+      "query": ["page", "limit", "status", "search"],
+      "roles": ["SUPER_ADMIN", "ADMIN", "MODERATOR", "CONTENT_CREATOR", "MARKETING"]
+    },
+    {
+      "id": 11,
+      "method": "GET",
+      "path": "/admin/organisateurs/:id",
+      "description": "Détail d'un organisateur",
+      "module": "organisateurs",
+      "roles": ["SUPER_ADMIN", "ADMIN", "MODERATOR", "CONTENT_CREATOR", "MARKETING"]
+    },
+
+    {
+      "id": 12,
+      "method": "GET",
+      "path": "/admin/reviews",
+      "description": "Lister les avis avec filtres",
+      "module": "reviews",
+      "query": ["page", "limit", "status"],
+      "roles": ["SUPER_ADMIN", "ADMIN", "MODERATOR", "CONTENT_CREATOR", "MARKETING"]
+    },
+    {
+      "id": 13,
+      "method": "PATCH",
+      "path": "/admin/reviews/:id/publish",
+      "description": "Publier un avis",
+      "module": "reviews",
+      "roles": ["SUPER_ADMIN", "ADMIN", "MODERATOR"]
+    },
+    {
+      "id": 14,
+      "method": "PATCH",
+      "path": "/admin/reviews/:id/reject",
+      "description": "Rejeter un avis",
+      "module": "reviews",
+      "body": "RejectReviewDto",
+      "roles": ["SUPER_ADMIN", "ADMIN", "MODERATOR"]
+    },
+
+    {
+      "id": 15,
+      "method": "GET",
+      "path": "/admin/commissions",
+      "description": "Lister les commissions avec filtres",
+      "module": "commissions",
+      "query": ["page", "limit", "status"],
+      "roles": ["SUPER_ADMIN", "ADMIN", "MODERATOR", "CONTENT_CREATOR", "MARKETING"]
+    },
+    {
+      "id": 16,
+      "method": "GET",
+      "path": "/admin/commissions/stats",
+      "description": "Statistiques globales des commissions",
+      "module": "commissions",
+      "roles": ["SUPER_ADMIN", "ADMIN", "MODERATOR", "CONTENT_CREATOR", "MARKETING"]
+    },
+    {
+      "id": 17,
+      "method": "PATCH",
+      "path": "/admin/commissions/:id/validate",
+      "description": "Valider une commission",
+      "module": "commissions",
+      "roles": ["SUPER_ADMIN", "ADMIN"]
+    },
+
+    {
+      "id": 18,
+      "method": "GET",
+      "path": "/admin/subscriptions",
+      "description": "Lister les abonnements avec filtres",
+      "module": "subscriptions",
+      "query": ["page", "limit", "status"],
+      "roles": ["SUPER_ADMIN", "ADMIN"]
+    },
+    {
+      "id": 19,
+      "method": "POST",
+      "path": "/admin/subscriptions/:id/payment",
+      "description": "Enregistrer un paiement manuel pour un abonnement",
+      "module": "subscriptions",
+      "body": "RecordPaymentDto",
+      "roles": ["SUPER_ADMIN", "ADMIN"]
+    },
+
+    {
+      "id": 20,
+      "method": "GET",
+      "path": "/admin/categories",
+      "description": "Lister les catégories",
+      "module": "categories",
+      "roles": ["SUPER_ADMIN", "ADMIN", "MODERATOR", "CONTENT_CREATOR", "MARKETING"]
+    },
+    {
+      "id": 21,
+      "method": "POST",
+      "path": "/admin/categories",
+      "description": "Créer une catégorie",
+      "module": "categories",
+      "body": "CreateCategorieDto",
+      "roles": ["SUPER_ADMIN", "ADMIN"]
+    },
+    {
+      "id": 22,
+      "method": "PATCH",
+      "path": "/admin/categories/:id",
+      "description": "Mettre à jour une catégorie",
+      "module": "categories",
+      "body": "UpdateCategorieDto",
+      "roles": ["SUPER_ADMIN", "ADMIN"]
+    },
+    {
+      "id": 23,
+      "method": "DELETE",
+      "path": "/admin/categories/:id",
+      "description": "Supprimer une catégorie",
+      "module": "categories",
+      "roles": ["SUPER_ADMIN"]
+    },
+
+    {
+      "id": 24,
+      "method": "GET",
+      "path": "/admin/tags",
+      "description": "Lister les tags",
+      "module": "tags",
+      "roles": ["SUPER_ADMIN", "ADMIN", "MODERATOR", "CONTENT_CREATOR", "MARKETING"]
+    },
+    {
+      "id": 25,
+      "method": "POST",
+      "path": "/admin/tags",
+      "description": "Créer un tag",
+      "module": "tags",
+      "body": "CreateTagDto",
+      "roles": ["SUPER_ADMIN", "ADMIN", "MARKETING"]
+    },
+    {
+      "id": 26,
+      "method": "DELETE",
+      "path": "/admin/tags/:id",
+      "description": "Supprimer un tag",
+      "module": "tags",
+      "roles": ["SUPER_ADMIN", "ADMIN"]
+    },
+
+    {
+      "id": 27,
+      "method": "GET",
+      "path": "/admin/blog",
+      "description": "Lister les articles de blog",
+      "module": "blog",
+      "query": ["page", "limit", "status"],
+      "roles": ["SUPER_ADMIN", "ADMIN", "MODERATOR", "CONTENT_CREATOR", "MARKETING"]
+    },
+    {
+      "id": 28,
+      "method": "POST",
+      "path": "/admin/blog",
+      "description": "Créer un article de blog",
+      "module": "blog",
+      "body": "CreateArticleDto",
+      "roles": ["SUPER_ADMIN", "ADMIN", "CONTENT_CREATOR"]
+    },
+    {
+      "id": 29,
+      "method": "PATCH",
+      "path": "/admin/blog/:id",
+      "description": "Mettre à jour un article de blog",
+      "module": "blog",
+      "body": "UpdateArticleDto",
+      "roles": ["SUPER_ADMIN", "ADMIN", "CONTENT_CREATOR"]
+    },
+    {
+      "id": 30,
+      "method": "PATCH",
+      "path": "/admin/blog/:id/publish",
+      "description": "Publier un article de blog",
+      "module": "blog",
+      "roles": ["SUPER_ADMIN", "ADMIN", "CONTENT_CREATOR"]
+    },
+    {
+      "id": 31,
+      "method": "DELETE",
+      "path": "/admin/blog/:id",
+      "description": "Supprimer un article de blog",
+      "module": "blog",
+      "roles": ["SUPER_ADMIN", "ADMIN"]
+    },
+
+    {
+      "id": 32,
+      "method": "GET",
+      "path": "/admin/appels-offres",
+      "description": "Lister les appels d'offres (paginé)",
+      "module": "appels-offres",
+      "query": ["page", "limit"],
+      "roles": ["SUPER_ADMIN", "ADMIN", "MODERATOR", "CONTENT_CREATOR", "MARKETING"]
+    },
+    {
+      "id": 33,
+      "method": "POST",
+      "path": "/admin/appels-offres",
+      "description": "Créer un appel d'offre",
+      "module": "appels-offres",
+      "body": "CreateAppelOffreDto",
+      "roles": ["SUPER_ADMIN", "ADMIN", "CONTENT_CREATOR"]
+    },
+    {
+      "id": 34,
+      "method": "PATCH",
+      "path": "/admin/appels-offres/:id",
+      "description": "Mettre à jour un appel d'offre",
+      "module": "appels-offres",
+      "body": "UpdateAppelOffreDto",
+      "roles": ["SUPER_ADMIN", "ADMIN", "CONTENT_CREATOR"]
+    },
+    {
+      "id": 35,
+      "method": "PATCH",
+      "path": "/admin/appels-offres/:id/close",
+      "description": "Clôturer un appel d'offre",
+      "module": "appels-offres",
+      "roles": ["SUPER_ADMIN", "ADMIN", "CONTENT_CREATOR"]
+    },
+
+    {
+      "id": 36,
+      "method": "POST",
+      "path": "/admin/studio/passages",
+      "description": "Planifier un passage studio live pour un prestataire",
+      "module": "studio",
+      "body": {
+        "prestataireId": "string (required)",
+        "datePassage": "string ISO date (required)",
+        "type": "string (required)",
+        "articleId": "string (optional)",
+        "noteInterne": "string (optional)"
+      },
+      "roles": ["SUPER_ADMIN", "ADMIN", "CONTENT_CREATOR"]
+    },
+
+    {
+      "id": 37,
+      "method": "GET",
+      "path": "/admin/settings",
+      "description": "Lister tous les paramètres plateforme",
+      "module": "settings",
+      "roles": ["SUPER_ADMIN", "ADMIN", "MODERATOR", "CONTENT_CREATOR", "MARKETING"]
+    },
+    {
+      "id": 38,
+      "method": "PATCH",
+      "path": "/admin/settings/:key",
+      "description": "Créer ou mettre à jour un paramètre",
+      "module": "settings",
+      "body": "SettingDto",
+      "roles": ["SUPER_ADMIN"]
+    },
+
+    {
+      "id": 39,
+      "method": "GET",
+      "path": "/admin/alertes",
+      "description": "Lister les alertes",
+      "module": "alertes",
+      "query": ["resolue (true | false)"],
+      "roles": ["SUPER_ADMIN", "ADMIN", "MODERATOR", "CONTENT_CREATOR", "MARKETING"]
+    },
+    {
+      "id": 40,
+      "method": "PATCH",
+      "path": "/admin/alertes/:id/resolve",
+      "description": "Résoudre une alerte",
+      "module": "alertes",
+      "body": "ResolveAlerteDto",
+      "roles": ["SUPER_ADMIN", "ADMIN", "MODERATOR", "CONTENT_CREATOR", "MARKETING"]
+    },
+
+    {
+      "id": 41,
+      "method": "GET",
+      "path": "/admin/audit-logs",
+      "description": "Consulter les logs d'audit",
+      "module": "audit",
+      "query": ["page", "limit", "action", "userId"],
+      "roles": ["SUPER_ADMIN", "ADMIN", "MODERATOR", "CONTENT_CREATOR", "MARKETING"]
+    },
+
+    {
+      "id": 42,
+      "method": "GET",
+      "path": "/admin/signalements",
+      "description": "Lister les signalements (paginé)",
+      "module": "signalements",
+      "query": ["page", "limit"],
+      "roles": ["SUPER_ADMIN", "ADMIN", "MODERATOR", "CONTENT_CREATOR", "MARKETING"]
+    },
+    {
+      "id": 43,
+      "method": "PATCH",
+      "path": "/admin/signalements/:id/resolve",
+      "description": "Résoudre un signalement",
+      "module": "signalements",
+      "body": "ResolveSignalementDto",
+      "roles": ["SUPER_ADMIN", "ADMIN", "MODERATOR", "CONTENT_CREATOR", "MARKETING"]
+    },
+
+    {
+      "id": 44,
+      "method": "POST",
+      "path": "/admin/notifications/broadcast",
+      "description": "Envoyer une notification broadcast à tous les utilisateurs",
+      "module": "notifications",
+      "body": "BroadcastDto",
+      "roles": ["SUPER_ADMIN", "ADMIN", "MARKETING"]
+    },
+
+    {
+      "id": 45,
+      "method": "GET",
+      "path": "/admin/documents",
+      "description": "Lister les documents avec filtres",
+      "module": "documents",
+      "query": ["page", "limit", "status", "prestataireId"],
+      "roles": ["SUPER_ADMIN", "ADMIN", "MODERATOR"]
+    },
+    {
+      "id": 46,
+      "method": "GET",
+      "path": "/admin/documents/:id",
+      "description": "Détail d'un document",
+      "module": "documents",
+      "roles": ["SUPER_ADMIN", "ADMIN", "MODERATOR"]
+    },
+    {
+      "id": 47,
+      "method": "GET",
+      "path": "/admin/documents/:id/download-url",
+      "description": "URL signée (1h) pour télécharger un document en sécurité",
+      "module": "documents",
+      "roles": ["SUPER_ADMIN", "ADMIN", "MODERATOR"]
+    },
+    {
+      "id": 48,
+      "method": "PATCH",
+      "path": "/admin/documents/:id/review",
+      "description": "Approuver ou rejeter un document",
+      "module": "documents",
+      "body": "ReviewDocumentDto",
+      "roles": ["SUPER_ADMIN", "ADMIN", "MODERATOR"]
+    }
+  ],
+
+  "summary": {
+    "total": 48,
+    "by_module": {
+      "dashboard": 1,
+      "prestataires": 8,
+      "organisateurs": 2,
+      "reviews": 3,
+      "commissions": 3,
+      "subscriptions": 2,
+      "categories": 4,
+      "tags": 3,
+      "blog": 5,
+      "appels-offres": 4,
+      "studio": 1,
+      "settings": 2,
+      "alertes": 2,
+      "audit": 1,
+      "signalements": 2,
+      "notifications": 1,
+      "documents": 4
+    },
+    "by_method": {
+      "GET": 24,
+      "POST": 6,
+      "PATCH": 16,
+      "DELETE": 3
+    },
+    "by_min_role": {
+      "SUPER_ADMIN_only": [
+        "DELETE /admin/categories/:id",
+        "PATCH /admin/settings/:key"
+      ],
+      "SUPER_ADMIN_ADMIN": [
+        "PATCH /admin/prestataires/:id/suspend",
+        "PATCH /admin/prestataires/:id/badge",
+        "PATCH /admin/prestataires/:id/plan",
+        "PATCH /admin/commissions/:id/validate",
+        "GET /admin/subscriptions",
+        "POST /admin/subscriptions/:id/payment",
+        "POST /admin/categories",
+        "PATCH /admin/categories/:id",
+        "DELETE /admin/tags/:id",
+        "DELETE /admin/blog/:id"
+      ]
+    }
+  }
+}

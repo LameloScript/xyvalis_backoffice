@@ -1,0 +1,90 @@
+[
+  {
+    "id": "IMP-001",
+    "eventId": "LP-USR-9842",
+    "nom": "Adjoua Bénédicte",
+    "email": "adjoua.b@gmail.com",
+    "telephone": "+225 07 11 22 33",
+    "type": "client",
+    "importeLe": "2026-04-26T13:00:00",
+    "statut": "succes",
+    "message": null
+  },
+  {
+    "id": "IMP-002",
+    "eventId": "LP-USR-9841",
+    "nom": "Konan Stéphane",
+    "email": "konan.s@gmail.com",
+    "telephone": "+225 05 44 55 66",
+    "type": "client",
+    "importeLe": "2026-04-26T13:00:00",
+    "statut": "succes",
+    "message": null
+  },
+  {
+    "id": "IMP-003",
+    "eventId": "LP-VND-2104",
+    "nom": "Boutique Elite",
+    "email": "boutique.elite@gmail.com",
+    "telephone": "+225 27 21 99 88",
+    "type": "vendeur",
+    "importeLe": "2026-04-26T13:00:00",
+    "statut": "succes",
+    "message": null
+  },
+  {
+    "id": "IMP-004",
+    "eventId": "LP-USR-9840",
+    "nom": "Touré Aïcha",
+    "email": "toure.aicha@gmail.com",
+    "telephone": "+225 01 99 88 77",
+    "type": "client",
+    "importeLe": "2026-04-26T13:00:00",
+    "statut": "erreur",
+    "message": "Email déjà associé à un compte event existant"
+  },
+  {
+    "id": "IMP-005",
+    "eventId": "LP-VND-2103",
+    "nom": "Studio Photo CI",
+    "email": "studio.photo@gmail.com",
+    "telephone": "+225 07 88 99 00",
+    "type": "vendeur",
+    "importeLe": "2026-04-26T07:00:00",
+    "statut": "succes",
+    "message": null
+  },
+  {
+    "id": "IMP-006",
+    "eventId": "LP-USR-9839",
+    "nom": "Bah Mamadou",
+    "email": "(non renseigné)",
+    "telephone": "+225 05 66 77 88",
+    "type": "client",
+    "importeLe": "2026-04-26T07:00:00",
+    "statut": "en_attente",
+    "message": "Téléphone à valider — OTP en cours"
+  },
+  {
+    "id": "IMP-007",
+    "eventId": "LP-USR-9838",
+    "nom": "N'Goran Prisca",
+    "email": "ngoran.prisca@yahoo.fr",
+    "telephone": "+225 07 90 12 34",
+    "type": "client",
+    "importeLe": "2026-04-26T01:00:00",
+    "statut": "succes",
+    "message": null
+  },
+  {
+    "id": "IMP-008",
+    "eventId": "LP-USR-9837",
+    "nom": "Doumbia Cheikh",
+    "email": "doumbia.c@gmail.com",
+    "telephone": "+225 invalide",
+    "type": "client",
+    "importeLe": "2026-04-26T01:00:00",
+    "statut": "erreur",
+    "message": "Format de téléphone invalide"
+  }
+]

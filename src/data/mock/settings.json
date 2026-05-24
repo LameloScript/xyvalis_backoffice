@@ -1,0 +1,251 @@
+{
+  "allPaymentProviders": [
+    {
+      "key": "Orange Money",
+      "logo": "/assets/logo-brand/logo-orange.svg",
+      "description": "Mobile Money Orange",
+      "maxLength": 10,
+      "waitDays": "24h"
+    },
+    {
+      "key": "Moov Money",
+      "logo": "/assets/logo-brand/logo-moov.png",
+      "description": "Mobile Money Moov",
+      "maxLength": 10,
+      "waitDays": "24h"
+    },
+    {
+      "key": "MTN Mobile Money",
+      "logo": "/assets/logo-brand/logo-mtn.png",
+      "description": "MTN MoMo",
+      "maxLength": 10,
+      "waitDays": "24h"
+    },
+    {
+      "key": "Wave",
+      "logo": "/assets/logo-brand/logo-wave.png",
+      "description": "Wave Money",
+      "maxLength": 10,
+      "waitDays": "Instantané"
+    },
+    {
+      "key": "Carte bancaire",
+      "logo": "",
+      "description": "Visa, Mastercard",
+      "maxLength": 27,
+      "waitDays": "3-5 jours"
+    }
+  ],
+  "westAfricanCountries": {
+    "cote-divoire": [
+      "Abidjan",
+      "Yamoussoukro",
+      "Bouaké",
+      "Korhogo",
+      "San-Pédro",
+      "Daloa",
+      "Man",
+      "Gagnoa",
+      "Divo",
+      "Anyama"
+    ],
+    "senegal": [
+      "Dakar",
+      "Thiès",
+      "Rufisque",
+      "Kaolack",
+      "Mbour",
+      "Saint-Louis",
+      "Ziguinchor",
+      "Diourbel",
+      "Louga",
+      "Tambacounda"
+    ],
+    "mali": [
+      "Bamako",
+      "Sikasso",
+      "Mopti",
+      "Koutiala",
+      "Kayes",
+      "Ségou",
+      "Gao",
+      "Tombouctou",
+      "Kidal",
+      "Koulikoro"
+    ],
+    "burkina-faso": [
+      "Ouagadougou",
+      "Bobo-Dioulasso",
+      "Koudougou",
+      "Banfora",
+      "Ouahigouya",
+      "Pouytenga",
+      "Kaya",
+      "Tenkodogo",
+      "Fada N'Gourma",
+      "Dédougou"
+    ],
+    "niger": [
+      "Niamey",
+      "Zinder",
+      "Maradi",
+      "Agadez",
+      "Tahoua",
+      "Dosso",
+      "Diffa",
+      "Tillabéri",
+      "Arlit",
+      "Birni N'Konni"
+    ],
+    "guinee": [
+      "Conakry",
+      "Nzérékoré",
+      "Kankan",
+      "Kindia",
+      "Labé",
+      "Mamou",
+      "Boké",
+      "Faranah",
+      "Siguiri",
+      "Kamsar"
+    ],
+    "benin": [
+      "Cotonou",
+      "Porto-Novo",
+      "Parakou",
+      "Djougou",
+      "Abomey-Calavi",
+      "Bohicon",
+      "Natitingou",
+      "Lokossa",
+      "Ouidah",
+      "Kandi"
+    ],
+    "togo": [
+      "Lomé",
+      "Sokodé",
+      "Kara",
+      "Kpalimé",
+      "Atakpamé",
+      "Bassar",
+      "Tsévié",
+      "Aného",
+      "Mango",
+      "Dapaong"
+    ],
+    "ghana": [
+      "Accra",
+      "Kumasi",
+      "Tamale",
+      "Sekondi-Takoradi",
+      "Ashaiman",
+      "Sunyani",
+      "Cape Coast",
+      "Obuasi",
+      "Tema",
+      "Koforidua"
+    ],
+    "nigeria": [
+      "Lagos",
+      "Kano",
+      "Ibadan",
+      "Abuja",
+      "Port Harcourt",
+      "Benin City",
+      "Maiduguri",
+      "Zaria",
+      "Aba",
+      "Jos"
+    ],
+    "liberia": [
+      "Monrovia",
+      "Gbarnga",
+      "Kakata",
+      "Bensonville",
+      "Harper",
+      "Voinjama",
+      "Buchanan",
+      "Zwedru",
+      "Harbel",
+      "Pleebo"
+    ],
+    "sierra-leone": [
+      "Freetown",
+      "Bo",
+      "Kenema",
+      "Makeni",
+      "Koidu",
+      "Lunsar",
+      "Port Loko",
+      "Kabala",
+      "Waterloo",
+      "Bonthe"
+    ],
+    "gambie": [
+      "Banjul",
+      "Serekunda",
+      "Brikama",
+      "Bakau",
+      "Farafenni",
+      "Lamin",
+      "Sukuta",
+      "Gunjur",
+      "Soma",
+      "Basse Santa Su"
+    ],
+    "guinee-bissau": [
+      "Bissau",
+      "Bafatá",
+      "Gabú",
+      "Bissorã",
+      "Bolama",
+      "Cacheu",
+      "Bubaque",
+      "Catió",
+      "Mansôa",
+      "Buba"
+    ],
+    "cap-vert": [
+      "Praia",
+      "Mindelo",
+      "Santa Maria",
+      "Assomada",
+      "Pedra Badejo",
+      "São Filipe",
+      "Tarrafal",
+      "Porto Novo",
+      "Espargos",
+      "Ribeira Grande"
+    ],
+    "mauritanie": [
+      "Nouakchott",
+      "Nouadhibou",
+      "Kiffa",
+      "Kaédi",
+      "Rosso",
+      "Zouérat",
+      "Atar",
+      "Néma",
+      "Sélibaby",
+      "Aleg"
+    ]
+  },
+  "countryNames": {
+    "cote-divoire": "Côte d'Ivoire",
+    "senegal": "Sénégal",
+    "mali": "Mali",
+    "burkina-faso": "Burkina Faso",
+    "niger": "Niger",
+    "guinee": "Guinée",
+    "benin": "Bénin",
+    "togo": "Togo",
+    "ghana": "Ghana",
+    "nigeria": "Nigeria",
+    "liberia": "Liberia",
+    "sierra-leone": "Sierra Leone",
+    "gambie": "Gambie",
+    "guinee-bissau": "Guinée-Bissau",
+    "cap-vert": "Cap-Vert",
+    "mauritanie": "Mauritanie"
+  }
+}

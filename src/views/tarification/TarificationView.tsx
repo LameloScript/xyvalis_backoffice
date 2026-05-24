@@ -23,31 +23,20 @@ import {
 
 // ── Mock data ──────────────────────────────────────────────────────────────
 
-const communesInit = [
-  { id: 1, nom: "Cocody", active: true },
-  { id: 2, nom: "Yopougon", active: true },
-  { id: 3, nom: "Plateau", active: true },
-  { id: 4, nom: "Marcory", active: true },
-  { id: 5, nom: "Treichville", active: true },
-  { id: 6, nom: "Adjamé", active: true },
-  { id: 7, nom: "Abobo", active: true },
-  { id: 8, nom: "Port-Bouët", active: false },
-  { id: 9, nom: "Koumassi", active: false },
-  { id: 10, nom: "Attécoubé", active: false },
-]
+import tarificationData from "@/data/mock/tarification.json"
 
-const vehicules = [
-  { key: "moto", label: "Moto", icon: Bike, prix: "1500" },
-  { key: "tricycle", label: "Tricycle", icon: Truck, prix: "3500" },
-  { key: "camionette", label: "Camionette", icon: Truck, prix: "8000" },
-  { key: "repas", label: "Livraison repas", icon: ShoppingBag, prix: "1800" },
-]
+const iconMap: Record<string, React.ComponentType<any>> = {
+  Bike,
+  Truck,
+  ShoppingBag,
+}
 
-const urgenceMultiplicateurs = [
-  { key: "urgent", label: "Urgent", multiplicateur: "1.4" },
-  { key: "detendu", label: "Détendu", multiplicateur: "1.0" },
-  { key: "trois-heures", label: "Sous 3 heures", multiplicateur: "0.9" },
-]
+const communesInit = tarificationData.communesInit
+const vehicules = tarificationData.vehicules.map((v) => ({
+  ...v,
+  icon: iconMap[v.icon] || Package,
+}))
+const urgenceMultiplicateurs = tarificationData.urgenceMultiplicateurs
 
 // ── Component ──────────────────────────────────────────────────────────────
 

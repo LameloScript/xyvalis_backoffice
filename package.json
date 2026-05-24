@@ -1,9 +1,9 @@
 {
-  "name": "Xyvalis-seller",
+  "name": "eventt reco backoffice",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --webpack",
+    "dev": "next dev --webpack -p 5173",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"

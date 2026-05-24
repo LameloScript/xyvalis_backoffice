@@ -65,7 +65,7 @@ type Motif =
   | "Colis abîmé"
   | "Colis non reçu"
   | "Erreur de livraison"
-  | "Comportement livreur"
+  | "Comportement prestataire"
   | "Frais incorrect"
   | "Article manquant"
 
@@ -74,7 +74,7 @@ type Litige = {
   commandeId: string
   client: string
   clientTel: string
-  livreur: string
+  prestataire: string
   motif: Motif
   montantConteste: number
   statut: StatutLitige
@@ -83,112 +83,9 @@ type Litige = {
   piecesJointes: number
 }
 
-const litigesData: Litige[] = [
-  {
-    id: "LTG-001",
-    commandeId: "CMD-2604-002",
-    client: "Konan Yao",
-    clientTel: "+225 01 23 45 67",
-    livreur: "Traoré Moussa",
-    motif: "Colis abîmé",
-    montantConteste: 95000,
-    statut: "ouvert",
-    dateOuverture: "2026-04-25",
-    derniereMaj: "2026-04-25",
-    piecesJointes: 3,
-  },
-  {
-    id: "LTG-002",
-    commandeId: "CMD-2604-007",
-    client: "Ouattara Seydou",
-    clientTel: "+225 01 88 99 00",
-    livreur: "Traoré Moussa",
-    motif: "Colis non reçu",
-    montantConteste: 72000,
-    statut: "en_enquete",
-    dateOuverture: "2026-04-24",
-    derniereMaj: "2026-04-25",
-    piecesJointes: 2,
-  },
-  {
-    id: "LTG-003",
-    commandeId: "CMD-2604-001",
-    client: "Adjoua Kouassi",
-    clientTel: "+225 07 12 34 56",
-    livreur: "Koffi Akissi",
-    motif: "Comportement livreur",
-    montantConteste: 0,
-    statut: "resolu",
-    dateOuverture: "2026-04-23",
-    derniereMaj: "2026-04-24",
-    piecesJointes: 0,
-  },
-  {
-    id: "LTG-004",
-    commandeId: "CMD-2604-008",
-    client: "Aya Traoré",
-    clientTel: "+225 07 33 44 55",
-    livreur: "Coulibaly Seydou",
-    motif: "Article manquant",
-    montantConteste: 35000,
-    statut: "ouvert",
-    dateOuverture: "2026-04-25",
-    derniereMaj: "2026-04-25",
-    piecesJointes: 1,
-  },
-  {
-    id: "LTG-005",
-    commandeId: "CMD-2604-005",
-    client: "N'Goran Prisca",
-    clientTel: "+225 07 99 00 11",
-    livreur: "Ouattara Drissa",
-    motif: "Frais incorrect",
-    montantConteste: 5000,
-    statut: "rejete",
-    dateOuverture: "2026-04-22",
-    derniereMaj: "2026-04-23",
-    piecesJointes: 1,
-  },
-  {
-    id: "LTG-006",
-    commandeId: "CMD-2604-003",
-    client: "Bamba Issouf",
-    clientTel: "+225 05 33 44 55",
-    livreur: "Diallo Mamadou",
-    motif: "Erreur de livraison",
-    montantConteste: 12000,
-    statut: "en_enquete",
-    dateOuverture: "2026-04-21",
-    derniereMaj: "2026-04-24",
-    piecesJointes: 4,
-  },
-  {
-    id: "LTG-007",
-    commandeId: "CMD-2604-010",
-    client: "Koffi Jean-Paul",
-    clientTel: "+225 01 44 55 66",
-    livreur: "Ouattara Drissa",
-    motif: "Colis abîmé",
-    montantConteste: 89000,
-    statut: "resolu",
-    dateOuverture: "2026-04-20",
-    derniereMaj: "2026-04-22",
-    piecesJointes: 5,
-  },
-  {
-    id: "LTG-008",
-    commandeId: "CMD-2604-006",
-    client: "Kouadio Marc",
-    clientTel: "+225 05 22 33 44",
-    livreur: "Koffi Akissi",
-    motif: "Colis non reçu",
-    montantConteste: 520000,
-    statut: "ouvert",
-    dateOuverture: "2026-04-25",
-    derniereMaj: "2026-04-25",
-    piecesJointes: 2,
-  },
-]
+import litigesMockData from "@/data/mock/litiges.json"
+
+const litigesData: Litige[] = litigesMockData as Litige[]
 
 const statutConfig: Record<StatutLitige, { label: string; className: string }> = {
   ouvert: { label: "Ouvert", className: "bg-orange-600/10 text-orange-600" },
@@ -230,7 +127,7 @@ export default function LitigesView() {
     "Colis abîmé",
     "Colis non reçu",
     "Erreur de livraison",
-    "Comportement livreur",
+    "Comportement prestataire",
     "Frais incorrect",
     "Article manquant",
   ]
@@ -263,9 +160,9 @@ export default function LitigesView() {
       ),
     },
     {
-      accessorKey: "livreur",
-      header: "Livreur",
-      cell: ({ row }) => <span className="text-sm">{row.getValue("livreur")}</span>,
+      accessorKey: "prestataire",
+      header: "Prestataire",
+      cell: ({ row }) => <span className="text-sm">{row.getValue("prestataire")}</span>,
     },
     {
       accessorKey: "motif",
@@ -499,7 +396,7 @@ export default function LitigesView() {
       <div className="w-full">
         <div className="flex flex-wrap items-center gap-3 py-4">
           <Input
-            placeholder="Rechercher (client, commande, livreur)..."
+            placeholder="Rechercher (client, commande, prestataire)..."
             value={globalFilter}
             onChange={(e) => setGlobalFilter(e.target.value)}
             className="max-w-sm"

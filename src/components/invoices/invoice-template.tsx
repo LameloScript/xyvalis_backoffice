@@ -79,7 +79,7 @@ export const InvoiceTemplate = ({ order }: { order: Order }) => (
         <Text>{order.customerDetails.name}</Text>
         <Text>{order.customerDetails.phone}</Text>
         <Text>{order.customerDetails.email}</Text>
-        <Text>{order.deliveryAddress.street}, {order.deliveryAddress.city}</Text>
+        <Text>{order.RecoAddress.street}, {order.RecoAddress.city}</Text>
       </View>
 
       {/* TABLEAU DES PRODUITS */}

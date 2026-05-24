@@ -14,26 +14,26 @@ import {
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
 
-// Mock data
+// Mock data aligned with Event Reco platform activity
 const initialNotifications = [
   {
     id: 1,
-    title: 'Nouvelle commande',
-    description: 'Vous avez reçu une nouvelle commande de Jean Dupont.',
+    title: 'Nouveau Prestataire Premium',
+    description: 'Lumière & Décors CI vient de s\'inscrire en formule Premium.',
     time: 'Il y a 2 min',
     unread: true,
   },
   {
     id: 2,
-    title: 'Stock faible',
-    description: 'Le produit "Chaussures Nike Air" est presque épuisé.',
+    title: 'Dossier KYC en attente',
+    description: 'Fatou Diallo a téléversé son Registre de Commerce pour validation.',
     time: 'Il y a 1 heure',
     unread: true,
   },
   {
     id: 3,
-    title: 'Nouveau commentaire',
-    description: 'Marie a laissé un avis sur votre produit.',
+    title: 'Devis signé & validé',
+    description: 'Le devis DEV-2605-012 a été signé par Marie-Claire Bédié.',
     time: 'Il y a 3 heures',
     unread: false,
   },

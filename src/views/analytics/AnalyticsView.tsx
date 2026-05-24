@@ -8,39 +8,20 @@ import { Button } from "@/components/ui/button"
 import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { WeeklySalesChart } from "@/components/charts/weekly-sales-chart"
 
-const topLivreurs = [
-  { name: "Diabaté Moussa", commune: "Cocody / Plateau", courses: 142, note: 4.9, avatar: "DM" },
-  { name: "Koffi Serge", commune: "Yopougon / Abobo", courses: 128, note: 4.8, avatar: "KS" },
-  { name: "Touré Ismail", commune: "Marcory / Treichville", courses: 117, note: 4.7, avatar: "TI" },
-  { name: "N'Guessan Paul", commune: "Adjamé / Plateau", courses: 104, note: 4.6, avatar: "NP" },
-  { name: "Coulibaly Lamine", commune: "Abobo / Koumassi", courses: 98, note: 4.5, avatar: "CL" },
-]
+import analyticsMockData from "@/data/mock/analytics.json"
 
-const validationsEnAttente = [
-  { nom: "Kra Ange", type: "Livreur", commune: "Cocody", date: "2026-04-26" },
-  { nom: "Boutique Chez Mariam", type: "Point relais", commune: "Yopougon", date: "2026-04-25" },
-  { nom: "Soro Lacina", type: "Livreur", commune: "Abobo", date: "2026-04-25" },
-  { nom: "Dépôt Express Plateau", type: "Point relais", commune: "Plateau", date: "2026-04-24" },
-  { nom: "Yao Franck", type: "Livreur", commune: "Marcory", date: "2026-04-24" },
-]
+const topPrestataires = analyticsMockData.topPrestataires
 
-const livraisonsParCommune = [
-  { commune: "Cocody", actives: 18, terminees: 24, total: 42 },
-  { commune: "Yopougon", actives: 14, terminees: 19, total: 33 },
-  { commune: "Plateau", actives: 11, terminees: 15, total: 26 },
-  { commune: "Marcory", actives: 8, terminees: 12, total: 20 },
-  { commune: "Abobo", actives: 7, terminees: 10, total: 17 },
-  { commune: "Adjamé", actives: 5, terminees: 8, total: 13 },
-  { commune: "Treichville", actives: 4, terminees: 6, total: 10 },
-  { commune: "Koumassi", actives: 3, terminees: 5, total: 8 },
-]
+const validationsEnAttente = analyticsMockData.validationsEnAttente
+
+const prestationsParCommune = analyticsMockData.prestationsParCommune
 
 export default function AnalyticsView() {
   const metrics = {
-    revenue: "312 500 FCFA",
+    reventue: "312 500 FCFA",
     orders: 87,
     avgOrder: "3 591 FCFA",
-    tauxLivraison: "94.2%",
+    tauxPrestation: "94.2%",
   }
 
   return (
@@ -66,12 +47,12 @@ export default function AnalyticsView() {
             </CardAction>
           </CardHeader>
           <CardFooter className="flex-col items-start gap-1.5 text-xs">
-            <div className="text-white/60">Frais de livraison collectés</div>
+            <div className="text-white/60">Frais de prestation collectés</div>
           </CardFooter>
         </Card>
         <Card className="@container/card bg-primary border-primary shadow-xs">
           <CardHeader>
-            <CardDescription className="text-white/70">Commandes du jour</CardDescription>
+            <CardDescription className="text-white/70">Prestations du jour</CardDescription>
             <CardTitle className="text-2xl font-semibold tabular-nums text-white">{metrics.orders}</CardTitle>
             <CardAction>
               <Badge variant="outline" className="border-none bg-sky-500 text-white">
@@ -80,7 +61,7 @@ export default function AnalyticsView() {
             </CardAction>
           </CardHeader>
           <CardFooter className="flex-col items-start gap-1.5 text-xs">
-            <div className="text-white/60">74 livrées · 8 en cours</div>
+            <div className="text-white/60">74 réalisées · 8 en cours</div>
           </CardFooter>
         </Card>
         <Card className="@container/card bg-primary border-primary shadow-xs">
@@ -92,24 +73,24 @@ export default function AnalyticsView() {
             </CardAction>
           </CardHeader>
           <CardFooter className="flex-col items-start gap-1.5 text-xs">
-            <div className="text-white/60">Par livraison</div>
+            <div className="text-white/60">Par prestation</div>
           </CardFooter>
         </Card>
         <Card className="@container/card bg-primary border-primary shadow-xs">
           <CardHeader>
-            <CardDescription className="text-white/70">Taux de livraison</CardDescription>
-            <CardTitle className="text-2xl font-semibold tabular-nums text-white">{metrics.tauxLivraison}</CardTitle>
+            <CardDescription className="text-white/70">Taux de réponse</CardDescription>
+            <CardTitle className="text-2xl font-semibold tabular-nums text-white">{metrics.tauxPrestation}</CardTitle>
             <CardAction>
               <Badge variant="outline" className="border-none bg-violet-500 text-white">+0.4 pt</Badge>
             </CardAction>
           </CardHeader>
           <CardFooter className="flex-col items-start gap-1.5 text-xs">
-            <div className="text-white/60">Livrées / total</div>
+            <div className="text-white/60">Réalisées / total</div>
           </CardFooter>
         </Card>
         <Card className="@container/card bg-primary border-primary shadow-xs">
           <CardHeader>
-            <CardDescription className="text-white/70">Livreurs actifs</CardDescription>
+            <CardDescription className="text-white/70">Prestataires actifs</CardDescription>
             <CardTitle className="text-2xl font-semibold tabular-nums text-white">143</CardTitle>
             <CardAction>
               <Badge variant="outline" className="border-none bg-emerald-500 text-white">
@@ -118,7 +99,7 @@ export default function AnalyticsView() {
             </CardAction>
           </CardHeader>
           <CardFooter className="flex-col items-start gap-1.5 text-xs">
-            <div className="text-white/60">98 en ligne maintenant</div>
+            <div className="text-white/60">98 actifs en ligne</div>
           </CardFooter>
         </Card>
         <Card className="@container/card bg-primary border-primary shadow-xs">
@@ -130,7 +111,7 @@ export default function AnalyticsView() {
             </CardAction>
           </CardHeader>
           <CardFooter className="flex-col items-start gap-1.5 text-xs">
-            <div className="text-white/60">19 clients · 4 livreurs</div>
+            <div className="text-white/60">19 clients · 4 prestataires</div>
           </CardFooter>
         </Card>
       </div>
@@ -138,7 +119,7 @@ export default function AnalyticsView() {
       {/* Chart */}
       <Card>
         <CardHeader>
-          <CardTitle>Livraisons hebdomadaires</CardTitle>
+          <CardTitle>Prestations hebdomadaires</CardTitle>
           <CardDescription>Tendance sur 7 jours</CardDescription>
         </CardHeader>
         <CardContent>
@@ -146,13 +127,13 @@ export default function AnalyticsView() {
         </CardContent>
       </Card>
 
-      {/* Top livreurs + Validations + Livraisons par commune */}
+      {/* Top prestataires + Validations + Prestations par commune */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-start gap-4">
-        {/* Top livreurs */}
+        {/* Top prestataires */}
         <Card className="gap-3 w-full">
           <CardHeader className="flex justify-between">
             <div className="flex flex-col gap-1">
-              <div className="text-lg font-semibold">Top livreurs</div>
+              <div className="text-lg font-semibold">Top prestataires</div>
               <div className="text-muted-foreground text-sm">Ce mois-ci</div>
             </div>
             <Button variant="ghost" size="icon" className="text-muted-foreground rounded-full">
@@ -160,7 +141,7 @@ export default function AnalyticsView() {
             </Button>
           </CardHeader>
           <CardContent className="flex flex-1 flex-col justify-between gap-3">
-            {topLivreurs.map((l) => (
+            {topPrestataires.map((l) => (
               <div key={l.name} className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
                   <div className="flex size-10 items-center justify-center rounded-full bg-primary/10 text-primary text-xs font-bold">
@@ -172,7 +153,7 @@ export default function AnalyticsView() {
                   </div>
                 </div>
                 <div className="flex flex-col items-end gap-0.5">
-                  <span className="text-sm font-medium">{l.courses} courses</span>
+                  <span className="text-sm font-medium">{l.prestations} prestations</span>
                   <span className="text-muted-foreground text-xs">★ {l.note}</span>
                 </div>
               </div>
@@ -200,7 +181,7 @@ export default function AnalyticsView() {
                   <span className="font-medium text-sm">{v.nom}</span>
                   <Badge
                     variant="outline"
-                    className={v.type === "Livreur"
+                    className={v.type === "Prestataire"
                       ? "text-blue-600 border-blue-200 text-xs"
                       : "text-amber-600 border-amber-200 text-xs"
                     }
@@ -219,17 +200,17 @@ export default function AnalyticsView() {
           </CardContent>
         </Card>
 
-        {/* Livraisons par commune */}
+        {/* Prestations par commune */}
         <Card className="gap-3 w-full">
           <CardHeader className="flex justify-between">
             <div className="flex flex-col gap-1">
-              <div className="text-lg font-semibold">Livraisons par commune</div>
+              <div className="text-lg font-semibold">Prestations par commune</div>
               <div className="text-muted-foreground text-sm">Aujourd&apos;hui</div>
             </div>
           </CardHeader>
           <CardContent className="space-y-3">
-            {livraisonsParCommune.map((c) => {
-              const max = livraisonsParCommune[0].total
+            {prestationsParCommune.map((c) => {
+              const max = prestationsParCommune[0].total
               const pct = (c.total / max) * 100
               return (
                 <div key={c.commune} className="space-y-1">

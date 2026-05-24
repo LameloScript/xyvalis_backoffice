@@ -3,10 +3,10 @@ import Link from 'next/link'
 export default function Footer() {
   return (
     <footer className=" bg-background">
-      <div className="max-w-360 mx-auto px-4 py-6">
+      <div className="max-w-360 mx-auto px-4 lg:px-6 py-6">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="text-sm text-muted-foreground">
-            ©2026 Xyvalis Delivery
+            ©2026 event Reco
           </div>
 
 

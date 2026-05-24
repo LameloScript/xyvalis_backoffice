@@ -1,6 +1,4 @@
-/**
- * Authentication and user data utilities
- */
+import authMock from "./mock/auth.json"
 
 export interface Credentials {
   email: string
@@ -14,13 +12,7 @@ export interface User {
   role: string
 }
 
-const SUPERADMIN = {
-  email: "admin@xyvalis.com",
-  password: "Admin@2026",
-  id: "sa_001",
-  name: "Superadmin",
-  role: "superadmin",
-}
+const SUPERADMIN = authMock.SUPERADMIN
 
 export async function verifyCredentials(
   credentials: Credentials
@@ -48,3 +40,4 @@ export async function verifyCredentials(
 
   return { success: false, error: "Email ou mot de passe incorrect" }
 }
+

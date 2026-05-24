@@ -1,0 +1,136 @@
+{
+  "prestatairesData": [
+    {
+      "id": "DLV-001",
+      "nom": "Kouassi Arnaud",
+      "telephone": "+225 07 11 22 33",
+      "commune": "Yopougon",
+      "vehicule": "Moto",
+      "documents": "complet",
+      "dateDemandeRaw": "2026-04-22",
+      "statut": "en_attente"
+    },
+    {
+      "id": "DLV-002",
+      "nom": "Diomandé Lassana",
+      "telephone": "+225 05 44 55 66",
+      "commune": "Abobo",
+      "vehicule": "Moto",
+      "documents": "incomplet",
+      "dateDemandeRaw": "2026-04-21",
+      "statut": "en_attente"
+    },
+    {
+      "id": "DLV-003",
+      "nom": "Touré Ibrahim",
+      "telephone": "+225 01 77 88 99",
+      "commune": "Cocody",
+      "vehicule": "Voiture",
+      "documents": "complet",
+      "dateDemandeRaw": "2026-04-20",
+      "statut": "en_attente"
+    },
+    {
+      "id": "DLV-004",
+      "nom": "Koné Moussa",
+      "telephone": "+225 07 33 44 55",
+      "commune": "Adjamé",
+      "vehicule": "Moto",
+      "documents": "complet",
+      "dateDemandeRaw": "2026-04-19",
+      "statut": "en_attente"
+    },
+    {
+      "id": "DLV-005",
+      "nom": "Bah Mamadou",
+      "telephone": "+225 05 66 77 88",
+      "commune": "Marcory",
+      "vehicule": "Vélo",
+      "documents": "incomplet",
+      "dateDemandeRaw": "2026-04-18",
+      "statut": "en_attente"
+    },
+    {
+      "id": "DLV-006",
+      "nom": "Fofana Seydou",
+      "telephone": "+225 01 99 00 11",
+      "commune": "Plateau",
+      "vehicule": "Moto",
+      "documents": "complet",
+      "dateDemandeRaw": "2026-04-10",
+      "statut": "approuve"
+    },
+    {
+      "id": "DLV-007",
+      "nom": "Ouédraogo Adama",
+      "telephone": "+225 07 22 33 44",
+      "commune": "Treichville",
+      "vehicule": "Moto",
+      "documents": "incomplet",
+      "dateDemandeRaw": "2026-04-08",
+      "statut": "rejete"
+    }
+  ],
+  "relaisData": [
+    {
+      "id": "DRL-001",
+      "nomBoutique": "Chez Mariama Express",
+      "responsable": "Mariama Bah",
+      "commune": "Yopougon",
+      "quartier": "Selmer",
+      "horaires": "Lun–Sam 08h–20h",
+      "dateDemandeRaw": "2026-04-23",
+      "statut": "en_attente"
+    },
+    {
+      "id": "DRL-002",
+      "nomBoutique": "Superette du Plateau",
+      "responsable": "N'Zi Kouakou",
+      "commune": "Plateau",
+      "quartier": "Avenue Noguès",
+      "horaires": "Lun–Ven 09h–18h",
+      "dateDemandeRaw": "2026-04-22",
+      "statut": "en_attente"
+    },
+    {
+      "id": "DRL-003",
+      "nomBoutique": "Kiosque Cocody Village",
+      "responsable": "Ahou Bléyou",
+      "commune": "Cocody",
+      "quartier": "Riviera 2",
+      "horaires": "Lun–Dim 07h–22h",
+      "dateDemandeRaw": "2026-04-21",
+      "statut": "en_attente"
+    },
+    {
+      "id": "DRL-004",
+      "nomBoutique": "Boutique Treichville Sud",
+      "responsable": "Coulibaly Sekou",
+      "commune": "Treichville",
+      "quartier": "Rue 12",
+      "horaires": "Lun–Sam 08h–19h",
+      "dateDemandeRaw": "2026-04-20",
+      "statut": "en_attente"
+    },
+    {
+      "id": "DRL-005",
+      "nomBoutique": "Dépôt Adjamé Market",
+      "responsable": "Sawadogo Rasmané",
+      "commune": "Adjamé",
+      "quartier": "220 Logements",
+      "horaires": "Lun–Sam 07h–21h",
+      "dateDemandeRaw": "2026-04-05",
+      "statut": "approuve"
+    },
+    {
+      "id": "DRL-006",
+      "nomBoutique": "Galerie Marcory",
+      "responsable": "Attié Marie-Claire",
+      "commune": "Marcory",
+      "quartier": "Zone 4",
+      "horaires": "Mar–Dim 10h–20h",
+      "dateDemandeRaw": "2026-04-03",
+      "statut": "rejete"
+    }
+  ]
+}

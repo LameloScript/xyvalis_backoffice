@@ -199,9 +199,9 @@ export function OrderManagementDialog({
                   <div className="col-span-2">
                     <label className="text-sm font-medium text-muted-foreground">Adresse de livraison</label>
                     <p className="text-sm mt-1">
-                      {order.deliveryAddress.street}<br />
-                      {order.deliveryAddress.region}, {order.deliveryAddress.city}
-                      {order.deliveryAddress.postalCode && <><br />{order.deliveryAddress.postalCode}</>}
+                      {order.RecoAddress.street}<br />
+                      {order.RecoAddress.region}, {order.RecoAddress.city}
+                      {order.RecoAddress.postalCode && <><br />{order.RecoAddress.postalCode}</>}
                     </p>
                   </div>
                 </div>
@@ -290,24 +290,24 @@ export function OrderManagementDialog({
               <CardContent className="space-y-4">
                 <div className="bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-900 rounded-lg p-4">
                   <p className="text-sm text-blue-800 dark:text-blue-200">
-                    Le colis est en cours de livraison. Assurez-vous que le livreur a toutes les informations nécessaires.
+                    Le colis est en cours de livraison. Assurez-vous que le prestataire a toutes les informations nécessaires.
                   </p>
                 </div>
 
-                {order.deliveryPerson && (
+                {order.RecoPerson && (
                   <div className="border rounded-lg p-4">
                     <h4 className="font-semibold text-sm mb-3 flex items-center gap-2">
                       <User className="size-4" />
-                      Livreur assigné
+                      Prestataire assigné
                     </h4>
                     <div className="space-y-2 text-sm">
                       <div className="flex items-center justify-between">
                         <span className="text-muted-foreground">Nom</span>
-                        <span className="font-medium">{order.deliveryPerson.name}</span>
+                        <span className="font-medium">{order.RecoPerson.name}</span>
                       </div>
                       <div className="flex items-center justify-between">
                         <span className="text-muted-foreground">Téléphone</span>
-                        <span className="font-medium">{order.deliveryPerson.phone}</span>
+                        <span className="font-medium">{order.RecoPerson.phone}</span>
                       </div>
                     </div>
                   </div>
@@ -316,8 +316,8 @@ export function OrderManagementDialog({
                 <div className="border rounded-lg p-4">
                   <h4 className="font-semibold text-sm mb-2">Adresse de livraison</h4>
                   <p className="text-sm text-muted-foreground">
-                    {order.deliveryAddress.street}<br />
-                    {order.deliveryAddress.region}, {order.deliveryAddress.city}
+                    {order.RecoAddress.street}<br />
+                    {order.RecoAddress.region}, {order.RecoAddress.city}
                   </p>
                 </div>
               </CardContent>

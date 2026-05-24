@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Central — Event Reco Africa</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Baskerville:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#07080F; --bg2:#0C0E18; --bg3:#111422; --card:#13162A; --card2:#191D31; --card3:#1E2238;
+  --gold:#D4A827; --gold2:#F0C040; --golddim:rgba(212,168,39,0.10); --goldbd:rgba(212,168,39,0.22);
+  --white:#F0EEF8; --text:#C8C6D8; --muted:#5C6080; --border:rgba(255,255,255,0.055); --border2:rgba(255,255,255,0.10);
+  --green:#34D399; --greendim:rgba(52,211,153,0.10); --red:#F87171; --reddim:rgba(248,113,113,0.10);
+  --blue:#60A5FA; --bluedim:rgba(96,165,250,0.10); --purple:#C084FC; --purpdim:rgba(192,132,252,0.10);
+  --orange:#FB923C; --orgdim:rgba(251,146,60,0.10); --cyan:#22D3EE; --cyandim:rgba(34,211,238,0.10);
+  --SW:248px; --TH:54px; --r:12px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;font-size:13px;line-height:1.5;}
+::-webkit-scrollbar{width:4px;height:4px;}
+::-webkit-scrollbar-track{background:var(--bg2);}
+::-webkit-scrollbar-thumb{background:var(--card3);border-radius:4px;}
+
+/* ══ SIDEBAR ══ */
+.sb{width:var(--SW);background:var(--bg2);border-right:1px solid var(--border);position:fixed;top:0;left:0;bottom:0;display:flex;flex-direction:column;z-index:300;overflow:hidden;}
+.sb::after{content:'';position:absolute;bottom:0;left:0;right:0;height:28%;background:radial-gradient(ellipse at 50% 100%,rgba(212,168,39,0.07) 0%,transparent 70%);pointer-events:none;}
+.sb-logo{padding:18px 20px 14px;border-bottom:1px solid var(--border);flex-shrink:0;}
+.sb-logotext{font-family:'Libre Baskerville',serif;font-size:17px;font-weight:700;color:var(--white);letter-spacing:-0.3px;}
+.sb-logotext span{color:var(--gold);}
+.sb-admintag{margin-top:6px;display:inline-flex;align-items:center;gap:5px;background:var(--reddim);border:1px solid rgba(248,113,113,0.25);color:var(--red);font-size:9px;font-weight:700;padding:2px 9px;border-radius:100px;letter-spacing:1.5px;text-transform:uppercase;}
+.sb-admintag::before{content:'●';font-size:6px;animation:blink 1.5s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.3;}}
+.sb-admininfo{padding:12px 18px;border-bottom:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;gap:10px;}
+.sb-av{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--gold),var(--gold2));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--bg);flex-shrink:0;}
+.sb-aname{font-size:13px;font-weight:600;color:var(--white);}
+.sb-arole{font-size:10px;color:var(--muted);margin-top:1px;}
+.sb-nav{flex:1;overflow-y:auto;padding:8px 10px;}
+.sb-grp{font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:2px;padding:12px 10px 5px;}
+.ni{display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;cursor:pointer;transition:all 0.15s;margin-bottom:1px;position:relative;}
+.ni:hover{background:rgba(255,255,255,0.04);}
+.ni.on{background:var(--golddim);}
+.ni.on::before{content:'';position:absolute;left:0;top:22%;bottom:22%;width:2.5px;border-radius:0 2px 2px 0;background:var(--gold);}
+.ni-ico{font-size:13px;width:18px;text-align:center;flex-shrink:0;}
+.ni-lbl{font-size:12px;font-weight:500;color:var(--muted);}
+.ni.on .ni-lbl{color:var(--white);font-weight:600;}
+.ni-tag{margin-left:auto;font-size:9px;font-weight:700;padding:2px 6px;border-radius:100px;}
+.ni-tag.red{background:var(--reddim);color:var(--red);}
+.ni-tag.gold{background:var(--golddim);color:var(--gold2);}
+.ni-tag.blue{background:var(--bluedim);color:var(--blue);}
+.sb-foot{padding:12px 18px;border-top:1px solid var(--border);flex-shrink:0;}
+.sb-foot-txt{font-size:10px;color:var(--muted);line-height:1.6;}
+.sb-foot-txt strong{color:var(--gold);}
+
+/* ══ TOPBAR ══ */
+.topbar{position:fixed;top:0;left:var(--SW);right:0;height:var(--TH);background:rgba(7,8,15,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);z-index:200;display:flex;align-items:center;padding:0 26px;gap:14px;}
+.tb-title{font-size:14px;font-weight:700;color:var(--white);flex:1;}
+.tb-search{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border2);border-radius:8px;padding:6px 12px;width:230px;}
+.tb-search input{background:none;border:none;outline:none;font-family:'IBM Plex Sans',sans-serif;font-size:12px;color:var(--text);width:100%;}
+.tb-search input::placeholder{color:var(--muted);}
+.tb-btn{padding:7px 14px;border-radius:7px;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;font-size:12px;font-weight:600;border:none;transition:all 0.15s;display:flex;align-items:center;gap:5px;}
+.tb-btn.gold{background:var(--gold);color:var(--bg);}
+.tb-btn.gold:hover{background:var(--gold2);}
+.tb-btn.ghost{background:var(--card);border:1px solid var(--border2);color:var(--text);}
+.tb-btn.ghost:hover{border-color:var(--goldbd);}
+.tb-notif{width:32px;height:32px;border-radius:8px;background:var(--card);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;position:relative;}
+.tb-notif::after{content:'5';position:absolute;top:-3px;right:-3px;background:var(--red);color:white;font-size:8px;font-weight:800;width:14px;height:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+
+/* ══ MAIN ══ */
+.main{margin-left:var(--SW);margin-top:var(--TH);flex:1;min-height:calc(100vh - var(--TH));padding:26px;}
+
+/* ══ VIEWS ══ */
+.view{display:none;}
+.view.on{display:block;animation:fu .25s ease both;}
+@keyframes fu{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* ══ LAYOUT GRID ══ */
+.row{display:grid;gap:16px;margin-bottom:16px;}
+.r4{grid-template-columns:repeat(4,1fr);}
+.r3{grid-template-columns:repeat(3,1fr);}
+.r2{grid-template-columns:1fr 1fr;}
+.r21{grid-template-columns:2fr 1fr;}
+.r12{grid-template-columns:1fr 2fr;}
+.r311{grid-template-columns:3fr 1fr 1fr;}
+
+/* ══ KPI ══ */
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;position:relative;overflow:hidden;transition:border-color .2s,transform .2s;}
+.kpi:hover{border-color:var(--goldbd);transform:translateY(-2px);}
+.kpi-glow{position:absolute;top:-30px;right:-30px;width:90px;height:90px;border-radius:50%;opacity:.07;filter:blur(24px);}
+.kpi-ico{font-size:18px;margin-bottom:10px;}
+.kpi-val{font-family:'IBM Plex Mono',monospace;font-size:28px;font-weight:600;color:var(--white);line-height:1;margin-bottom:4px;}
+.kpi-lbl{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;}
+.kpi-delta{position:absolute;top:14px;right:14px;font-size:10px;font-weight:700;padding:3px 7px;border-radius:100px;}
+.du{background:var(--greendim);color:var(--green);}
+.dd{background:var(--reddim);color:var(--red);}
+.kpi-sub{font-size:11px;color:var(--muted);margin-top:5px;}
+
+/* ══ CARD ══ */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:16px;}
+.card:last-child{margin-bottom:0;}
+.ch{padding:13px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.ct{font-size:13px;font-weight:700;color:var(--white);}
+.cs{font-size:11px;color:var(--muted);}
+.ca{font-size:11px;font-weight:700;color:var(--gold);cursor:pointer;padding:4px 10px;background:var(--golddim);border:1px solid var(--goldbd);border-radius:5px;transition:all .15s;white-space:nowrap;border:none;font-family:'IBM Plex Sans',sans-serif;}
+.ca:hover{background:var(--gold);color:var(--bg);}
+.cb{padding:16px 18px;}
+
+/* ══ TABLE ══ */
+.tbl-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;}
+thead th{text-align:left;padding:9px 12px;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid var(--border);white-space:nowrap;background:var(--card2);}
+tbody tr{border-bottom:1px solid var(--border);transition:background .1s;cursor:pointer;}
+tbody tr:hover{background:rgba(255,255,255,0.025);}
+tbody tr:last-child{border-bottom:none;}
+td{padding:11px 12px;font-size:12.5px;color:var(--text);vertical-align:middle;}
+td.mono{font-family:'IBM Plex Mono',monospace;font-size:12px;}
+.tpager{padding:10px 18px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+.tpager-info{font-size:11px;color:var(--muted);}
+
+/* ══ BADGE ══ */
+.badge{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:700;padding:3px 8px;border-radius:100px;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap;}
+.b-g{background:var(--greendim);color:var(--green);}
+.b-r{background:var(--reddim);color:var(--red);}
+.b-gold{background:var(--golddim);color:var(--gold2);}
+.b-b{background:var(--bluedim);color:var(--blue);}
+.b-p{background:var(--purpdim);color:var(--purple);}
+.b-o{background:var(--orgdim);color:var(--orange);}
+.b-gray{background:rgba(255,255,255,0.05);color:var(--muted);}
+.b-c{background:var(--cyandim);color:var(--cyan);}
+
+/* ══ ACTION BUTTONS ══ */
+.act{padding:4px 10px;border-radius:5px;font-size:11px;font-weight:700;cursor:pointer;border:none;font-family:'IBM Plex Sans',sans-serif;transition:all .15s;white-space:nowrap;}
+.act.g{background:var(--greendim);color:var(--green);}
+.act.g:hover{background:var(--green);color:var(--bg);}
+.act.r{background:var(--reddim);color:var(--red);}
+.act.r:hover{background:var(--red);color:white;}
+.act.b{background:var(--bluedim);color:var(--blue);}
+.act.b:hover{background:var(--blue);color:var(--bg);}
+.act.o{background:var(--golddim);color:var(--gold2);}
+.act.o:hover{background:var(--gold);color:var(--bg);}
+.act.p{background:var(--purpdim);color:var(--purple);}
+.act.p:hover{background:var(--purple);color:white;}
+.ar{display:flex;gap:4px;flex-wrap:nowrap;}
+
+/* ══ FILTER BAR ══ */
+.filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:11px 18px;border-bottom:1px solid var(--border);background:var(--bg3);}
+.fi{padding:6px 11px;border-radius:6px;background:var(--card3);border:1px solid var(--border2);font-family:'IBM Plex Sans',sans-serif;font-size:12px;color:var(--text);outline:none;cursor:pointer;transition:border-color .15s;appearance:none;}
+.fi:focus{border-color:var(--goldbd);}
+.fi-chip{padding:5px 12px;border-radius:100px;background:var(--card3);border:1px solid var(--border2);font-size:11px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s;}
+.fi-chip:hover,.fi-chip.on{background:var(--golddim);border-color:var(--goldbd);color:var(--gold2);}
+.fi-s{display:flex;align-items:center;gap:6px;background:var(--card3);border:1px solid var(--border2);border-radius:6px;padding:5px 10px;}
+.fi-s input{background:none;border:none;outline:none;font-family:'IBM Plex Sans',sans-serif;font-size:12px;color:var(--text);width:160px;}
+.fi-s input::placeholder{color:var(--muted);}
+
+/* ══ ISTAT ══ */
+.istat{display:flex;}
+.istat-item{flex:1;padding:14px 16px;text-align:center;border-right:1px solid var(--border);}
+.istat-item:last-child{border-right:none;}
+.istat-val{font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:600;color:var(--white);}
+.istat-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px;}
+
+/* ══ MODAL ══ */
+.modal-bg{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.75);backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:20px;}
+.modal-bg.on{display:flex;}
+.modal{background:var(--card);border:1px solid var(--border2);border-radius:16px;width:100%;max-width:620px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,.6);position:relative;}
+.mh{padding:16px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--card);z-index:1;}
+.mh-t{font-size:15px;font-weight:700;color:var(--white);}
+.mclose{background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;padding:2px 6px;transition:color .15s;line-height:1;}
+.mclose:hover{color:var(--white);}
+.mb{padding:22px;}
+.mfooter{padding:16px 22px;border-top:1px solid var(--border);display:flex;gap:10px;}
+
+/* ══ FORM ══ */
+.fg{display:grid;gap:13px;margin-bottom:14px;}
+.fg.c2{grid-template-columns:1fr 1fr;}
+.fg.c3{grid-template-columns:1fr 1fr 1fr;}
+.ff{display:flex;flex-direction:column;gap:5px;}
+.fl{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;}
+.fl .req{color:var(--gold);}
+.fi2,.fsel,.fta{background:var(--card2);border:1px solid var(--border2);border-radius:8px;padding:9px 12px;font-family:'IBM Plex Sans',sans-serif;font-size:13px;color:var(--text);outline:none;transition:border-color .15s;appearance:none;width:100%;}
+.fi2:focus,.fsel:focus,.fta:focus{border-color:var(--goldbd);}
+.fi2::placeholder{color:var(--muted);}
+.fta{resize:vertical;height:80px;}
+.fhint{font-size:10px;color:var(--muted);margin-top:3px;}
+.fsep{border:none;border-top:1px solid var(--border);margin:18px 0;}
+.fsec-title{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;}
+
+/* toggle */
+.tog{width:38px;height:20px;border-radius:100px;background:var(--card3);border:1px solid var(--border2);position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;}
+.tog.on{background:var(--gold);}
+.tog::after{content:'';position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:white;transition:left .2s;}
+.tog.on::after{left:20px;}
+.togrow{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.toglbl{font-size:12px;color:var(--text);}
+
+/* ══ MINI BARS ══ */
+.minibars{display:flex;align-items:flex-end;gap:6px;height:80px;}
+.mbc{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;}
+.mbb{width:100%;border-radius:3px 3px 0 0;transition:opacity .2s;cursor:pointer;}
+.mbb:hover{opacity:.7;}
+.mbl{font-size:9px;color:var(--muted);}
+.mbv{font-size:9px;color:var(--gold2);font-weight:600;}
+
+/* ══ DONUT ══ */
+.donut-wrap{display:flex;align-items:center;gap:18px;}
+.donut-leg{display:flex;flex-direction:column;gap:8px;flex:1;}
+.dl-item{display:flex;align-items:center;gap:8px;}
+.dl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.dl-name{font-size:12px;color:var(--text);flex:1;}
+.dl-val{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:var(--white);}
+
+/* ══ TIMELINE ══ */
+.tl-item{display:flex;gap:12px;margin-bottom:13px;}
+.tl-l{display:flex;flex-direction:column;align-items:center;}
+.tl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.tl-line{width:1px;background:var(--border);flex:1;margin:4px 0;min-height:14px;}
+.tl-txt{font-size:12.5px;color:var(--text);line-height:1.5;}
+.tl-t{font-size:10px;color:var(--muted);margin-top:3px;}
+
+/* ══ ALERT ══ */
+.alert-it{display:flex;gap:12px;padding:12px;border-radius:9px;border:1px solid var(--border);background:var(--card2);margin-bottom:8px;cursor:pointer;transition:border-color .15s;}
+.alert-it:hover{border-color:var(--goldbd);}
+.alert-it.new{border-color:rgba(212,168,39,.25);}
+.alert-ico{font-size:18px;flex-shrink:0;margin-top:1px;}
+.alert-body{flex:1;}
+.alert-title{font-size:13px;font-weight:700;color:var(--white);}
+.alert-desc{font-size:12px;color:var(--muted);margin-top:2px;line-height:1.5;}
+.alert-time{font-size:10px;color:var(--muted);margin-top:5px;}
+
+/* ══ PBAR ══ */
+.pbar-bg{width:100%;height:5px;background:var(--card3);border-radius:100px;}
+.pbar{height:100%;border-radius:100px;}
+
+/* ══ UROW ══ */
+.urow{display:flex;align-items:center;gap:10px;}
+.uav{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;}
+.uname{font-size:13px;font-weight:600;color:var(--white);}
+.uemail{font-size:11px;color:var(--muted);}
+
+/* ══ VALIDATION CARD ══ */
+.val-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);margin-bottom:14px;overflow:hidden;}
+.val-head{padding:12px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.val-body{padding:18px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;}
+.val-section-t{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;}
+.val-row{font-size:12.5px;line-height:2;color:var(--text);}
+.val-row span{color:var(--muted);}
+.doc-item{display:flex;align-items:center;gap:7px;font-size:12px;margin-bottom:5px;}
+
+/* ══ SYSTEME STATUS ══ */
+.sys-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--card2);border-radius:8px;margin-bottom:8px;}
+
+/* ══ TOAST ══ */
+.toast{position:fixed;bottom:24px;right:24px;z-index:9999;background:var(--card2);border:1px solid var(--goldbd);border-radius:10px;padding:13px 18px;font-size:13px;color:var(--white);transform:translateX(130%);transition:transform .3s;max-width:340px;border-left:3px solid var(--gold);box-shadow:0 8px 32px rgba(0,0,0,.5);}
+.toast.show{transform:translateX(0);}
+
+/* ══ RESP ══ */
+@media(max-width:960px){
+  .sb{display:none;} .main,.topbar{margin-left:0;} .topbar{left:0;}
+  .r4,.r3{grid-template-columns:1fr 1fr;} .r21,.r12,.r311{grid-template-columns:1fr;}
+  .val-body{grid-template-columns:1fr;}
+}
+@media(max-width:600px){
+  .r4,.r3,.r2{grid-template-columns:1fr;} .fg.c2,.fg.c3{grid-template-columns:1fr;} .main{padding:14px;}
+}
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<!-- ════ SIDEBAR ════ -->
+<aside class="sb">
+  <div class="sb-logo">
+    <div class="sb-logotext">Event<span>Reco</span> Africa</div>
+    <div class="sb-admintag">Admin Central</div>
+  </div>
+  <div class="sb-admininfo">
+    <div class="sb-av">SR</div>
+    <div>
+      <div class="sb-aname">Super Admin</div>
+      <div class="sb-arole">Accès complet · Niveau 1</div>
+    </div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-grp">Supervision</div>
+    <div class="ni on" onclick="goView(this,'dashboard')"><div class="ni-ico">⬡</div><div class="ni-lbl">Vue d'ensemble</div></div>
+    <div class="ni" onclick="goView(this,'alertes')"><div class="ni-ico">🔔</div><div class="ni-lbl">Alertes & Logs</div><span class="ni-tag red">12</span></div>
+    <div class="ni" onclick="goView(this,'activite')"><div class="ni-ico">⚡</div><div class="ni-lbl">Activité temps réel</div></div>
+
+    <div class="sb-grp">Utilisateurs</div>
+    <div class="ni" onclick="goView(this,'prestataires')"><div class="ni-ico">🏢</div><div class="ni-lbl">Prestataires</div><span class="ni-tag gold">14</span></div>
+    <div class="ni" onclick="goView(this,'visiteurs')"><div class="ni-ico">👤</div><div class="ni-lbl">Visiteurs / Organisateurs</div></div>
+    <div class="ni" onclick="goView(this,'validations')"><div class="ni-ico">✅</div><div class="ni-lbl">Validations en attente</div><span class="ni-tag red">9</span></div>
+
+    <div class="sb-grp">Contenu</div>
+    <div class="ni" onclick="goView(this,'fiches')"><div class="ni-ico">🪪</div><div class="ni-lbl">Fiches & Profils</div></div>
+    <div class="ni" onclick="goView(this,'avis')"><div class="ni-ico">💗</div><div class="ni-lbl">Avis & Modération</div><span class="ni-tag red">7</span></div>
+    <div class="ni" onclick="goView(this,'blog')"><div class="ni-ico">📝</div><div class="ni-lbl">Blog & Studio Live</div></div>
+    <div class="ni" onclick="goView(this,'categories')"><div class="ni-ico">📦</div><div class="ni-lbl">Catégories & Tags</div></div>
+
+    <div class="sb-grp">Commerce</div>
+    <div class="ni" onclick="goView(this,'devis')"><div class="ni-ico">⚡</div><div class="ni-lbl">Devis Express</div><span class="ni-tag blue">28</span></div>
+    <div class="ni" onclick="goView(this,'abonnements')"><div class="ni-ico">💎</div><div class="ni-lbl">Abonnements</div></div>
+    <div class="ni" onclick="goView(this,'commissions')"><div class="ni-ico">💰</div><div class="ni-lbl">Commissions & Revenus</div></div>
+    <div class="ni" onclick="goView(this,'appels')"><div class="ni-ico">📋</div><div class="ni-lbl">Appels d'offres</div></div>
+
+    <div class="sb-grp">Configuration</div>
+    <div class="ni" onclick="goView(this,'roles')"><div class="ni-ico">🛡️</div><div class="ni-lbl">Rôles & Permissions</div></div>
+    <div class="ni" onclick="goView(this,'tarifs')"><div class="ni-ico">🏷️</div><div class="ni-lbl">Grille tarifaire</div></div>
+    <div class="ni" onclick="goView(this,'notifcfg')"><div class="ni-ico">📡</div><div class="ni-lbl">Notifications & Emails</div></div>
+    <div class="ni" onclick="goView(this,'systeme')"><div class="ni-ico">⚙️</div><div class="ni-lbl">Paramètres système</div></div>
+  </nav>
+  <div class="sb-foot">
+    <div class="sb-foot-txt">Synchro : <strong>il y a 2 min</strong><br>Serveur : <strong style="color:var(--green)">● Opérationnel</strong></div>
+  </div>
+</aside>
+
+<!-- ════ TOPBAR ════ -->
+<header class="topbar">
+  <div class="tb-title" id="tb-title">Vue d'ensemble</div>
+  <div class="tb-search"><span style="color:var(--muted)">🔍</span><input type="text" placeholder="Rechercher prestataire, visiteur, devis…"></div>
+  <div style="display:flex;gap:8px;align-items:center;">
+    <button class="tb-btn ghost" onclick="openM('export')">↓ Exporter</button>
+    <button class="tb-btn gold" onclick="openM('addpresta')">+ Ajouter</button>
+    <div class="tb-notif" onclick="goView(null,'alertes')">🔔</div>
+  </div>
+</header>
+
+<!-- ════ MAIN ════ -->
+<main class="main">
+
+<!-- ══ DASHBOARD ══ -->
+<div class="view on" id="view-dashboard">
+  <div class="row r4">
+    <div class="kpi"><div class="kpi-glow" style="background:var(--gold)"></div><div class="kpi-ico">🏢</div><div class="kpi-val">847</div><div class="kpi-lbl">Prestataires totaux</div><span class="kpi-delta du">+14 ce mois</span><div class="kpi-sub">721 actifs · 14 en vérif. · 8 suspendus</div></div>
+    <div class="kpi"><div class="kpi-glow" style="background:var(--blue)"></div><div class="kpi-ico">👤</div><div class="kpi-val">2 341</div><div class="kpi-lbl">Visiteurs inscrits</div><span class="kpi-delta du">+87 cette semaine</span><div class="kpi-sub">73 Premium · 2 268 gratuits</div></div>
+    <div class="kpi"><div class="kpi-glow" style="background:var(--green)"></div><div class="kpi-ico">⚡</div><div class="kpi-val">186</div><div class="kpi-lbl">Devis actifs</div><span class="kpi-delta du">+28 auj.</span><div class="kpi-sub">54 sans réponse · 43 convertis</div></div>
+    <div class="kpi"><div class="kpi-glow" style="background:var(--purple)"></div><div class="kpi-ico">💰</div><div class="kpi-val">4,7M</div><div class="kpi-lbl">CA généré (FCFA)</div><span class="kpi-delta du">+18%</span><div class="kpi-sub">94K commissions · 4,2M MRR</div></div>
+  </div>
+
+  <div class="row r4">
+    <div class="kpi"><div class="kpi-glow" style="background:var(--orange)"></div><div class="kpi-ico">💎</div><div class="kpi-val">312</div><div class="kpi-lbl">Abonnements actifs</div><span class="kpi-delta du">+12</span><div class="kpi-sub">150 Prem. · 89 Prem+· 73 Visit.</div></div>
+    <div class="kpi"><div class="kpi-glow" style="background:var(--cyan)"></div><div class="kpi-ico">👁️</div><div class="kpi-val">18 400</div><div class="kpi-lbl">Visites/mois</div><span class="kpi-delta du">+23%</span><div class="kpi-sub">11% taux conversion Freemium→Payant</div></div>
+    <div class="kpi"><div class="kpi-glow" style="background:var(--red)"></div><div class="kpi-ico">🔴</div><div class="kpi-val">9</div><div class="kpi-lbl">Validations en attente</div><span class="kpi-delta dd">À traiter</span><div class="kpi-sub">14 paiements échoués · 7 avis signalés</div></div>
+    <div class="kpi"><div class="kpi-glow" style="background:var(--green)"></div><div class="kpi-ico">💗</div><div class="kpi-val">4.8</div><div class="kpi-lbl">Note plateforme</div><span class="kpi-delta du">+0.1</span><div class="kpi-sub">2 847 avis · 104 Prestataires Vérifiés</div></div>
+  </div>
+
+  <div class="row r21">
+    <div>
+      <div class="card">
+        <div class="ch"><span class="ct">📈 CA mensuel via Event Reco (FCFA)</span>
+          <div style="display:flex;gap:6px;">
+            <span class="fi-chip on" onclick="filterChip(this)">6 mois</span>
+            <span class="fi-chip" onclick="filterChip(this)">12 mois</span>
+            <button class="ca" onclick="openM('export')">↓ Exporter</button>
+          </div>
+        </div>
+        <div class="cb">
+          <div class="minibars" style="height:100px;margin-bottom:8px;">
+            <div class="mbc"><div class="mbv">2,8M</div><div class="mbb" style="height:38%;background:rgba(212,168,39,.28)"></div><div class="mbl">Août</div></div>
+            <div class="mbc"><div class="mbv">3,1M</div><div class="mbb" style="height:50%;background:rgba(212,168,39,.36)"></div><div class="mbl">Sep</div></div>
+            <div class="mbc"><div class="mbv">2,9M</div><div class="mbb" style="height:42%;background:rgba(212,168,39,.32)"></div><div class="mbl">Oct</div></div>
+            <div class="mbc"><div class="mbv">3,6M</div><div class="mbb" style="height:62%;background:rgba(212,168,39,.46)"></div><div class="mbl">Nov</div></div>
+            <div class="mbc"><div class="mbv">4,0M</div><div class="mbb" style="height:78%;background:rgba(212,168,39,.56)"></div><div class="mbl">Déc</div></div>
+            <div class="mbc"><div class="mbv">4,7M</div><div class="mbb" style="height:100%;background:var(--gold)"></div><div class="mbl" style="color:var(--gold)">Jan●</div></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding-top:10px;border-top:1px solid var(--border);">
+            <span style="font-size:11px;color:var(--muted)">Total 6 mois : <strong style="color:var(--white)">21,1M FCFA</strong></span>
+            <span style="font-size:11px;color:var(--green)">↑ +18% vs période N-1</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="ch"><span class="ct">🏢 Dernières inscriptions prestataires</span><button class="ca" onclick="goView(null,'prestataires')">Gérer tout →</button></div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Entreprise</th><th>Catégorie</th><th>Plan</th><th>Statut</th><th>Date</th><th>Actions</th></tr></thead>
+          <tbody>
+            <tr onclick="openM('viewpresta')"><td><div class="urow"><div class="uav" style="background:var(--golddim);color:var(--gold2)">AS</div><div><div class="uname">Alpha Sound Pro</div><div class="uemail">Cocody · alpha@sound.ci</div></div></div></td><td><span class="badge b-b">DJ & Son.</span></td><td><span class="badge b-gold">Premium+</span></td><td><span class="badge b-g">✓ Actif</span></td><td class="mono">12/01/25</td><td onclick="event.stopPropagation()"><div class="ar"><button class="act b" onclick="openM('viewpresta')">Voir</button><button class="act o" onclick="openM('editpresta')">Éditer</button><button class="act r" onclick="toast('⚠️ Compte suspendu')">Susp.</button></div></td></tr>
+            <tr><td><div class="urow"><div class="uav" style="background:var(--bluedim);color:var(--blue)">LD</div><div><div class="uname">Lumière & Décors CI</div><div class="uemail">Plateau · RC manquant</div></div></div></td><td><span class="badge b-p">Décoration</span></td><td><span class="badge b-gold">Premium</span></td><td><span class="badge b-o">⏳ En vérif.</span></td><td class="mono">10/01/25</td><td><div class="ar"><button class="act g" onclick="toast('✅ Prestataire validé !')">Valider</button><button class="act o" onclick="openM('editpresta')">Éditer</button><button class="act r" onclick="toast('❌ Refus envoyé')">Refuser</button></div></td></tr>
+            <tr><td><div class="urow"><div class="uav" style="background:var(--greendim);color:var(--green)">DA</div><div><div class="uname">Délices d'Abidjan</div><div class="uemail">Marcory · jean@delices.ci</div></div></div></td><td><span class="badge b-g">Traiteur</span></td><td><span class="badge b-gray">Freemium</span></td><td><span class="badge b-g">✓ Actif</span></td><td class="mono">08/01/25</td><td><div class="ar"><button class="act b" onclick="openM('viewpresta')">Voir</button><button class="act o" onclick="openM('upgrade')">Upgrade</button><button class="act r" onclick="toast('⚠️ Suspension')">Susp.</button></div></td></tr>
+            <tr><td><div class="urow"><div class="uav" style="background:var(--reddim);color:var(--red)">SP</div><div><div class="uname">Studio Pixel CI</div><div class="uemail">Riviera · david@pixel.ci</div></div></div></td><td><span class="badge b-c">Photo</span></td><td><span class="badge b-gold">Premium+</span></td><td><span class="badge b-r">✗ Suspendu</span></td><td class="mono">05/01/25</td><td><div class="ar"><button class="act g" onclick="toast('✅ Réactivé !')">Réactiver</button><button class="act b" onclick="openM('viewpresta')">Détails</button></div></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="card">
+        <div class="ch"><span class="ct">💎 Abonnements</span><span class="cs">312 actifs</span></div>
+        <div class="cb">
+          <div class="donut-wrap">
+            <svg width="80" height="80" viewBox="0 0 80 80">
+              <circle cx="40" cy="40" r="28" fill="none" stroke="var(--card3)" stroke-width="12"/>
+              <circle cx="40" cy="40" r="28" fill="none" stroke="var(--gold)" stroke-width="12" stroke-dasharray="88 88" stroke-dashoffset="0" transform="rotate(-90 40 40)"/>
+              <circle cx="40" cy="40" r="28" fill="none" stroke="var(--blue)" stroke-width="12" stroke-dasharray="52 124" stroke-dashoffset="-88" transform="rotate(-90 40 40)"/>
+              <circle cx="40" cy="40" r="28" fill="none" stroke="var(--purple)" stroke-width="12" stroke-dasharray="36 140" stroke-dashoffset="-140" transform="rotate(-90 40 40)"/>
+            </svg>
+            <div class="donut-leg">
+              <div class="dl-item"><div class="dl-dot" style="background:var(--gold)"></div><div class="dl-name">Premium</div><div class="dl-val">150</div></div>
+              <div class="dl-item"><div class="dl-dot" style="background:var(--blue)"></div><div class="dl-name">Premium+</div><div class="dl-val">89</div></div>
+              <div class="dl-item"><div class="dl-dot" style="background:var(--purple)"></div><div class="dl-name">Visiteur</div><div class="dl-val">73</div></div>
+            </div>
+          </div>
+          <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);">
+            <div style="display:flex;justify-content:space-between;margin-bottom:5px;"><span style="font-size:11px;color:var(--muted)">Conversion Freemium→Payant</span><span style="font-size:11px;font-weight:700;color:var(--gold2)">11.4%</span></div>
+            <div class="pbar-bg"><div class="pbar" style="width:11.4%;background:var(--gold)"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="ch"><span class="ct">🚨 Alertes urgentes</span><button class="ca" onclick="goView(null,'alertes')">Tout voir</button></div>
+        <div class="cb" style="padding:12px">
+          <div class="alert-it new"><div class="alert-ico">⚠️</div><div class="alert-body"><div class="alert-title">Profil signalé x3</div><div class="alert-desc">FastDeco CI — infos suspectes</div><div class="alert-time">Il y a 18 min</div></div><button class="act r" onclick="toast('🔍 Dossier ouvert')">Examiner</button></div>
+          <div class="alert-it new"><div class="alert-ico">💳</div><div class="alert-body"><div class="alert-title">Paiement échoué</div><div class="alert-desc">Premium+ · Alpha Sound Pro</div><div class="alert-time">Il y a 1h</div></div><button class="act o" onclick="toast('📧 Relance envoyée')">Relancer</button></div>
+          <div class="alert-it"><div class="alert-ico">🔍</div><div class="alert-body"><div class="alert-title">9 fiches à valider</div><div class="alert-desc">Inscriptions 48h</div><div class="alert-time">Mis à jour il y a 5 min</div></div><button class="act g" onclick="goView(null,'validations')">Traiter</button></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="ch"><span class="ct">⚡ Activité récente</span></div>
+        <div class="cb">
+          <div class="tl-item"><div class="tl-l"><div class="tl-dot" style="background:var(--green)"></div><div class="tl-line"></div></div><div><div class="tl-txt"><strong style="color:var(--white)">Nouveau Premium+</strong> — Alpha Sound</div><div class="tl-t">12 min · +104 100 F</div></div></div>
+          <div class="tl-item"><div class="tl-l"><div class="tl-dot" style="background:var(--gold)"></div><div class="tl-line"></div></div><div><div class="tl-txt"><strong style="color:var(--white)">Devis validé</strong> — Mariage Koffi & Touré</div><div class="tl-t">28 min · Commission 3 700 F</div></div></div>
+          <div class="tl-item"><div class="tl-l"><div class="tl-dot" style="background:var(--red)"></div><div class="tl-line"></div></div><div><div class="tl-txt"><strong style="color:var(--white)">Avis signalé</strong> — contenu suspect</div><div class="tl-t">45 min · Modération requise</div></div></div>
+          <div class="tl-item"><div class="tl-l"><div class="tl-dot" style="background:var(--blue)"></div></div><div><div class="tl-txt"><strong style="color:var(--white)">Inscription visiteur</strong> — Aya Touré · Premium</div><div class="tl-t">1h · +5 500 F</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PRESTATAIRES ══ -->
+<div class="view" id="view-prestataires">
+  <div class="card">
+    <div class="istat">
+      <div class="istat-item"><div class="istat-val">847</div><div class="istat-lbl">Total</div></div>
+      <div class="istat-item"><div class="istat-val" style="color:var(--green)">721</div><div class="istat-lbl">Actifs</div></div>
+      <div class="istat-item"><div class="istat-val" style="color:var(--orange)">14</div><div class="istat-lbl">En vérif.</div></div>
+      <div class="istat-item"><div class="istat-val" style="color:var(--red)">8</div><div class="istat-lbl">Suspendus</div></div>
+      <div class="istat-item"><div class="istat-val" style="color:var(--gold2)">312</div><div class="istat-lbl">Payants</div></div>
+      <div class="istat-item"><div class="istat-val" style="color:var(--blue)">104</div><div class="istat-lbl">Vérifiés</div></div>
+    </div>
+    <div class="filters">
+      <div class="fi-s"><span>🔍</span><input type="text" placeholder="Nom, email, téléphone, RC…"></div>
+      <select class="fi"><option>Toutes catégories</option><option>DJ & Sonorisation</option><option>Traiteur</option><option>Décoration</option><option>Photo & Vidéo</option><option>Logistique</option><option>MC & Animation</option><option>Espaces & Salles</option><option>Hôtellerie</option></select>
+      <select class="fi"><option>Tous les plans</option><option>Freemium</option><option>Premium</option><option>Premium+</option></select>
+      <select class="fi"><option>Tous les statuts</option><option>Actif</option><option>En vérification</option><option>Suspendu</option><option>Expiré</option></select>
+      <select class="fi"><option>Toutes zones</option><option>Cocody</option><option>Plateau</option><option>Yopougon</option><option>Marcory</option><option>Treichville</option><option>Hors Abidjan</option></select>
+      <select class="fi"><option>Badge vérifié : tous</option><option>Vérifiés uniquement</option><option>Non vérifiés</option></select>
+      <select class="fi"><option>Trier : Plus récent</option><option>Alphabétique</option><option>Plan (décrois.)</option><option>Note (décrois.)</option><option>Vues (décrois.)</option><option>Expiration proche</option></select>
+      <button class="tb-btn gold" onclick="openM('addpresta')">+ Ajouter</button>
+      <button class="tb-btn ghost" onclick="openM('export')">↓ Exporter</button>
+    </div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th><input type="checkbox" onchange="selAll(this)"></th><th>Entreprise / Responsable</th><th>Catégorie</th><th>Zone</th><th>Plan</th><th>Statut</th><th>Note</th><th>Vues/mois</th><th>RC</th><th>Inscription</th><th>Expiration</th><th>Commission</th><th>Actions</th></tr></thead>
+      <tbody>
+        <tr><td><input type="checkbox"></td><td><div class="urow"><div class="uav" style="background:var(--golddim);color:var(--gold2)">AS</div><div><div class="uname">Alpha Sound Production</div><div class="uemail">Kouamé Alpha · alpha@sound.ci · +225 07 89 01 23</div></div></div></td><td><span class="badge b-b">DJ & Son.</span></td><td>Cocody</td><td><span class="badge b-gold">Premium+</span></td><td><span class="badge b-g">✓ Actif</span></td><td>💗 4.9</td><td class="mono">1 284</td><td class="mono" style="color:var(--green)">✓</td><td class="mono">12/01/25</td><td class="mono" style="color:var(--orange)">31/03/25</td><td class="mono">60 000 F</td><td><div class="ar"><button class="act b" onclick="openM('viewpresta')">Voir</button><button class="act o" onclick="openM('editpresta')">Éditer</button><button class="act p" onclick="toast('⭐ Badge Vérifié accordé')">Badger</button><button class="act r" onclick="toast('⚠️ Suspendu')">Susp.</button></div></td></tr>
+        <tr><td><input type="checkbox"></td><td><div class="urow"><div class="uav" style="background:var(--bluedim);color:var(--blue)">LD</div><div><div class="uname">Lumière & Décors CI</div><div class="uemail">Marie Coulibaly · marie@lumiere.ci</div></div></div></td><td><span class="badge b-p">Décoration</span></td><td>Plateau</td><td><span class="badge b-gold">Premium</span></td><td><span class="badge b-o">⏳ En vérif.</span></td><td>—</td><td class="mono">—</td><td class="mono" style="color:var(--red)">✗ Manque</td><td class="mono">10/01/25</td><td class="mono">—</td><td class="mono">—</td><td><div class="ar"><button class="act g" onclick="toast('✅ Validé !')">Valider</button><button class="act o" onclick="openM('editpresta')">Éditer</button><button class="act r" onclick="toast('❌ Refusé')">Refuser</button></div></td></tr>
+        <tr><td><input type="checkbox"></td><td><div class="urow"><div class="uav" style="background:var(--greendim);color:var(--green)">DA</div><div><div class="uname">Délices d'Abidjan</div><div class="uemail">Konan Jean · jean@delices.ci</div></div></div></td><td><span class="badge b-g">Traiteur</span></td><td>Marcory</td><td><span class="badge b-gray">Freemium</span></td><td><span class="badge b-g">✓ Actif</span></td><td>💗 5.0</td><td class="mono">642</td><td class="mono" style="color:var(--green)">✓</td><td class="mono">08/01/25</td><td class="mono">—</td><td class="mono">0 F</td><td><div class="ar"><button class="act b" onclick="openM('viewpresta')">Voir</button><button class="act o" onclick="openM('upgrade')">Upgrade</button><button class="act r" onclick="toast('⚠️ Suspendu')">Susp.</button></div></td></tr>
+      </tbody>
+    </table></div>
+    <div class="tpager"><span class="tpager-info">Affichage 1–3 sur 847</span><div class="ar"><button class="act b">← Préc.</button><button class="act o">1</button><button class="act b">2</button><button class="act b">3…212</button><button class="act b">Suiv. →</button></div></div>
+  </div>
+</div>
+
+<!-- ══ VISITEURS ══ -->
+<div class="view" id="view-visiteurs">
+  <div class="card">
+    <div class="istat">
+      <div class="istat-item"><div class="istat-val">2 341</div><div class="istat-lbl">Total</div></div>
+      <div class="istat-item"><div class="istat-val" style="color:var(--gold2)">73</div><div class="istat-lbl">Premium</div></div>
+      <div class="istat-item"><div class="istat-val" style="color:var(--green)">1 890</div><div class="istat-lbl">Gratuits actifs</div></div>
+      <div class="istat-item"><div class="istat-val" style="color:var(--blue)">340</div><div class="istat-lbl">Entreprises</div></div>
+      <div class="istat-item"><div class="istat-val" style="color:var(--red)">12</div><div class="istat-lbl">Signalés</div></div>
+    </div>
+    <div class="filters">
+      <div class="fi-s"><span>🔍</span><input type="text" placeholder="Nom, email, WhatsApp, ville…"></div>
+      <select class="fi"><option>Tous profils</option><option>Particulier</option><option>PME</option><option>Grande entreprise</option><option>ONG</option><option>Agence événementielle</option></select>
+      <select class="fi"><option>Tous plans</option><option>Gratuit</option><option>Visiteur Premium</option></select>
+      <select class="fi"><option>Toutes zones</option><option>Abidjan</option><option>Bouaké</option><option>Autre CI</option></select>
+      <select class="fi"><option>Trier : Plus récent</option><option>Alphabétique</option><option>Nb devis (décrois.)</option><option>CA généré (décrois.)</option></select>
+      <button class="tb-btn gold" onclick="openM('addvisiteur')">+ Ajouter</button>
+      <button class="tb-btn ghost" onclick="openM('export')">↓ Exporter</button>
+    </div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th><input type="checkbox" onchange="selAll(this)"></th><th>Visiteur</th><th>Profil</th><th>Plan</th><th>Ville</th><th>Nb devis</th><th>CA généré</th><th>Remboursement 1%</th><th>Inscription</th><th>Dernière activité</th><th>Actions</th></tr></thead>
+      <tbody>
+        <tr><td><input type="checkbox"></td><td><div class="urow"><div class="uav" style="background:var(--golddim);color:var(--gold2)">AK</div><div><div class="uname">Adjoua Koffi</div><div class="uemail">adjoua@gmail.com · +225 07 01 23 45</div></div></div></td><td>Particulier</td><td><span class="badge b-gold">⭐ Premium</span></td><td>Cocody</td><td class="mono">12</td><td class="mono">6,2M F</td><td class="mono" style="color:var(--green)">3 500 F</td><td class="mono">03/01/25</td><td class="mono">Auj. 14h</td><td><div class="ar"><button class="act b" onclick="openM('viewvisiteur')">Voir</button><button class="act o" onclick="openM('editvisiteur')">Éditer</button><button class="act r" onclick="toast('⚠️ Suspendu')">Susp.</button></div></td></tr>
+        <tr><td><input type="checkbox"></td><td><div class="urow"><div class="uav" style="background:var(--bluedim);color:var(--blue)">BK</div><div><div class="uname">Bertin Kouassi</div><div class="uemail">bertin@nsia.ci</div></div></div></td><td>Gr. Entreprise</td><td><span class="badge b-gray">Gratuit</span></td><td>Plateau</td><td class="mono">4</td><td class="mono">1,2M F</td><td class="mono">0 F</td><td class="mono">15/12/24</td><td class="mono">Hier</td><td><div class="ar"><button class="act b" onclick="openM('viewvisiteur')">Voir</button><button class="act o" onclick="openM('upgrade')">Upgrade</button><button class="act r">Susp.</button></div></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</div>
+
+<!-- ══ VALIDATIONS ══ -->
+<div class="view" id="view-validations">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
+    <div><div style="font-size:20px;font-weight:700;color:var(--white)">9 dossiers en attente</div><div style="font-size:12px;color:var(--muted);margin-top:2px">Inscriptions des 48 dernières heures</div></div>
+    <div style="display:flex;gap:8px;"><button class="tb-btn gold" onclick="toast('✅ 9 dossiers approuvés en masse !')">✅ Tout approuver</button><button class="tb-btn ghost" onclick="toast('❌ Refus groupé envoyé')">❌ Tout refuser</button></div>
+  </div>
+
+  <div class="val-card">
+    <div class="val-head">
+      <div style="display:flex;align-items:center;gap:10px;"><span class="badge b-o">⏳ En attente</span><span class="ct">FastDeco CI — Décoration · Yopougon</span></div>
+      <div class="ar"><button class="act g" onclick="toast('✅ FastDeco CI validé et notifié !')">Valider</button><button class="act b" onclick="openM('editpresta')">Demander infos</button><button class="act r" onclick="toast('❌ Refus notifié')">Refuser</button></div>
+    </div>
+    <div class="val-body">
+      <div><div class="val-section-t">Informations entreprise</div><div class="val-row"><span>Responsable : </span>Koné Fatima<br><span>Email : </span>fastdeco@gmail.com<br><span>WhatsApp : </span>+225 07 55 66 77 88<br><span>Zone : </span>Yopougon · Tout Abidjan<br><span>Fondée en : </span>2022</div></div>
+      <div><div class="val-section-t">Offre choisie & paiement</div><span class="badge b-gold" style="font-size:12px;padding:6px 14px">Premium — 7 500 F/mois</span><div style="margin-top:10px;font-size:12px;color:var(--muted)">Paiement : <strong style="color:var(--orange)">En attente confirmation Mobile Money</strong></div></div>
+      <div><div class="val-section-t">Documents fournis</div>
+        <div class="doc-item"><span style="color:var(--red)">✗</span><span>Registre de commerce</span><span class="badge b-r">Manquant</span></div>
+        <div class="doc-item"><span style="color:var(--green)">✓</span><span>Photos prestations</span><span class="badge b-g">3 photos</span></div>
+        <div class="doc-item"><span style="color:var(--green)">✓</span><span>Description activité</span><span class="badge b-g">OK</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="val-card">
+    <div class="val-head">
+      <div style="display:flex;align-items:center;gap:10px;"><span class="badge b-o">⏳ En attente</span><span class="ct">CI Protocol Events — Protocole & Hôtesses · Cocody</span></div>
+      <div class="ar"><button class="act g" onclick="toast('✅ CI Protocol validé !')">Valider</button><button class="act r" onclick="toast('❌ Refus envoyé')">Refuser</button></div>
+    </div>
+    <div class="val-body">
+      <div><div class="val-section-t">Informations entreprise</div><div class="val-row"><span>Responsable : </span>Traoré Issouf<br><span>Email : </span>protocol@events.ci<br><span>WhatsApp : </span>+225 05 44 55 66 77<br><span>RC : </span>CI-ABJ-2020-B-12345<br><span>Site : </span>www.ciprotocol.ci</div></div>
+      <div><div class="val-section-t">Offre choisie & paiement</div><span class="badge b-gold" style="font-size:12px;padding:6px 14px">Premium+ — 8 800 F/mois</span><div style="margin-top:10px;font-size:12px;color:var(--muted)">Paiement : <strong style="color:var(--green)">MTN Money confirmé</strong></div></div>
+      <div><div class="val-section-t">Documents fournis</div>
+        <div class="doc-item"><span style="color:var(--green)">✓</span><span>Registre de commerce</span><span class="badge b-g">Valide</span></div>
+        <div class="doc-item"><span style="color:var(--green)">✓</span><span>Photos prestations</span><span class="badge b-g">5 photos</span></div>
+        <div class="doc-item"><span style="color:var(--green)">✓</span><span>Description activité</span><span class="badge b-g">Complète</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ AVIS ══ -->
+<div class="view" id="view-avis">
+  <div class="card">
+    <div class="istat">
+      <div class="istat-item"><div class="istat-val">2 847</div><div class="istat-lbl">Total avis</div></div>
+      <div class="istat-item"><div class="istat-val" style="color:var(--red)">7</div><div class="istat-lbl">Signalés</div></div>
+      <div class="istat-item"><div class="istat-val" style="color:var(--orange)">23</div><div class="istat-lbl">En attente</div></div>
+      <div class="istat-item"><div class="istat-val" style="color:var(--green)">2 817</div><div class="istat-lbl">Publiés</div></div>
+      <div class="istat-item"><div class="istat-val">4.8</div><div class="istat-lbl">Note moy. plateforme</div></div>
+    </div>
+    <div class="filters">
+      <div class="fi-s"><span>🔍</span><input type="text" placeholder="Auteur, prestataire, mot-clé…"></div>
+      <select class="fi"><option>Tous statuts</option><option>En attente</option><option>Publié</option><option>Signalé</option><option>Supprimé</option></select>
+      <select class="fi"><option>Toutes notes</option><option>💗 Excellent</option><option>⭐ Bon</option><option>🤍 Acceptable</option><option>☆ Mauvais</option></select>
+      <select class="fi"><option>Toutes catégories</option><option>DJ & Son.</option><option>Traiteur</option><option>Décoration</option></select>
+      <select class="fi"><option>Trier : Récent</option><option>Plus signalés</option><option>Note croissante</option></select>
+    </div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Auteur</th><th>Prestataire évalué</th><th>Note</th><th>Avis (extrait)</th><th>Statut</th><th>Date</th><th>Actions</th></tr></thead>
+      <tbody>
+        <tr><td><div class="uname">Adjoua Koffi</div><div class="uemail">Particulier · Premium</div></td><td>Alpha Sound Production</td><td>💗 Excellent</td><td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted)">"Sonorisation impeccable pour notre mariage…"</td><td><span class="badge b-o">⏳ Attente</span></td><td class="mono">14/01/25</td><td><div class="ar"><button class="act g" onclick="toast('✅ Avis publié !')">Publier</button><button class="act b" onclick="openM('editavis')">Éditer</button><button class="act r" onclick="toast('🗑 Avis supprimé')">Suppr.</button></div></td></tr>
+        <tr><td><div class="uname">Anonyme signalé</div><div class="uemail">Compte suspect</div></td><td>FastDeco CI</td><td>☆ Mauvais</td><td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--red)">"[contenu potentiellement frauduleux]"</td><td><span class="badge b-r">🚨 Signalé x3</span></td><td class="mono">13/01/25</td><td><div class="ar"><button class="act g" onclick="toast('✅ Avis maintenu')">Valider</button><button class="act r" onclick="toast('🗑 Avis supprimé + compte signalé')">Suppr.+Signal.</button></div></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</div>
+
+<!-- ══ DEVIS ══ -->
+<div class="view" id="view-devis">
+  <div class="card">
+    <div class="istat">
+      <div class="istat-item"><div class="istat-val">186</div><div class="istat-lbl">Actifs</div></div>
+      <div class="istat-item"><div class="istat-val" style="color:var(--orange)">54</div><div class="istat-lbl">Sans réponse</div></div>
+      <div class="istat-item"><div class="istat-val" style="color:var(--green)">89</div><div class="istat-lbl">Répondus</div></div>
+      <div class="istat-item"><div class="istat-val" style="color:var(--blue)">43</div><div class="istat-lbl">Convertis</div></div>
+      <div class="istat-item"><div class="istat-val" style="color:var(--gold2)">28,4M</div><div class="istat-lbl">Valeur totale (F)</div></div>
+    </div>
+    <div class="filters">
+      <div class="fi-s"><span>🔍</span><input type="text" placeholder="Client, prestataire, réf., type event…"></div>
+      <select class="fi"><option>Tous statuts</option><option>Nouveau</option><option>En cours</option><option>Répondu</option><option>Accepté</option><option>Expiré</option><option>Annulé</option></select>
+      <select class="fi"><option>Toutes catégories</option><option>Mariage</option><option>Séminaire</option><option>Concert</option><option>Anniversaire</option><option>Gala</option></select>
+      <select class="fi"><option>Toutes dates</option><option>Aujourd'hui</option><option>7 derniers jours</option><option>Ce mois</option><option>Mois précédent</option></select>
+      <select class="fi"><option>Budget : tous</option><option>-500K</option><option>500K–2M</option><option>+2M</option></select>
+      <button class="tb-btn ghost" onclick="openM('export')">↓ Exporter</button>
+    </div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Réf.</th><th>Demandeur</th><th>Type événement</th><th>Prestations</th><th>Montant estimé</th><th>Nb réponses</th><th>Statut</th><th>Date</th><th>Actions</th></tr></thead>
+      <tbody>
+        <tr><td class="mono" style="color:var(--gold2)">DEV-2501</td><td><div class="uname">Adjoua Koffi</div><div class="uemail">Mariage 14 Fév · 300 inv.</div></td><td>💍 Mariage</td><td><span class="badge b-b">Sono</span> <span class="badge b-p">Déco</span> <span class="badge b-g">Traiteur</span></td><td class="mono">1 645 000 F</td><td class="mono">4 / 4</td><td><span class="badge b-g">✓ Répondu</span></td><td class="mono">12/01/25</td><td><div class="ar"><button class="act b" onclick="openM('viewdevis')">Détails</button><button class="act r" onclick="toast('❌ Devis annulé')">Annuler</button></div></td></tr>
+        <tr><td class="mono" style="color:var(--gold2)">DEV-2502</td><td><div class="uname">Bertin Kouassi</div><div class="uemail">Séminaire 28 Mar · 80 inv.</div></td><td>🏢 Séminaire</td><td><span class="badge b-b">Sono</span> <span class="badge b-g">Traiteur</span></td><td class="mono">240 000 F</td><td class="mono">1 / 3</td><td><span class="badge b-o">⏳ En attente</span></td><td class="mono">13/01/25</td><td><div class="ar"><button class="act b" onclick="openM('viewdevis')">Détails</button><button class="act o" onclick="toast('📧 Relance envoyée')">Relancer</button></div></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</div>
+
+<!-- ══ ABONNEMENTS ══ -->
+<div class="view" id="view-abonnements">
+  <div class="card">
+    <div class="istat">
+      <div class="istat-item"><div class="istat-val" style="color:var(--gold2)">312</div><div class="istat-lbl">Actifs</div></div>
+      <div class="istat-item"><div class="istat-val" style="color:var(--orange)">28</div><div class="istat-lbl">Expirent ce mois</div></div>
+      <div class="istat-item"><div class="istat-val" style="color:var(--red)">14</div><div class="istat-lbl">Paiements échoués</div></div>
+      <div class="istat-item"><div class="istat-val" style="color:var(--green)">4,2M</div><div class="istat-lbl">MRR (FCFA)</div></div>
+    </div>
+    <div class="filters">
+      <div class="fi-s"><span>🔍</span><input type="text" placeholder="Nom, email, référence paiement…"></div>
+      <select class="fi"><option>Tous plans</option><option>Premium — 7 500 F/mois</option><option>Premium+ — 8 800 F/mois</option><option>Visiteur Premium — 5 500 F/an</option></select>
+      <select class="fi"><option>Tous statuts</option><option>Actif</option><option>Expiré</option><option>Suspendu</option><option>Paiement échoué</option></select>
+      <select class="fi"><option>Méthode : toutes</option><option>MTN Mobile Money</option><option>Orange Money</option><option>Virement bancaire</option><option>Espèces (manuel)</option></select>
+      <select class="fi"><option>Trier : Expiration proche</option><option>Plus récent</option><option>Alphabétique</option><option>Montant (décrois.)</option></select>
+      <button class="tb-btn gold" onclick="toast('📧 Relance envoyée aux 28 expirations proches !')">📧 Relancer expirations</button>
+      <button class="tb-btn ghost" onclick="openM('export')">↓ Exporter</button>
+    </div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Abonné</th><th>Type</th><th>Plan</th><th>Montant</th><th>Périodicité</th><th>Méthode paiement</th><th>Référence paiement</th><th>Début</th><th>Expiration</th><th>Statut</th><th>Actions</th></tr></thead>
+      <tbody>
+        <tr><td><div class="uname">Alpha Sound Pro</div><div class="uemail">Prestataire</div></td><td><span class="badge b-b">Presta.</span></td><td><span class="badge b-gold">Premium+</span></td><td class="mono">104 100 F</td><td>Annuel</td><td>Orange Money</td><td class="mono">OM-2501-XXX</td><td class="mono">01/01/25</td><td class="mono" style="color:var(--orange)">31/03/25</td><td><span class="badge b-o">⚠️ Expire bientôt</span></td><td><div class="ar"><button class="act o" onclick="toast('📧 Relance envoyée')">Relancer</button><button class="act g" onclick="openM('upgrade')">Renouveler</button><button class="act r" onclick="toast('⚠️ Suspendu')">Suspendre</button></div></td></tr>
+        <tr><td><div class="uname">Adjoua Koffi</div><div class="uemail">Visiteur</div></td><td><span class="badge b-p">Visit.</span></td><td><span class="badge b-gold">Vis. Prem.</span></td><td class="mono">5 500 F</td><td>Annuel</td><td>MTN Mobile</td><td class="mono">MTN-2501-YYY</td><td class="mono">03/01/25</td><td class="mono" style="color:var(--green)">03/01/26</td><td><span class="badge b-g">✓ Actif</span></td><td><div class="ar"><button class="act b" onclick="openM('viewvisiteur')">Détails</button><button class="act r" onclick="toast('⚠️ Annulé')">Annuler</button></div></td></tr>
+        <tr><td><div class="uname">Lumière & Décors</div><div class="uemail">Prestataire</div></td><td><span class="badge b-b">Presta.</span></td><td><span class="badge b-gold">Premium</span></td><td class="mono">22 000 F</td><td>Trimestriel</td><td>Virement</td><td class="mono">VIR-2501-ZZZ</td><td class="mono">10/01/25</td><td class="mono" style="color:var(--green)">10/04/25</td><td><span class="badge b-r">💳 Paiement échoué</span></td><td><div class="ar"><button class="act o" onclick="toast('📧 Relance paiement')">Relancer</button><button class="act g" onclick="openM('upgrade')">Saisir manuellement</button></div></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</div>
+
+<!-- ══ COMMISSIONS ══ -->
+<div class="view" id="view-commissions">
+  <div class="row r4">
+    <div class="kpi"><div class="kpi-glow" style="background:var(--gold)"></div><div class="kpi-ico">💰</div><div class="kpi-val">94 000</div><div class="kpi-lbl">Commissions ce mois (F)</div><span class="kpi-delta du">+12%</span></div>
+    <div class="kpi"><div class="kpi-glow" style="background:var(--green)"></div><div class="kpi-ico">🤝</div><div class="kpi-val">43</div><div class="kpi-lbl">Transactions validées</div><span class="kpi-delta du">+8</span></div>
+    <div class="kpi"><div class="kpi-glow" style="background:var(--blue)"></div><div class="kpi-ico">📊</div><div class="kpi-val">2%</div><div class="kpi-lbl">Taux commission presta.</div></div>
+    <div class="kpi"><div class="kpi-glow" style="background:var(--purple)"></div><div class="kpi-ico">🎯</div><div class="kpi-val">1%</div><div class="kpi-lbl">Remboursement visiteur</div></div>
+  </div>
+  <div class="card">
+    <div class="ch"><span class="ct">📋 Transactions & commissions</span><button class="ca" onclick="openM('export')">↓ Exporter</button></div>
+    <div class="filters">
+      <div class="fi-s"><span>🔍</span><input type="text" placeholder="Réf., prestataire, organisateur…"></div>
+      <select class="fi"><option>Tous statuts</option><option>Validé</option><option>En attente</option><option>Remboursé</option></select>
+      <select class="fi"><option>Toutes dates</option><option>Aujourd'hui</option><option>Ce mois</option><option>Trimestre</option></select>
+      <select class="fi"><option>Montant : tous</option><option>-100K</option><option>100K–500K</option><option>+500K</option></select>
+    </div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Réf. transaction</th><th>Prestataire</th><th>Organisateur</th><th>Prestation</th><th>Montant HT</th><th>Commission 2%</th><th>Remboursement 1%</th><th>Net Event Reco</th><th>Date</th><th>Statut</th></tr></thead>
+      <tbody>
+        <tr><td class="mono" style="color:var(--gold2)">TRX-2501</td><td>Alpha Sound Pro</td><td>Adjoua Koffi</td><td>Sono Mariage</td><td class="mono">185 000</td><td class="mono" style="color:var(--green)">3 700</td><td class="mono" style="color:var(--orange)">1 850</td><td class="mono" style="color:var(--gold2)">1 850</td><td class="mono">14/01/25</td><td><span class="badge b-g">✓ Validé</span></td></tr>
+        <tr><td class="mono" style="color:var(--gold2)">TRX-2502</td><td>Délices d'Abidjan</td><td>Adjoua Koffi</td><td>Traiteur 300 couverts</td><td class="mono">890 000</td><td class="mono" style="color:var(--green)">17 800</td><td class="mono" style="color:var(--orange)">8 900</td><td class="mono" style="color:var(--gold2)">8 900</td><td class="mono">14/01/25</td><td><span class="badge b-o">⏳ En attente</span></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</div>
+
+<!-- ══ TARIFS ══ -->
+<div class="view" id="view-tarifs">
+  <div class="card">
+    <div class="ch"><span class="ct">🏷️ Grille tarifaire</span><span class="badge b-r" style="font-size:10px">⚠️ Modifications appliquées immédiatement</span></div>
+    <div class="cb">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:20px;">
+        <div style="background:var(--card2);border:1px solid var(--border2);border-radius:12px;padding:18px;">
+          <div style="font-size:13px;font-weight:700;color:var(--white);margin-bottom:14px;">🔓 Freemium</div>
+          <div class="fg c2">
+            <div class="ff"><div class="fl">Prix mensuel (FCFA)</div><input class="fi2" type="number" value="0" readonly style="color:var(--muted)"></div>
+            <div class="ff"><div class="fl">Commission transactions</div><input class="fi2" type="number" value="2"><div class="fhint">% du montant validé</div></div>
+          </div>
+          <div class="ff"><div class="fl">Fonctionnalités</div><textarea class="fta">Fiche basique, nom + contacts + localisation, notation clients</textarea></div>
+        </div>
+        <div style="background:var(--card2);border:1px solid var(--goldbd);border-radius:12px;padding:18px;">
+          <div style="font-size:13px;font-weight:700;color:var(--gold2);margin-bottom:14px;">⭐ Premium</div>
+          <div class="fg c2">
+            <div class="ff"><div class="fl">Prix mensuel <span class="req">*</span></div><input class="fi2" type="number" value="7500"></div>
+            <div class="ff"><div class="fl">Prix 3 mois</div><input class="fi2" type="number" value="22000"></div>
+            <div class="ff"><div class="fl">Prix 6 mois</div><input class="fi2" type="number" value="44000"></div>
+            <div class="ff"><div class="fl">Prix 12 mois</div><input class="fi2" type="number" value="89000"></div>
+          </div>
+          <div class="ff" style="margin-bottom:12px"><div class="fl">Fonctionnalités</div><textarea class="fta">Photos, portfolio, tarifs, lien WhatsApp direct, badge Vérifié, "Les plus contactés"</textarea></div>
+          <div class="togrow"><div class="tog on" onclick="this.classList.toggle('on')"></div><span class="toglbl">Actif à la vente</span></div>
+        </div>
+        <div style="background:var(--card2);border:1px solid var(--border2);border-radius:12px;padding:18px;">
+          <div style="font-size:13px;font-weight:700;color:var(--white);margin-bottom:14px;">🌟 Premium+</div>
+          <div class="fg c2">
+            <div class="ff"><div class="fl">Prix mensuel <span class="req">*</span></div><input class="fi2" type="number" value="8800"></div>
+            <div class="ff"><div class="fl">Prix 3 mois</div><input class="fi2" type="number" value="26150"></div>
+            <div class="ff"><div class="fl">Prix 6 mois</div><input class="fi2" type="number" value="52100"></div>
+            <div class="ff"><div class="fl">Prix 12 mois</div><input class="fi2" type="number" value="104100"></div>
+            <div class="ff"><div class="fl">Passages Studio Live/an</div><input class="fi2" type="number" value="1"></div>
+            <div class="ff"><div class="fl">Posts réseaux sociaux</div><input class="fi2" type="number" value="2"></div>
+          </div>
+          <div class="togrow"><div class="tog on" onclick="this.classList.toggle('on')"></div><span class="toglbl">Actif à la vente</span></div>
+        </div>
+      </div>
+      <div style="background:var(--card2);border:1px solid var(--border2);border-radius:12px;padding:18px;margin-bottom:18px;">
+        <div style="font-size:13px;font-weight:700;color:var(--white);margin-bottom:14px;">💎 Visiteur Premium</div>
+        <div class="fg c3">
+          <div class="ff"><div class="fl">Prix annuel <span class="req">*</span></div><input class="fi2" type="number" value="5500"></div>
+          <div class="ff"><div class="fl">Remboursement sur commandes</div><input class="fi2" type="number" value="1"><div class="fhint">% remboursé sur commandes validées</div></div>
+          <div class="ff"><div class="fl">Délai devis express (h)</div><input class="fi2" type="number" value="48"></div>
+        </div>
+      </div>
+      <div style="background:var(--card2);border:1px solid var(--border2);border-radius:12px;padding:18px;margin-bottom:18px;">
+        <div style="font-size:13px;font-weight:700;color:var(--white);margin-bottom:14px;">⚙️ Paramètres commissions globaux</div>
+        <div class="fg c3">
+          <div class="ff"><div class="fl">Commission prestataire (%)</div><input class="fi2" type="number" value="2"></div>
+          <div class="ff"><div class="fl">Remboursement visiteur (%)</div><input class="fi2" type="number" value="1"></div>
+          <div class="ff"><div class="fl">Délai paiement commission (jours)</div><input class="fi2" type="number" value="30"></div>
+        </div>
+      </div>
+      <button class="tb-btn gold" onclick="toast('✅ Grille tarifaire mise à jour !')">💾 Enregistrer les tarifs</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ RÔLES ══ -->
+<div class="view" id="view-roles">
+  <div class="card">
+    <div class="ch"><span class="ct">🛡️ Rôles et permissions</span><button class="ca" onclick="openM('addrole')">+ Créer un rôle</button></div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Rôle</th><th>Niveau</th><th>Utilisateurs</th><th>Voir users</th><th>Valider fiches</th><th>Modérer avis</th><th>Gérer tarifs</th><th>Accès finances</th><th>Blog / Studio</th><th>Config. système</th><th>Rôles & perms</th><th>Actions</th></tr></thead>
+      <tbody>
+        <tr><td><span class="badge b-r">Super Admin</span></td><td class="mono">1</td><td>1</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td><div class="ar"><button class="act b" onclick="openM('editrole')">Éditer</button></div></td></tr>
+        <tr><td><span class="badge b-o">Admin</span></td><td class="mono">2</td><td>3</td><td>✅</td><td>✅</td><td>✅</td><td>❌</td><td>✅</td><td>✅</td><td>❌</td><td>❌</td><td><div class="ar"><button class="act b" onclick="openM('editrole')">Éditer</button><button class="act r" onclick="toast('🗑 Rôle supprimé')">Suppr.</button></div></td></tr>
+        <tr><td><span class="badge b-b">Modérateur</span></td><td class="mono">3</td><td>5</td><td>❌</td><td>✅</td><td>✅</td><td>❌</td><td>❌</td><td>✅</td><td>❌</td><td>❌</td><td><div class="ar"><button class="act b" onclick="openM('editrole')">Éditer</button><button class="act r">Suppr.</button></div></td></tr>
+        <tr><td><span class="badge b-g">Support</span></td><td class="mono">4</td><td>8</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td><div class="ar"><button class="act b" onclick="openM('editrole')">Éditer</button><button class="act r">Suppr.</button></div></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</div>
+
+<!-- ══ CATÉGORIES ══ -->
+<div class="view" id="view-categories">
+  <div class="row r2">
+    <div class="card">
+      <div class="ch"><span class="ct">📦 Catégories prestataires</span><button class="ca" onclick="openM('addcat')">+ Catégorie</button></div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Ico</th><th>Nom</th><th>Slug</th><th>Prestataires</th><th>Visible</th><th>Ordre</th><th>Actions</th></tr></thead>
+        <tbody>
+          <tr><td>🎧</td><td>DJ & Sonorisation</td><td class="mono">dj-son</td><td class="mono">42</td><td><span class="badge b-g">Visible</span></td><td class="mono">1</td><td><div class="ar"><button class="act o" onclick="openM('addcat')">Éditer</button><button class="act r">Suppr.</button></div></td></tr>
+          <tr><td>🍽️</td><td>Traiteurs</td><td class="mono">traiteur</td><td class="mono">55</td><td><span class="badge b-g">Visible</span></td><td class="mono">2</td><td><div class="ar"><button class="act o" onclick="openM('addcat')">Éditer</button><button class="act r">Suppr.</button></div></td></tr>
+          <tr><td>🌸</td><td>Décoration</td><td class="mono">decoration</td><td class="mono">49</td><td><span class="badge b-g">Visible</span></td><td class="mono">3</td><td><div class="ar"><button class="act o">Éditer</button><button class="act r">Suppr.</button></div></td></tr>
+          <tr><td>🚑</td><td>Assistance médicale</td><td class="mono">medical</td><td class="mono">8</td><td><span class="badge b-gray">Masqué</span></td><td class="mono">18</td><td><div class="ar"><button class="act g" onclick="toast('✅ Catégorie rendue visible')">Afficher</button><button class="act o">Éditer</button></div></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="card">
+      <div class="ch"><span class="ct">🏷️ Tags SEO</span><button class="ca" onclick="toast('+ Tag ajouté')">+ Tag</button></div>
+      <div class="cb">
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <span style="padding:6px 14px;border-radius:100px;background:var(--card2);border:1px solid var(--border2);font-size:12px;cursor:pointer" onclick="toast('✏️ Tag en édition')">mariage</span>
+          <span style="padding:6px 14px;border-radius:100px;background:var(--card2);border:1px solid var(--border2);font-size:12px;cursor:pointer">abidjan</span>
+          <span style="padding:6px 14px;border-radius:100px;background:var(--card2);border:1px solid var(--border2);font-size:12px;cursor:pointer">evenementiel</span>
+          <span style="padding:6px 14px;border-radius:100px;background:var(--card2);border:1px solid var(--border2);font-size:12px;cursor:pointer">traiteur</span>
+          <span style="padding:6px 14px;border-radius:100px;background:var(--card2);border:1px solid var(--border2);font-size:12px;cursor:pointer">seminaire</span>
+          <span style="padding:6px 14px;border-radius:100px;background:var(--card2);border:1px solid var(--border2);font-size:12px;cursor:pointer">concert</span>
+          <span style="padding:6px 14px;border-radius:100px;background:var(--golddim);border:1px solid var(--goldbd);color:var(--gold2);font-size:12px;cursor:pointer">logistique ×</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ALERTES ══ -->
+<div class="view" id="view-alertes">
+  <div class="row r4">
+    <div class="kpi"><div class="kpi-glow" style="background:var(--red)"></div><div class="kpi-ico">🚨</div><div class="kpi-val">3</div><div class="kpi-lbl">Critiques</div></div>
+    <div class="kpi"><div class="kpi-glow" style="background:var(--orange)"></div><div class="kpi-ico">⚠️</div><div class="kpi-val">7</div><div class="kpi-lbl">Avertissements</div></div>
+    <div class="kpi"><div class="kpi-glow" style="background:var(--blue)"></div><div class="kpi-ico">ℹ️</div><div class="kpi-val">2</div><div class="kpi-lbl">Informations</div></div>
+    <div class="kpi"><div class="kpi-glow" style="background:var(--green)"></div><div class="kpi-ico">📋</div><div class="kpi-val">1 248</div><div class="kpi-lbl">Logs aujourd'hui</div></div>
+  </div>
+  <div class="card">
+    <div class="ch"><span class="ct">🔔 Journal alertes & logs système</span>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <span class="fi-chip on" onclick="filterChip(this)">Tout</span>
+        <span class="fi-chip" onclick="filterChip(this)">Critiques</span>
+        <span class="fi-chip" onclick="filterChip(this)">Paiements</span>
+        <span class="fi-chip" onclick="filterChip(this)">Sécurité</span>
+        <span class="fi-chip" onclick="filterChip(this)">Inscriptions</span>
+        <span class="fi-chip" onclick="filterChip(this)">Système</span>
+      </div>
+    </div>
+    <div class="cb" style="padding:12px">
+      <div class="alert-it new" style="border-color:rgba(248,113,113,.4)"><div class="alert-ico">🚨</div><div class="alert-body"><div class="alert-title" style="color:var(--red)">CRITIQUE · Profil signalé x3</div><div class="alert-desc">FastDeco CI · Signalements frauduleux · IP : 197.234.xx.xx</div><div class="alert-time">Aujourd'hui 15:42</div></div><button class="act r" onclick="toast('🔍 Dossier ouvert + IP bloquée')">Enquêter</button></div>
+      <div class="alert-it new"><div class="alert-ico">💳</div><div class="alert-body"><div class="alert-title">Échec paiement Premium+</div><div class="alert-desc">Alpha Sound Pro · Orange Money · Solde insuffisant · Ref: TRX-2501-F</div><div class="alert-time">Aujourd'hui 14:18</div></div><button class="act o" onclick="toast('📧 Relance envoyée')">Relancer</button></div>
+      <div class="alert-it"><div class="alert-ico">🔐</div><div class="alert-body"><div class="alert-title">Tentative de connexion suspecte</div><div class="alert-desc">Admin panel · 5 tentatives · IP : 185.220.xx.xx (Tor Exit Node)</div><div class="alert-time">Aujourd'hui 13:05</div></div><button class="act r" onclick="toast('🚫 IP bloquée définitivement')">Bloquer IP</button></div>
+      <div class="alert-it"><div class="alert-ico">✅</div><div class="alert-body"><div class="alert-title">Sauvegarde automatique réussie</div><div class="alert-desc">Base de données · 14h00 · 2.3 GB · Durée : 4min 12sec</div><div class="alert-time">Aujourd'hui 14:00</div></div></div>
+      <div class="alert-it"><div class="alert-ico">📈</div><div class="alert-body"><div class="alert-title">Pic de trafic détecté</div><div class="alert-desc">+340% requêtes vs moyenne · Serveur stable · Probablement post viral</div><div class="alert-time">Aujourd'hui 12:30</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ BLOG ══ -->
+<div class="view" id="view-blog">
+  <div class="card">
+    <div class="ch"><span class="ct">📝 Blog & Studio Live Reco</span><button class="ca" onclick="openM('addarticle')">+ Nouvel article</button></div>
+    <div class="cb" style="padding:30px;text-align:center;color:var(--muted)">
+      <div style="font-size:48px;margin-bottom:16px">🎬</div>
+      <div style="font-size:15px;font-weight:600;color:var(--white);margin-bottom:8px">Gestion articles de blog & épisodes Studio Live</div>
+      <div style="font-size:13px;max-width:400px;margin:0 auto">Publiez des articles SEO, gérez les épisodes YouTube du Studio Live Reco et planifiez les passages des prestataires Premium+.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ APPELS ══ -->
+<div class="view" id="view-appels">
+  <div class="card">
+    <div class="ch"><span class="ct">📋 Appels d'offres & Emplois</span><button class="ca" onclick="toast('+ Appel d\'offres publié')">+ Publier</button></div>
+    <div class="cb" style="padding:30px;text-align:center;color:var(--muted)">
+      <div style="font-size:48px;margin-bottom:16px">📋</div>
+      <div style="font-size:15px;font-weight:600;color:var(--white);margin-bottom:8px">Appels d'offres événementiels & offres d'emploi</div>
+      <div style="font-size:13px;max-width:400px;margin:0 auto">Publiez et gérez les appels d'offres sectoriels et les offres d'emploi ciblant les professionnels de l'événementiel CI.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ACTIVITE ══ -->
+<div class="view" id="view-activite">
+  <div class="card">
+    <div class="ch"><span class="ct">⚡ Activité temps réel</span><span class="badge b-g">● Live</span></div>
+    <div class="cb" style="padding:40px;text-align:center;color:var(--muted)">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:600;color:var(--white);margin-bottom:8px">1 utilisateur en ligne maintenant</div>
+      <div>284 requêtes/min · Temps de réponse moyen : 180ms</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FICHES ══ -->
+<div class="view" id="view-fiches">
+  <div class="card">
+    <div class="ch"><span class="ct">🪪 Gestion des fiches publiques</span></div>
+    <div class="filters">
+      <div class="fi-s"><span>🔍</span><input type="text" placeholder="Nom entreprise, catégorie, zone…"></div>
+      <select class="fi"><option>Toutes catégories</option></select>
+      <select class="fi"><option>Tous plans</option></select>
+      <select class="fi"><option>Complétude : toutes</option><option>Fiche complète</option><option>Fiche incomplète</option><option>Sans photo</option></select>
+    </div>
+    <div class="cb" style="padding:30px;text-align:center;color:var(--muted)">
+      Même architecture table que Prestataires — filtrages complémentaires sur l'état de complétion de la fiche publique, la présence de médias, etc.
+    </div>
+  </div>
+</div>
+
+<!-- ══ NOTIFCFG ══ -->
+<div class="view" id="view-notifcfg">
+  <div class="card">
+    <div class="ch"><span class="ct">📡 Notifications & Emails</span><button class="ca" onclick="toast('✅ Configuration sauvegardée !')">Sauvegarder</button></div>
+    <div class="cb">
+      <div class="fg c2">
+        <div class="ff"><div class="fl">Expéditeur email</div><input class="fi2" type="email" value="noreply@eventreco.africa"></div>
+        <div class="ff"><div class="fl">Nom expéditeur</div><input class="fi2" type="text" value="Event Reco Africa"></div>
+        <div class="ff"><div class="fl">SMTP host</div><input class="fi2" type="text" value="smtp.eventreco.africa"></div>
+        <div class="ff"><div class="fl">Port SMTP</div><input class="fi2" type="number" value="587"></div>
+        <div class="ff"><div class="fl">WhatsApp Business API key</div><input class="fi2" type="text" placeholder="wa_api_xxxx…" value="wa_api_••••••••"></div>
+        <div class="ff"><div class="fl">Numéro expéditeur WhatsApp</div><input class="fi2" type="tel" value="+225 07 00 00 00 00"></div>
+      </div>
+      <hr class="fsep">
+      <div class="fsec-title">Déclencheurs automatiques</div>
+      <div class="togrow"><div class="tog on" onclick="this.classList.toggle('on')"></div><span class="toglbl">Email confirmation d'inscription</span></div>
+      <div class="togrow"><div class="tog on" onclick="this.classList.toggle('on')"></div><span class="toglbl">Email validation fiche prestataire</span></div>
+      <div class="togrow"><div class="tog on" onclick="this.classList.toggle('on')"></div><span class="toglbl">WhatsApp notification nouveau devis</span></div>
+      <div class="togrow"><div class="tog on" onclick="this.classList.toggle('on')"></div><span class="toglbl">Email relance abonnement expirant (J-15)</span></div>
+      <div class="togrow"><div class="tog on" onclick="this.classList.toggle('on')"></div><span class="toglbl">WhatsApp relance paiement échoué</span></div>
+      <div class="togrow"><div class="tog on" onclick="this.classList.toggle('on')"></div><span class="toglbl">Email notification remboursement 1% visiteur</span></div>
+      <div class="togrow"><div class="tog" onclick="this.classList.toggle('on')"></div><span class="toglbl">Newsletter mensuelle automatique</span></div>
+      <div class="togrow"><div class="tog on" onclick="this.classList.toggle('on')"></div><span class="toglbl">Alerte admin avis signalé</span></div>
+      <div class="togrow"><div class="tog on" onclick="this.classList.toggle('on')"></div><span class="toglbl">Rapport hebdomadaire envoyé à l'équipe admin</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SYSTÈME ══ -->
+<div class="view" id="view-systeme">
+  <div class="row r2">
+    <div class="card">
+      <div class="ch"><span class="ct">⚙️ Paramètres généraux</span><button class="ca" onclick="toast('✅ Paramètres enregistrés !')">Sauvegarder</button></div>
+      <div class="cb">
+        <div class="fg c2">
+          <div class="ff"><div class="fl">Nom de la plateforme</div><input class="fi2" type="text" value="Event Reco Africa"></div>
+          <div class="ff"><div class="fl">URL principale</div><input class="fi2" type="text" value="www.eventreco.africa"></div>
+          <div class="ff"><div class="fl">Email contact admin</div><input class="fi2" type="email" value="admin@eventreco.africa"></div>
+          <div class="ff"><div class="fl">WhatsApp admin</div><input class="fi2" type="tel" value="+225 07 00 00 00 00"></div>
+          <div class="ff"><div class="fl">Pays par défaut</div><select class="fsel"><option>Côte d'Ivoire</option><option>Sénégal</option><option>Ghana</option><option>Burkina Faso</option></select></div>
+          <div class="ff"><div class="fl">Devise</div><select class="fsel"><option>FCFA (XOF)</option><option>USD</option><option>EUR</option></select></div>
+          <div class="ff"><div class="fl">Langue par défaut</div><select class="fsel"><option>Français</option><option>Anglais</option></select></div>
+          <div class="ff"><div class="fl">Fuseau horaire</div><select class="fsel"><option>Africa/Abidjan (UTC+0)</option><option>Africa/Dakar</option><option>Africa/Lagos (UTC+1)</option></select></div>
+        </div>
+        <hr class="fsep">
+        <div class="fsec-title">Modes de la plateforme</div>
+        <div class="togrow"><div class="tog" onclick="this.classList.toggle('on')"></div><span class="toglbl">Mode maintenance (désactive le site public)</span></div>
+        <div class="togrow"><div class="tog on" onclick="this.classList.toggle('on')"></div><span class="toglbl">Inscriptions prestataires ouvertes</span></div>
+        <div class="togrow"><div class="tog on" onclick="this.classList.toggle('on')"></div><span class="toglbl">Inscriptions visiteurs ouvertes</span></div>
+        <div class="togrow"><div class="tog on" onclick="this.classList.toggle('on')"></div><span class="toglbl">Système de notation actif</span></div>
+        <div class="togrow"><div class="tog on" onclick="this.classList.toggle('on')"></div><span class="toglbl">Devis express activé</span></div>
+        <div class="togrow"><div class="tog on" onclick="this.classList.toggle('on')"></div><span class="toglbl">Paiements en ligne actifs</span></div>
+        <div class="togrow"><div class="tog" onclick="this.classList.toggle('on')"></div><span class="toglbl">Mode bêta (bannière affichée)</span></div>
+        <div class="togrow"><div class="tog on" onclick="this.classList.toggle('on')"></div><span class="toglbl">API Paiements MTN/Orange activée</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="ch"><span class="ct">🖥️ État du système</span></div>
+        <div class="cb">
+          <div class="sys-row"><span>Serveur web</span><span class="badge b-g">● Opérationnel</span></div>
+          <div class="sys-row"><span>Base de données</span><span class="badge b-g">● Opérationnel</span></div>
+          <div class="sys-row"><span>API Paiements (MTN/Orange)</span><span class="badge b-o">⚠ Lenteur légère</span></div>
+          <div class="sys-row"><span>Emails (SMTP)</span><span class="badge b-g">● Opérationnel</span></div>
+          <div class="sys-row"><span>WhatsApp Business API</span><span class="badge b-g">● Opérationnel</span></div>
+          <div class="sys-row"><span>Stockage CDN</span><span class="badge b-b">73% utilisé</span></div>
+          <div class="sys-row"><span>SSL / HTTPS</span><span class="badge b-g">● Valide jusqu'au 01/2026</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ch"><span class="ct">💾 Sauvegardes</span></div>
+        <div class="cb">
+          <div style="font-size:12px;line-height:2.2;color:var(--muted)">
+            Dernière sauvegarde : <strong style="color:var(--green)">Aujourd'hui 14h00 ✓</strong><br>
+            Fréquence : <strong style="color:var(--white)">Toutes les 6h</strong><br>
+            Rétention : <strong style="color:var(--white)">30 jours</strong><br>
+            Taille : <strong style="color:var(--white)">2.3 GB</strong>
+          </div>
+          <button class="tb-btn ghost" style="margin-top:12px;width:100%;justify-content:center" onclick="toast('💾 Sauvegarde manuelle lancée…')">💾 Sauvegarde manuelle</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<!-- ════ MODALS ════ -->
+
+<!-- Ajouter Prestataire -->
+<div class="modal-bg" id="modal-addpresta" onclick="closeM('addpresta')">
+<div class="modal" onclick="event.stopPropagation()">
+  <div class="mh"><div class="mh-t">🏢 Ajouter un prestataire</div><button class="mclose" onclick="closeM('addpresta')">✕</button></div>
+  <div class="mb">
+    <div class="fsec-title">Informations entreprise</div>
+    <div class="fg c2">
+      <div class="ff"><div class="fl">Nom entreprise <span class="req">*</span></div><input class="fi2" type="text" placeholder="Raison sociale"></div>
+      <div class="ff"><div class="fl">Responsable <span class="req">*</span></div><input class="fi2" type="text" placeholder="Prénom Nom"></div>
+      <div class="ff"><div class="fl">Email professionnel <span class="req">*</span></div><input class="fi2" type="email" placeholder="email@entreprise.ci"></div>
+      <div class="ff"><div class="fl">WhatsApp Business <span class="req">*</span></div><input class="fi2" type="tel" placeholder="+225 07 XX XX XX XX"></div>
+      <div class="ff"><div class="fl">Téléphone fixe</div><input class="fi2" type="tel" placeholder="+225 27 XX XX XX XX"></div>
+      <div class="ff"><div class="fl">Site web</div><input class="fi2" type="url" placeholder="https://…"></div>
+      <div class="ff"><div class="fl">Lien WhatsApp Business</div><input class="fi2" type="url" placeholder="https://wa.me/225…"></div>
+      <div class="ff"><div class="fl">Registre de commerce</div><input class="fi2" type="text" placeholder="CI-ABJ-XXXX-B-XXXXX"></div>
+    </div>
+    <hr class="fsep">
+    <div class="fsec-title">Catégorie & zone</div>
+    <div class="fg c2">
+      <div class="ff"><div class="fl">Catégorie principale <span class="req">*</span></div><select class="fsel"><option>DJ & Sonorisation</option><option>Traiteur</option><option>Décoration</option><option>Photo & Vidéo</option><option>Logistique</option><option>MC & Animation</option><option>Espaces & Salles</option><option>Hôtesses</option><option>Autre</option></select></div>
+      <div class="ff"><div class="fl">Zone principale</div><select class="fsel"><option>Tout Abidjan</option><option>Cocody</option><option>Plateau</option><option>Yopougon</option><option>Marcory</option><option>Treichville</option><option>Hors Abidjan CI</option><option>CEDEAO</option></select></div>
+      <div class="ff"><div class="fl">Capacité max. gérée</div><select class="fsel"><option>Jusqu'à 50 pers.</option><option>50–200 pers.</option><option>200–500 pers.</option><option>500–1000 pers.</option><option>+1000 pers.</option></select></div>
+      <div class="ff"><div class="fl">Année de création</div><input class="fi2" type="number" placeholder="Ex: 2018" min="2000" max="2025"></div>
+    </div>
+    <hr class="fsep">
+    <div class="fsec-title">Plan & statut</div>
+    <div class="fg c2">
+      <div class="ff"><div class="fl">Plan initial <span class="req">*</span></div><select class="fsel"><option>Freemium</option><option>Premium</option><option>Premium+</option></select></div>
+      <div class="ff"><div class="fl">Statut initial</div><select class="fsel"><option>Actif directement</option><option>En vérification</option></select></div>
+      <div class="ff"><div class="fl">Badge Vérifié</div><select class="fsel"><option>Non</option><option>Accordé immédiatement</option></select></div>
+      <div class="ff"><div class="fl">Date expiration abonnement</div><input class="fi2" type="date"></div>
+    </div>
+    <div class="ff" style="margin-bottom:14px"><div class="fl">Description activité <span class="req">*</span></div><textarea class="fta" style="height:90px" placeholder="Description visible sur la fiche publique…"></textarea></div>
+    <div class="ff" style="margin-bottom:14px"><div class="fl">Note interne admin</div><textarea class="fta" placeholder="Observations internes (non visible par le prestataire)…"></textarea></div>
+    <div class="togrow" style="margin-bottom:14px"><div class="tog on" onclick="this.classList.toggle('on')"></div><span class="toglbl">Notifier le prestataire par email & WhatsApp</span></div>
+  </div>
+  <div class="mfooter">
+    <button class="tb-btn gold" onclick="toast('✅ Prestataire créé et notifié !');closeM('addpresta')">Créer le prestataire</button>
+    <button class="tb-btn ghost" onclick="closeM('addpresta')">Annuler</button>
+  </div>
+</div>
+</div>
+
+<!-- Éditer Prestataire -->
+<div class="modal-bg" id="modal-editpresta" onclick="closeM('editpresta')">
+<div class="modal" onclick="event.stopPropagation()">
+  <div class="mh"><div class="mh-t">✏️ Éditer : Alpha Sound Production</div><button class="mclose" onclick="closeM('editpresta')">✕</button></div>
+  <div class="mb">
+    <div class="fg c2">
+      <div class="ff"><div class="fl">Nom entreprise</div><input class="fi2" type="text" value="Alpha Sound Production"></div>
+      <div class="ff"><div class="fl">Responsable</div><input class="fi2" type="text" value="Kouamé Alpha"></div>
+      <div class="ff"><div class="fl">Email</div><input class="fi2" type="email" value="alpha@sound.ci"></div>
+      <div class="ff"><div class="fl">WhatsApp</div><input class="fi2" type="tel" value="+225 07 89 01 23 45"></div>
+      <div class="ff"><div class="fl">Catégorie</div><select class="fsel"><option selected>DJ & Sonorisation</option></select></div>
+      <div class="ff"><div class="fl">Zone</div><select class="fsel"><option selected>Cocody</option></select></div>
+      <div class="ff"><div class="fl">Plan</div><select class="fsel"><option>Freemium</option><option>Premium</option><option selected>Premium+</option></select></div>
+      <div class="ff"><div class="fl">Statut</div><select class="fsel"><option selected>Actif</option><option>En vérification</option><option>Suspendu</option><option>Expiré</option></select></div>
+      <div class="ff"><div class="fl">Expiration abonnement</div><input class="fi2" type="date" value="2025-03-31"></div>
+      <div class="ff"><div class="fl">Badge Vérifié</div><div class="togrow" style="margin-top:6px"><div class="tog on" onclick="this.classList.toggle('on')"></div><span class="toglbl">Accordé</span></div></div>
+    </div>
+    <div class="ff" style="margin-bottom:14px"><div class="fl">Note admin interne</div><textarea class="fta" placeholder="Observations non visibles par le prestataire…"></textarea></div>
+    <div class="togrow" style="margin-bottom:6px"><div class="tog on" onclick="this.classList.toggle('on')"></div><span class="toglbl">Notifier le prestataire des modifications</span></div>
+  </div>
+  <div class="mfooter">
+    <button class="tb-btn gold" onclick="toast('✅ Modifications enregistrées !');closeM('editpresta')">Enregistrer</button>
+    <button class="tb-btn ghost" onclick="closeM('editpresta')">Annuler</button>
+  </div>
+</div>
+</div>
+
+<!-- Voir Prestataire -->
+<div class="modal-bg" id="modal-viewpresta" onclick="closeM('viewpresta')">
+<div class="modal" onclick="event.stopPropagation()">
+  <div class="mh"><div class="mh-t">👁 Fiche complète — Alpha Sound Production</div><button class="mclose" onclick="closeM('viewpresta')">✕</button></div>
+  <div class="mb">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:12.5px;line-height:2.4;margin-bottom:18px;">
+      <div><span style="color:var(--muted)">Responsable : </span><strong style="color:var(--white)">Kouamé Alpha</strong></div>
+      <div><span style="color:var(--muted)">Email : </span>alpha@sound.ci</div>
+      <div><span style="color:var(--muted)">WhatsApp : </span>+225 07 89 01 23 45</div>
+      <div><span style="color:var(--muted)">Catégorie : </span>DJ & Sonorisation</div>
+      <div><span style="color:var(--muted)">Zone : </span>Cocody · Tout Abidjan</div>
+      <div><span style="color:var(--muted)">RC : </span>CI-ABJ-2015-B-89456</div>
+      <div><span style="color:var(--muted)">Plan : </span><span class="badge b-gold">Premium+</span></div>
+      <div><span style="color:var(--muted)">Statut : </span><span class="badge b-g">Actif</span></div>
+      <div><span style="color:var(--muted)">Badge Vérifié : </span><span class="badge b-g">✓ Oui</span></div>
+      <div><span style="color:var(--muted)">Inscription : </span>12/01/2025</div>
+      <div><span style="color:var(--muted)">Expiration : </span><strong style="color:var(--orange)">31/03/2025</strong></div>
+      <div><span style="color:var(--muted)">Note : </span>💗 4.9 · 87 avis</div>
+      <div><span style="color:var(--muted)">Vues/mois : </span>1 284</div>
+      <div><span style="color:var(--muted)">CA généré (6 mois) : </span>3 000 000 F</div>
+      <div><span style="color:var(--muted)">Commissions versées : </span>60 000 F</div>
+      <div><span style="color:var(--muted)">Devis envoyés : </span>28</div>
+      <div><span style="color:var(--muted)">Contrats signés : </span>16</div>
+      <div><span style="color:var(--muted)">Taux conversion : </span>57%</div>
+    </div>
+  </div>
+  <div class="mfooter">
+    <button class="tb-btn gold" onclick="closeM('viewpresta');openM('editpresta')">✏️ Modifier</button>
+    <button class="tb-btn ghost" onclick="closeM('viewpresta');openM('upgrade')">⬆️ Changer plan</button>
+    <button class="tb-btn ghost" onclick="toast('⚠️ Compte suspendu');closeM('viewpresta')">Suspendre</button>
+    <button class="tb-btn ghost" onclick="closeM('viewpresta')">Fermer</button>
+  </div>
+</div>
+</div>
+
+<!-- Upgrade Plan -->
+<div class="modal-bg" id="modal-upgrade" onclick="closeM('upgrade')">
+<div class="modal" onclick="event.stopPropagation()" style="max-width:440px">
+  <div class="mh"><div class="mh-t">⬆️ Changer le plan</div><button class="mclose" onclick="closeM('upgrade')">✕</button></div>
+  <div class="mb">
+    <div class="fg c2">
+      <div class="ff"><div class="fl">Nouveau plan <span class="req">*</span></div><select class="fsel"><option>Freemium (gratuit)</option><option>Premium — 7 500 F/mois</option><option selected>Premium+ — 8 800 F/mois</option><option>Visiteur Premium — 5 500 F/an</option></select></div>
+      <div class="ff"><div class="fl">Durée / périodicité</div><select class="fsel"><option>Mensuel</option><option>Trimestriel</option><option>Semestriel</option><option selected>Annuel</option></select></div>
+      <div class="ff"><div class="fl">Date de début</div><input class="fi2" type="date"></div>
+      <div class="ff"><div class="fl">Date d'expiration</div><input class="fi2" type="date"></div>
+      <div class="ff"><div class="fl">Méthode de paiement</div><select class="fsel"><option>MTN Mobile Money</option><option>Orange Money</option><option>Virement bancaire</option><option>Espèces (saisie manuelle)</option><option>Offert (gratuit)</option></select></div>
+      <div class="ff"><div class="fl">Montant encaissé (FCFA)</div><input class="fi2" type="number" placeholder="104100"></div>
+      <div class="ff"><div class="fl">Référence paiement</div><input class="fi2" type="text" placeholder="OM-2501-XXX / reçu n°…"></div>
+      <div class="ff"><div class="fl">Motif du changement</div><select class="fsel"><option>Nouveau paiement</option><option>Renouvellement</option><option>Offre commerciale</option><option>Correction admin</option></select></div>
+    </div>
+    <div class="ff" style="margin-bottom:14px"><div class="fl">Note admin</div><textarea class="fta" placeholder="Commentaire interne…"></textarea></div>
+    <div class="togrow" style="margin-bottom:6px"><div class="tog on" onclick="this.classList.toggle('on')"></div><span class="toglbl">Notifier l'utilisateur (email + WhatsApp)</span></div>
+  </div>
+  <div class="mfooter">
+    <button class="tb-btn gold" style="flex:1;justify-content:center" onclick="toast('✅ Plan mis à jour et utilisateur notifié !');closeM('upgrade')">Confirmer le changement</button>
+    <button class="tb-btn ghost" onclick="closeM('upgrade')">Annuler</button>
+  </div>
+</div>
+</div>
+
+<!-- Ajouter Visiteur -->
+<div class="modal-bg" id="modal-addvisiteur" onclick="closeM('addvisiteur')">
+<div class="modal" onclick="event.stopPropagation()" style="max-width:520px">
+  <div class="mh"><div class="mh-t">👤 Ajouter un visiteur / organisateur</div><button class="mclose" onclick="closeM('addvisiteur')">✕</button></div>
+  <div class="mb">
+    <div class="fg c2">
+      <div class="ff"><div class="fl">Prénom <span class="req">*</span></div><input class="fi2" type="text" placeholder="Prénom"></div>
+      <div class="ff"><div class="fl">Nom <span class="req">*</span></div><input class="fi2" type="text" placeholder="Nom"></div>
+      <div class="ff"><div class="fl">Email <span class="req">*</span></div><input class="fi2" type="email" placeholder="email@…"></div>
+      <div class="ff"><div class="fl">WhatsApp <span class="req">*</span></div><input class="fi2" type="tel" placeholder="+225 07 XX XX XX XX"></div>
+      <div class="ff"><div class="fl">Profil</div><select class="fsel"><option>Particulier</option><option>PME</option><option>Grande entreprise</option><option>ONG</option><option>Agence événementielle</option></select></div>
+      <div class="ff"><div class="fl">Ville</div><select class="fsel"><option>Abidjan — Cocody</option><option>Abidjan — Plateau</option><option>Abidjan — Yopougon</option><option>Bouaké</option><option>Autre CI</option></select></div>
+      <div class="ff"><div class="fl">Entreprise (si professionnel)</div><input class="fi2" type="text" placeholder="Raison sociale"></div>
+      <div class="ff"><div class="fl">Plan</div><select class="fsel"><option>Gratuit</option><option>Visiteur Premium</option></select></div>
+    </div>
+    <div class="togrow" style="margin-bottom:6px"><div class="tog on" onclick="this.classList.toggle('on')"></div><span class="toglbl">Envoyer email de bienvenue</span></div>
+  </div>
+  <div class="mfooter">
+    <button class="tb-btn gold" onclick="toast('✅ Visiteur créé !');closeM('addvisiteur')">Créer</button>
+    <button class="tb-btn ghost" onclick="closeM('addvisiteur')">Annuler</button>
+  </div>
+</div>
+</div>
+
+<!-- Voir Visiteur -->
+<div class="modal-bg" id="modal-viewvisiteur" onclick="closeM('viewvisiteur')">
+<div class="modal" onclick="event.stopPropagation()" style="max-width:500px">
+  <div class="mh"><div class="mh-t">👁 Profil — Adjoua Koffi</div><button class="mclose" onclick="closeM('viewvisiteur')">✕</button></div>
+  <div class="mb">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:12.5px;line-height:2.4;">
+      <div><span style="color:var(--muted)">Email : </span>adjoua@gmail.com</div>
+      <div><span style="color:var(--muted)">WhatsApp : </span>+225 07 01 23 45 67</div>
+      <div><span style="color:var(--muted)">Profil : </span>Particulier</div>
+      <div><span style="color:var(--muted)">Ville : </span>Cocody</div>
+      <div><span style="color:var(--muted)">Plan : </span><span class="badge b-gold">⭐ Premium</span></div>
+      <div><span style="color:var(--muted)">Inscription : </span>03/01/2025</div>
+      <div><span style="color:var(--muted)">Dernière activité : </span>Auj. 14h</div>
+      <div><span style="color:var(--muted)">Devis envoyés : </span>12</div>
+      <div><span style="color:var(--muted)">CA généré : </span>6,2M F</div>
+      <div><span style="color:var(--muted)">Remboursement 1% : </span>3 500 F</div>
+      <div><span style="color:var(--muted)">Statut : </span><span class="badge b-g">Actif</span></div>
+    </div>
+  </div>
+  <div class="mfooter">
+    <button class="tb-btn gold" onclick="closeM('viewvisiteur');openM('editvisiteur')">✏️ Modifier</button>
+    <button class="tb-btn ghost" onclick="toast('⚠️ Suspendu');closeM('viewvisiteur')">Suspendre</button>
+    <button class="tb-btn ghost" onclick="closeM('viewvisiteur')">Fermer</button>
+  </div>
+</div>
+</div>
+
+<!-- Éditer Visiteur -->
+<div class="modal-bg" id="modal-editvisiteur" onclick="closeM('editvisiteur')">
+<div class="modal" onclick="event.stopPropagation()" style="max-width:500px">
+  <div class="mh"><div class="mh-t">✏️ Éditer : Adjoua Koffi</div><button class="mclose" onclick="closeM('editvisiteur')">✕</button></div>
+  <div class="mb">
+    <div class="fg c2">
+      <div class="ff"><div class="fl">Prénom</div><input class="fi2" type="text" value="Adjoua"></div>
+      <div class="ff"><div class="fl">Nom</div><input class="fi2" type="text" value="Koffi"></div>
+      <div class="ff"><div class="fl">Email</div><input class="fi2" type="email" value="adjoua@gmail.com"></div>
+      <div class="ff"><div class="fl">WhatsApp</div><input class="fi2" type="tel" value="+225 07 01 23 45 67"></div>
+      <div class="ff"><div class="fl">Plan</div><select class="fsel"><option>Gratuit</option><option selected>Visiteur Premium</option></select></div>
+      <div class="ff"><div class="fl">Statut</div><select class="fsel"><option selected>Actif</option><option>Suspendu</option><option>Banni</option></select></div>
+      <div class="ff"><div class="fl">Expiration Premium</div><input class="fi2" type="date" value="2026-01-03"></div>
+      <div class="ff"><div class="fl">Solde remboursements (F)</div><input class="fi2" type="number" value="3500"></div>
+    </div>
+    <div class="ff" style="margin-bottom:14px"><div class="fl">Note admin interne</div><textarea class="fta" placeholder="Observations internes…"></textarea></div>
+    <div class="togrow"><div class="tog on" onclick="this.classList.toggle('on')"></div><span class="toglbl">Notifier l'utilisateur des modifications</span></div>
+  </div>
+  <div class="mfooter">
+    <button class="tb-btn gold" onclick="toast('✅ Visiteur mis à jour !');closeM('editvisiteur')">Enregistrer</button>
+    <button class="tb-btn ghost" onclick="closeM('editvisiteur')">Annuler</button>
+  </div>
+</div>
+</div>
+
+<!-- Voir Devis -->
+<div class="modal-bg" id="modal-viewdevis" onclick="closeM('viewdevis')">
+<div class="modal" onclick="event.stopPropagation()" style="max-width:500px">
+  <div class="mh"><div class="mh-t">⚡ Détails devis DEV-2501</div><button class="mclose" onclick="closeM('viewdevis')">✕</button></div>
+  <div class="mb">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:12.5px;line-height:2.4;">
+      <div><span style="color:var(--muted)">Demandeur : </span>Adjoua Koffi</div>
+      <div><span style="color:var(--muted)">Type événement : </span>💍 Mariage</div>
+      <div><span style="color:var(--muted)">Date événement : </span>14/02/2025</div>
+      <div><span style="color:var(--muted)">Lieu : </span>Hôtel Ivoire</div>
+      <div><span style="color:var(--muted)">Nb invités : </span>300</div>
+      <div><span style="color:var(--muted)">Budget estimé : </span>1 645 000 F</div>
+      <div><span style="color:var(--muted)">Prestations : </span>Sono · Déco · Traiteur</div>
+      <div><span style="color:var(--muted)">Réponses reçues : </span>4 / 4</div>
+      <div><span style="color:var(--muted)">Date demande : </span>12/01/2025</div>
+      <div><span style="color:var(--muted)">Statut : </span><span class="badge b-g">✓ Répondu</span></div>
+    </div>
+  </div>
+  <div class="mfooter">
+    <button class="tb-btn ghost" onclick="toast('❌ Devis annulé');closeM('viewdevis')">Annuler le devis</button>
+    <button class="tb-btn ghost" onclick="closeM('viewdevis')">Fermer</button>
+  </div>
+</div>
+</div>
+
+<!-- Éditer Avis -->
+<div class="modal-bg" id="modal-editavis" onclick="closeM('editavis')">
+<div class="modal" onclick="event.stopPropagation()" style="max-width:480px">
+  <div class="mh"><div class="mh-t">✏️ Modérer un avis</div><button class="mclose" onclick="closeM('editavis')">✕</button></div>
+  <div class="mb">
+    <div class="fg c2">
+      <div class="ff"><div class="fl">Auteur</div><input class="fi2" type="text" value="Adjoua Koffi"></div>
+      <div class="ff"><div class="fl">Prestataire évalué</div><input class="fi2" type="text" value="Alpha Sound Production"></div>
+      <div class="ff"><div class="fl">Note</div><select class="fsel"><option>💗 Excellent</option><option>⭐ Bon</option><option>🤍 Acceptable</option><option>☆ Mauvais</option></select></div>
+      <div class="ff"><div class="fl">Statut</div><select class="fsel"><option>En attente</option><option selected>Publié</option><option>Masqué</option><option>Supprimé</option></select></div>
+    </div>
+    <div class="ff" style="margin-bottom:14px"><div class="fl">Contenu de l'avis</div><textarea class="fta" style="height:100px">"Sonorisation impeccable pour notre mariage de 300 personnes. L'équipe est arrivée 3h à l'avance, tout était parfaitement réglé."</textarea></div>
+    <div class="ff" style="margin-bottom:14px"><div class="fl">Motif de modération (si supprimé)</div><select class="fsel"><option>— Choisir —</option><option>Contenu inapproprié</option><option>Faux avis</option><option>Spam / publicité</option><option>Hors sujet</option></select></div>
+  </div>
+  <div class="mfooter">
+    <button class="tb-btn gold" onclick="toast('✅ Avis modéré !');closeM('editavis')">Enregistrer</button>
+    <button class="tb-btn ghost" onclick="closeM('editavis')">Annuler</button>
+  </div>
+</div>
+</div>
+
+<!-- Ajouter Catégorie -->
+<div class="modal-bg" id="modal-addcat" onclick="closeM('addcat')">
+<div class="modal" onclick="event.stopPropagation()" style="max-width:460px">
+  <div class="mh"><div class="mh-t">📦 Catégorie</div><button class="mclose" onclick="closeM('addcat')">✕</button></div>
+  <div class="mb">
+    <div class="fg c2">
+      <div class="ff"><div class="fl">Emoji icône</div><input class="fi2" type="text" placeholder="🎪"></div>
+      <div class="ff"><div class="fl">Nom <span class="req">*</span></div><input class="fi2" type="text" placeholder="Ex: Spectacle vivant"></div>
+      <div class="ff"><div class="fl">Slug URL</div><input class="fi2" type="text" placeholder="spectacle-vivant"></div>
+      <div class="ff"><div class="fl">Ordre d'affichage</div><input class="fi2" type="number" placeholder="19"></div>
+    </div>
+    <div class="ff" style="margin-bottom:12px"><div class="fl">Description (SEO)</div><textarea class="fta" placeholder="Description pour le référencement…"></textarea></div>
+    <div class="togrow"><div class="tog on" onclick="this.classList.toggle('on')"></div><span class="toglbl">Visible sur le site public</span></div>
+  </div>
+  <div class="mfooter">
+    <button class="tb-btn gold" onclick="toast('✅ Catégorie créée !');closeM('addcat')">Créer</button>
+    <button class="tb-btn ghost" onclick="closeM('addcat')">Annuler</button>
+  </div>
+</div>
+</div>
+
+<!-- Éditer Rôle -->
+<div class="modal-bg" id="modal-editrole" onclick="closeM('editrole')">
+<div class="modal" onclick="event.stopPropagation()" style="max-width:500px">
+  <div class="mh"><div class="mh-t">🛡️ Éditer rôle : Modérateur</div><button class="mclose" onclick="closeM('editrole')">✕</button></div>
+  <div class="mb">
+    <div class="fg c2" style="margin-bottom:16px">
+      <div class="ff"><div class="fl">Nom du rôle</div><input class="fi2" type="text" value="Modérateur"></div>
+      <div class="ff"><div class="fl">Niveau (1 = max)</div><input class="fi2" type="number" value="3" min="1" max="10"></div>
+    </div>
+    <div class="fsec-title">Permissions</div>
+    <div class="togrow"><div class="tog" onclick="this.classList.toggle('on')"></div><span class="toglbl">Voir la liste des utilisateurs</span></div>
+    <div class="togrow"><div class="tog on" onclick="this.classList.toggle('on')"></div><span class="toglbl">Valider / Refuser les fiches prestataires</span></div>
+    <div class="togrow"><div class="tog on" onclick="this.classList.toggle('on')"></div><span class="toglbl">Modérer les avis clients</span></div>
+    <div class="togrow"><div class="tog" onclick="this.classList.toggle('on')"></div><span class="toglbl">Modifier la grille tarifaire</span></div>
+    <div class="togrow"><div class="tog" onclick="this.classList.toggle('on')"></div><span class="toglbl">Accès aux données financières</span></div>
+    <div class="togrow"><div class="tog on" onclick="this.classList.toggle('on')"></div><span class="toglbl">Gérer le blog & Studio Live</span></div>
+    <div class="togrow"><div class="tog" onclick="this.classList.toggle('on')"></div><span class="toglbl">Paramètres système</span></div>
+    <div class="togrow"><div class="tog" onclick="this.classList.toggle('on')"></div><span class="toglbl">Gérer les rôles & permissions</span></div>
+    <div class="togrow"><div class="tog on" onclick="this.classList.toggle('on')"></div><span class="toglbl">Envoyer des notifications aux utilisateurs</span></div>
+    <div class="togrow"><div class="tog on" onclick="this.classList.toggle('on')"></div><span class="toglbl">Exporter des données</span></div>
+  </div>
+  <div class="mfooter">
+    <button class="tb-btn gold" onclick="toast('✅ Rôle mis à jour !');closeM('editrole')">Enregistrer</button>
+    <button class="tb-btn ghost" onclick="closeM('editrole')">Annuler</button>
+  </div>
+</div>
+</div>
+
+<!-- Ajouter Rôle -->
+<div class="modal-bg" id="modal-addrole" onclick="closeM('addrole')">
+<div class="modal" onclick="event.stopPropagation()" style="max-width:400px">
+  <div class="mh"><div class="mh-t">🛡️ Créer un rôle</div><button class="mclose" onclick="closeM('addrole')">✕</button></div>
+  <div class="mb">
+    <div class="fg c2">
+      <div class="ff"><div class="fl">Nom du rôle <span class="req">*</span></div><input class="fi2" type="text" placeholder="Ex: Comptable"></div>
+      <div class="ff"><div class="fl">Niveau accès</div><input class="fi2" type="number" placeholder="3" min="2" max="9"></div>
+    </div>
+    <div class="ff" style="margin-bottom:14px"><div class="fl">Description</div><textarea class="fta" placeholder="Rôle destiné à…"></textarea></div>
+  </div>
+  <div class="mfooter">
+    <button class="tb-btn gold" onclick="toast('✅ Rôle créé !');closeM('addrole')">Créer</button>
+    <button class="tb-btn ghost" onclick="closeM('addrole')">Annuler</button>
+  </div>
+</div>
+</div>
+
+<!-- Export -->
+<div class="modal-bg" id="modal-export" onclick="closeM('export')">
+<div class="modal" onclick="event.stopPropagation()" style="max-width:440px">
+  <div class="mh"><div class="mh-t">↓ Exporter des données</div><button class="mclose" onclick="closeM('export')">✕</button></div>
+  <div class="mb">
+    <div class="ff" style="margin-bottom:14px"><div class="fl">Type de données <span class="req">*</span></div><select class="fsel"><option>Prestataires (tous)</option><option>Visiteurs / Organisateurs</option><option>Abonnements</option><option>Devis & Commissions</option><option>Avis & Notations</option><option>Alertes & Logs</option><option>Rapport complet</option></select></div>
+    <div class="fg c2">
+      <div class="ff"><div class="fl">Du</div><input class="fi2" type="date"></div>
+      <div class="ff"><div class="fl">Au</div><input class="fi2" type="date"></div>
+    </div>
+    <div class="ff" style="margin-bottom:14px"><div class="fl">Format</div><div style="display:flex;gap:10px;margin-top:6px"><span class="fi-chip on" onclick="filterChip(this)">Excel (.xlsx)</span><span class="fi-chip" onclick="filterChip(this)">CSV</span><span class="fi-chip" onclick="filterChip(this)">PDF</span></div></div>
+    <div class="togrow"><div class="tog on" onclick="this.classList.toggle('on')"></div><span class="toglbl">Inclure les données sensibles (emails, tél.)</span></div>
+  </div>
+  <div class="mfooter">
+    <button class="tb-btn gold" style="flex:1;justify-content:center" onclick="toast('📊 Export en cours… Téléchargement dans 5s');closeM('export')">Générer l'export</button>
+    <button class="tb-btn ghost" onclick="closeM('export')">Annuler</button>
+  </div>
+</div>
+</div>
+
+<!-- Ajouter Article Blog -->
+<div class="modal-bg" id="modal-addarticle" onclick="closeM('addarticle')">
+<div class="modal" onclick="event.stopPropagation()" style="max-width:560px">
+  <div class="mh"><div class="mh-t">📝 Nouvel article / épisode</div><button class="mclose" onclick="closeM('addarticle')">✕</button></div>
+  <div class="mb">
+    <div class="ff" style="margin-bottom:14px"><div class="fl">Type de contenu</div><select class="fsel"><option>Article de blog</option><option>Épisode Studio Live Reco (YouTube)</option><option>Appel d'offres</option><option>Offre d'emploi</option></select></div>
+    <div class="fg c2">
+      <div class="ff"><div class="fl">Titre <span class="req">*</span></div><input class="fi2" type="text" placeholder="Titre de l'article…"></div>
+      <div class="ff"><div class="fl">Slug URL</div><input class="fi2" type="text" placeholder="mon-article-evenementiel"></div>
+      <div class="ff"><div class="fl">Catégorie</div><select class="fsel"><option>Conseil & Guide</option><option>Décryptage</option><option>Portrait prestataire</option><option>Tendances</option><option>Rapport</option></select></div>
+      <div class="ff"><div class="fl">Auteur</div><input class="fi2" type="text" value="Équipe Event Reco"></div>
+      <div class="ff"><div class="fl">Lien YouTube (si épisode)</div><input class="fi2" type="url" placeholder="https://youtube.com/watch?v=…"></div>
+      <div class="ff"><div class="fl">Date de publication</div><input class="fi2" type="date"></div>
+    </div>
+    <div class="ff" style="margin-bottom:14px"><div class="fl">Résumé (SEO)</div><textarea class="fta" placeholder="Description courte pour les moteurs de recherche…"></textarea></div>
+    <div class="togrow"><div class="tog on" onclick="this.classList.toggle('on')"></div><span class="toglbl">Publier immédiatement</span></div>
+    <div class="togrow"><div class="tog" onclick="this.classList.toggle('on')"></div><span class="toglbl">Mettre en avant sur la home</span></div>
+    <div class="togrow"><div class="tog on" onclick="this.classList.toggle('on')"></div><span class="toglbl">Diffuser sur les réseaux sociaux (Facebook, Instagram)</span></div>
+  </div>
+  <div class="mfooter">
+    <button class="tb-btn gold" onclick="toast('✅ Article publié !');closeM('addarticle')">Publier</button>
+    <button class="tb-btn ghost" onclick="toast('💾 Brouillon sauvegardé');closeM('addarticle')">Sauvegarder brouillon</button>
+    <button class="tb-btn ghost" onclick="closeM('addarticle')">Annuler</button>
+  </div>
+</div>
+</div>
+
+<script>
+const PAGE_TITLES = {
+  dashboard:'Vue d\'ensemble',prestataires:'Prestataires',visiteurs:'Visiteurs & Organisateurs',
+  validations:'Validations en attente',fiches:'Fiches & Profils',avis:'Avis & Modération',
+  blog:'Blog & Studio Live',categories:'Catégories & Tags',devis:'Devis Express',
+  abonnements:'Abonnements',commissions:'Commissions & Revenus',appels:'Appels d\'offres',
+  roles:'Rôles & Permissions',tarifs:'Grille tarifaire',notifcfg:'Notifications & Emails',
+  systeme:'Paramètres système',alertes:'Alertes & Logs',activite:'Activité temps réel',
+};
+
+function goView(el, name) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('on'));
+  document.querySelectorAll('.ni').forEach(n => n.classList.remove('on'));
+  const v = document.getElementById('view-' + name);
+  if (v) v.classList.add('on');
+  if (el) el.classList.add('on');
+  document.getElementById('tb-title').textContent = PAGE_TITLES[name] || name;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function openM(id) {
+  const m = document.getElementById('modal-' + id);
+  if (m) m.classList.add('on');
+}
+function closeM(id) {
+  const m = document.getElementById('modal-' + id);
+  if (m) m.classList.remove('on');
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.querySelectorAll('.modal-bg.on').forEach(m => m.classList.remove('on'));
+});
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove('show'), 4000);
+}
+
+function filterChip(el) {
+  const parent = el.parentElement;
+  parent.querySelectorAll('.fi-chip').forEach(c => c.classList.remove('on'));
+  el.classList.add('on');
+}
+
+function selAll(cb) {
+  const tbl = cb.closest('table');
+  if (tbl) tbl.querySelectorAll('tbody input[type=checkbox]').forEach(c => c.checked = cb.checked);
+}
+</script>
+</body>
+</html>

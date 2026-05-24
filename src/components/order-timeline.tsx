@@ -64,7 +64,7 @@ export function OrderTimeline({ events }: OrderTimelineProps) {
       case "system": return "Système"
       case "seller": return "Vendeur"
       case "customer": return "Client"
-      case "courier": return "Livreur"
+      case "courier": return "Prestataire"
       default: return actor
     }
   }

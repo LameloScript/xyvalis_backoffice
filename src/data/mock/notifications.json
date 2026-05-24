@@ -1,0 +1,16 @@
+{
+  "historique": [
+    { "id": 1, "titre": "Mise à jour application", "segment": "Tous", "message": "Une nouvelle version est disponible. Mettez à jour…", "date": "24 avr. 2026", "statut": "Envoyée" },
+    { "id": 2, "titre": "Promo Ramadan -20%", "segment": "Clients", "message": "Profitez de 20 % de réduction sur toutes vos livraisons…", "date": "22 avr. 2026", "statut": "Envoyée" },
+    { "id": 3, "titre": "Bonus prestataires ce week-end", "segment": "Prestataires", "message": "Double commission sur les courses livrées samedi et dimanche…", "date": "21 avr. 2026", "statut": "Envoyée" },
+    { "id": 4, "titre": "Maintenance programmée", "segment": "Tous", "message": "Le service sera interrompu le 26 avr. de 02h à 04h…", "date": "20 avr. 2026", "statut": "Planifiée" },
+    { "id": 5, "titre": "Rappel validation KYC", "segment": "Relais", "message": "Votre dossier KYC est incomplet. Veuillez soumettre…", "date": "19 avr. 2026", "statut": "Envoyée" }
+  ],
+  "modeles": [
+    { "id": 1, "nom": "Confirmation de livraison", "type": "livraison", "modif": "18 avr. 2026" },
+    { "id": 2, "nom": "Colis en attente au relais", "type": "livraison", "modif": "15 avr. 2026" },
+    { "id": 3, "nom": "Offre promotionnelle", "type": "promo", "modif": "10 avr. 2026" },
+    { "id": 4, "nom": "Alerte sécurité compte", "type": "système", "modif": "5 avr. 2026" },
+    { "id": 5, "nom": "Bienvenue nouvel utilisateur", "type": "système", "modif": "1 avr. 2026" }
+  ]
+}

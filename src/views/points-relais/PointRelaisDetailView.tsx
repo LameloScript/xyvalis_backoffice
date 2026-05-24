@@ -51,7 +51,7 @@ const relais = {
   fraisExpiresAccumules: 10000,
   note: 4.7,
   totalColisTraites: 1248,
-  revenus: 312000,
+  reventus: 312000,
   statut: "actif" as const,
   dateInscription: "2025-11-15",
   colisRecents: [
@@ -176,9 +176,9 @@ export default function PointRelaisDetailView({ id }: PointRelaisDetailViewProps
 
         <Card className="@container/card">
           <CardHeader>
-            <CardDescription>Revenus ce mois</CardDescription>
+            <CardDescription>Reventus ce mois</CardDescription>
             <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-2xl">
-              {relais.revenus.toLocaleString("fr-FR")} FCFA
+              {relais.reventus.toLocaleString("fr-FR")} FCFA
             </CardTitle>
             <CardAction>
               <Badge variant="outline" className="border-green-600 text-green-700">

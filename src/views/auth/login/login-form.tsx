@@ -4,16 +4,14 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
   Field,
-  FieldDescription,
   FieldGroup,
   FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Eye, EyeOff, Loader2 } from "lucide-react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { verifyCredentials } from "@/data/data"
 import { useAuth } from "@/contexts/auth-context"
 import { getSettings } from "@/lib/settings-store"
 
@@ -25,7 +23,13 @@ export function LoginForm({
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
-  const { login } = useAuth()
+  const { login, isAuthenticated } = useAuth()
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.replace("/dashboard")
+    }
+  }, [isAuthenticated, router])
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -36,24 +40,16 @@ export function LoginForm({
     const email = formData.get("email") as string
     const password = formData.get("password") as string
 
-    const result = await verifyCredentials({ email, password })
-
-    if (result.success && result.user) {
-      // Stocker les informations de l'utilisateur dans le sessionStorage
-      sessionStorage.setItem("user", JSON.stringify(result.user))
-      
+    try {
+      await login(email, password)
       const settings = getSettings()
-      
       if (settings.twoFactorEnabled) {
-        // Si 2FA est activé, rediriger vers la page OTP
         router.push("/otp")
       } else {
-        // Sinon, connecter directement
-        login()
         router.push("/dashboard")
       }
-    } else {
-      setError(result.error || "Email ou mot de passe incorrect")
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Email ou mot de passe incorrect")
       setIsLoading(false)
     }
   }
@@ -64,7 +60,7 @@ export function LoginForm({
         <div className="flex flex-col items-start gap-1">
           <h1 className="text-xl font-bold">Connexion</h1>
           <p className="text-muted-foreground text-sm pr-10">
-            Portail Superadmin — accès réservé aux administrateurs Xyvalis.
+            Portail Superadmin — accès réservé aux administrateurs Event Reco Africa
           </p>
         </div>
         {error && (

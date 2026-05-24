@@ -64,7 +64,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 type DocumentStatut = "complet" | "incomplet"
 type DemandeStatut = "en_attente" | "approuve" | "rejete"
 
-type DemandelivreurRaw = {
+type DemandeprestataireRaw = {
   id: string
   nom: string
   telephone: string
@@ -88,151 +88,21 @@ type DemandeRelaisRaw = {
 
 // ── Mock data ──────────────────────────────────────────────────────────────
 
-const livreursData: DemandelivreurRaw[] = [
-  {
-    id: "DLV-001",
-    nom: "Kouassi Arnaud",
-    telephone: "+225 07 11 22 33",
-    commune: "Yopougon",
-    vehicule: "Moto",
-    documents: "complet",
-    dateDemandeRaw: "2026-04-22",
-    statut: "en_attente",
-  },
-  {
-    id: "DLV-002",
-    nom: "Diomandé Lassana",
-    telephone: "+225 05 44 55 66",
-    commune: "Abobo",
-    vehicule: "Moto",
-    documents: "incomplet",
-    dateDemandeRaw: "2026-04-21",
-    statut: "en_attente",
-  },
-  {
-    id: "DLV-003",
-    nom: "Touré Ibrahim",
-    telephone: "+225 01 77 88 99",
-    commune: "Cocody",
-    vehicule: "Voiture",
-    documents: "complet",
-    dateDemandeRaw: "2026-04-20",
-    statut: "en_attente",
-  },
-  {
-    id: "DLV-004",
-    nom: "Koné Moussa",
-    telephone: "+225 07 33 44 55",
-    commune: "Adjamé",
-    vehicule: "Moto",
-    documents: "complet",
-    dateDemandeRaw: "2026-04-19",
-    statut: "en_attente",
-  },
-  {
-    id: "DLV-005",
-    nom: "Bah Mamadou",
-    telephone: "+225 05 66 77 88",
-    commune: "Marcory",
-    vehicule: "Vélo",
-    documents: "incomplet",
-    dateDemandeRaw: "2026-04-18",
-    statut: "en_attente",
-  },
-  {
-    id: "DLV-006",
-    nom: "Fofana Seydou",
-    telephone: "+225 01 99 00 11",
-    commune: "Plateau",
-    vehicule: "Moto",
-    documents: "complet",
-    dateDemandeRaw: "2026-04-10",
-    statut: "approuve",
-  },
-  {
-    id: "DLV-007",
-    nom: "Ouédraogo Adama",
-    telephone: "+225 07 22 33 44",
-    commune: "Treichville",
-    vehicule: "Moto",
-    documents: "incomplet",
-    dateDemandeRaw: "2026-04-08",
-    statut: "rejete",
-  },
-]
+import validationsData from "@/data/mock/validations.json"
 
-const relaisData: DemandeRelaisRaw[] = [
-  {
-    id: "DRL-001",
-    nomBoutique: "Chez Mariama Express",
-    responsable: "Mariama Bah",
-    commune: "Yopougon",
-    quartier: "Selmer",
-    horaires: "Lun–Sam 08h–20h",
-    dateDemandeRaw: "2026-04-23",
-    statut: "en_attente",
-  },
-  {
-    id: "DRL-002",
-    nomBoutique: "Superette du Plateau",
-    responsable: "N'Zi Kouakou",
-    commune: "Plateau",
-    quartier: "Avenue Noguès",
-    horaires: "Lun–Ven 09h–18h",
-    dateDemandeRaw: "2026-04-22",
-    statut: "en_attente",
-  },
-  {
-    id: "DRL-003",
-    nomBoutique: "Kiosque Cocody Village",
-    responsable: "Ahou Bléyou",
-    commune: "Cocody",
-    quartier: "Riviera 2",
-    horaires: "Lun–Dim 07h–22h",
-    dateDemandeRaw: "2026-04-21",
-    statut: "en_attente",
-  },
-  {
-    id: "DRL-004",
-    nomBoutique: "Boutique Treichville Sud",
-    responsable: "Coulibaly Sekou",
-    commune: "Treichville",
-    quartier: "Rue 12",
-    horaires: "Lun–Sam 08h–19h",
-    dateDemandeRaw: "2026-04-20",
-    statut: "en_attente",
-  },
-  {
-    id: "DRL-005",
-    nomBoutique: "Dépôt Adjamé Market",
-    responsable: "Sawadogo Rasmané",
-    commune: "Adjamé",
-    quartier: "220 Logements",
-    horaires: "Lun–Sam 07h–21h",
-    dateDemandeRaw: "2026-04-05",
-    statut: "approuve",
-  },
-  {
-    id: "DRL-006",
-    nomBoutique: "Galerie Marcory",
-    responsable: "Attié Marie-Claire",
-    commune: "Marcory",
-    quartier: "Zone 4",
-    horaires: "Mar–Dim 10h–20h",
-    dateDemandeRaw: "2026-04-03",
-    statut: "rejete",
-  },
-]
+const prestatairesData: DemandeprestataireRaw[] = validationsData.prestatairesData as DemandeprestataireRaw[]
+
+const relaisData: DemandeRelaisRaw[] = validationsData.relaisData as DemandeRelaisRaw[]
 
 // ── KPI counts ─────────────────────────────────────────────────────────────
 
 const kpis = {
-  livreursEnAttente: livreursData.filter((l) => l.statut === "en_attente").length,
+  prestatairesEnAttente: prestatairesData.filter((l) => l.statut === "en_attente").length,
   relaisEnAttente: relaisData.filter((r) => r.statut === "en_attente").length,
   approuvesCeMois:
-    [...livreursData, ...relaisData].filter((d) => d.statut === "approuve").length,
+    [...prestatairesData, ...relaisData].filter((d) => d.statut === "approuve").length,
   rejetesCeMois:
-    [...livreursData, ...relaisData].filter((d) => d.statut === "rejete").length,
+    [...prestatairesData, ...relaisData].filter((d) => d.statut === "rejete").length,
 }
 
 // ── Shared pagination component ────────────────────────────────────────────
@@ -289,16 +159,16 @@ function TablePagination({ table }: { table: ReturnType<typeof useReactTable<any
   )
 }
 
-// ── Livreurs sub-table ─────────────────────────────────────────────────────
+// ── Prestataires sub-table ─────────────────────────────────────────────────────
 
-function LivreursTable() {
-  const [data, setData] = React.useState<DemandelivreurRaw[]>(livreursData)
+function PrestatairesTable() {
+  const [data, setData] = React.useState<DemandeprestataireRaw[]>(prestatairesData)
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
 
-  const columns: ColumnDef<DemandelivreurRaw>[] = React.useMemo(() => [
+  const columns: ColumnDef<DemandeprestataireRaw>[] = React.useMemo(() => [
     {
       id: "select",
       header: ({ table }) => (
@@ -499,7 +369,7 @@ function LivreursTable() {
     <div className="w-full">
       <div className="flex flex-wrap items-center gap-3 py-4">
         <Input
-          placeholder="Rechercher un livreur..."
+          placeholder="Rechercher un prestataire..."
           value={(table.getColumn("nom")?.getFilterValue() as string) ?? ""}
           onChange={(e) => table.getColumn("nom")?.setFilterValue(e.target.value)}
           className="max-w-xs"
@@ -874,9 +744,9 @@ export default function ValidationsView() {
       <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card className="@container/card bg-primary border-primary shadow-xs">
           <CardHeader>
-            <CardDescription className="text-white/70">En attente (livreurs)</CardDescription>
+            <CardDescription className="text-white/70">En attente (prestataires)</CardDescription>
             <CardTitle className="text-2xl font-semibold tabular-nums text-white">
-              {kpis.livreursEnAttente}
+              {kpis.prestatairesEnAttente}
             </CardTitle>
             <CardAction>
               <Badge variant="outline" className="border-none bg-amber-500 text-white">
@@ -926,7 +796,7 @@ export default function ValidationsView() {
             <div className="line-clamp-1 flex gap-2 font-medium text-emerald-300">
               Bon traitement <IconTrendingUp className="size-4" />
             </div>
-            <div className="text-white/60">Livreurs + relais</div>
+            <div className="text-white/60">Prestataires + relais</div>
           </CardFooter>
         </Card>
         <Card className="@container/card bg-primary border-primary shadow-xs">
@@ -951,13 +821,13 @@ export default function ValidationsView() {
       </div>
 
       {/* Tabs */}
-      <Tabs defaultValue="livreurs" className="w-full">
+      <Tabs defaultValue="prestataires" className="w-full">
         <TabsList>
-          <TabsTrigger value="livreurs" className="flex items-center gap-2">
+          <TabsTrigger value="prestataires" className="flex items-center gap-2">
             <FileCheck className="h-4 w-4" />
-            Livreurs
+            Prestataires
             <Badge variant="outline" className="ml-1 bg-amber-600/10 text-amber-600 border-none rounded-sm text-xs">
-              {kpis.livreursEnAttente}
+              {kpis.prestatairesEnAttente}
             </Badge>
           </TabsTrigger>
           <TabsTrigger value="relais" className="flex items-center gap-2">
@@ -968,8 +838,8 @@ export default function ValidationsView() {
             </Badge>
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="livreurs">
-          <LivreursTable />
+        <TabsContent value="prestataires">
+          <PrestatairesTable />
         </TabsContent>
         <TabsContent value="relais">
           <RelaisTable />

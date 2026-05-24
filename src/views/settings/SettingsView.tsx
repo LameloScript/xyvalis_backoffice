@@ -61,258 +61,13 @@ import {
 } from "@/components/ui/select";
 
 // Payment providers configuration
-const allPaymentProviders = [
-  {
-    key: "Orange Money",
-    logo: "/assets/logo-brand/logo.png",
-    description: "Mobile Money Orange",
-    maxLength: 10,
-    waitDays: "24h",
-  },
-  {
-    key: "Moov Money",
-    logo: "/assets/logo-brand/logo-moov.png",
-    description: "Mobile Money Moov",
-    maxLength: 10,
-    waitDays: "24h",
-  },
-  {
-    key: "MTN Mobile Money",
-    logo: "/assets/logo-brand/logo-mtn.png",
-    description: "MTN MoMo",
-    maxLength: 10,
-    waitDays: "24h",
-  },
-  {
-    key: "Wave",
-    logo: "/assets/logo-brand/logo-wave.png",
-    description: "Wave Money",
-    maxLength: 10,
-    waitDays: "Instantané",
-  },
-  {
-    key: "Carte bancaire",
-    logo: "",
-    description: "Visa, Mastercard",
-    maxLength: 27,
-    waitDays: "3-5 jours",
-  },
-];
+import settingsMockData from "@/data/mock/settings.json"
 
-// Données des pays d'Afrique de l'Ouest et leurs villes
-const westAfricanCountries: Record<string, string[]> = {
-  "cote-divoire": [
-    "Abidjan",
-    "Yamoussoukro",
-    "Bouaké",
-    "Korhogo",
-    "San-Pédro",
-    "Daloa",
-    "Man",
-    "Gagnoa",
-    "Divo",
-    "Anyama",
-  ],
-  senegal: [
-    "Dakar",
-    "Thiès",
-    "Rufisque",
-    "Kaolack",
-    "Mbour",
-    "Saint-Louis",
-    "Ziguinchor",
-    "Diourbel",
-    "Louga",
-    "Tambacounda",
-  ],
-  mali: [
-    "Bamako",
-    "Sikasso",
-    "Mopti",
-    "Koutiala",
-    "Kayes",
-    "Ségou",
-    "Gao",
-    "Tombouctou",
-    "Kidal",
-    "Koulikoro",
-  ],
-  "burkina-faso": [
-    "Ouagadougou",
-    "Bobo-Dioulasso",
-    "Koudougou",
-    "Banfora",
-    "Ouahigouya",
-    "Pouytenga",
-    "Kaya",
-    "Tenkodogo",
-    "Fada N'Gourma",
-    "Dédougou",
-  ],
-  niger: [
-    "Niamey",
-    "Zinder",
-    "Maradi",
-    "Agadez",
-    "Tahoua",
-    "Dosso",
-    "Diffa",
-    "Tillabéri",
-    "Arlit",
-    "Birni N'Konni",
-  ],
-  guinee: [
-    "Conakry",
-    "Nzérékoré",
-    "Kankan",
-    "Kindia",
-    "Labé",
-    "Mamou",
-    "Boké",
-    "Faranah",
-    "Siguiri",
-    "Kamsar",
-  ],
-  benin: [
-    "Cotonou",
-    "Porto-Novo",
-    "Parakou",
-    "Djougou",
-    "Abomey-Calavi",
-    "Bohicon",
-    "Natitingou",
-    "Lokossa",
-    "Ouidah",
-    "Kandi",
-  ],
-  togo: [
-    "Lomé",
-    "Sokodé",
-    "Kara",
-    "Kpalimé",
-    "Atakpamé",
-    "Bassar",
-    "Tsévié",
-    "Aného",
-    "Mango",
-    "Dapaong",
-  ],
-  ghana: [
-    "Accra",
-    "Kumasi",
-    "Tamale",
-    "Sekondi-Takoradi",
-    "Ashaiman",
-    "Sunyani",
-    "Cape Coast",
-    "Obuasi",
-    "Tema",
-    "Koforidua",
-  ],
-  nigeria: [
-    "Lagos",
-    "Kano",
-    "Ibadan",
-    "Abuja",
-    "Port Harcourt",
-    "Benin City",
-    "Maiduguri",
-    "Zaria",
-    "Aba",
-    "Jos",
-  ],
-  liberia: [
-    "Monrovia",
-    "Gbarnga",
-    "Kakata",
-    "Bensonville",
-    "Harper",
-    "Voinjama",
-    "Buchanan",
-    "Zwedru",
-    "Harbel",
-    "Pleebo",
-  ],
-  "sierra-leone": [
-    "Freetown",
-    "Bo",
-    "Kenema",
-    "Makeni",
-    "Koidu",
-    "Lunsar",
-    "Port Loko",
-    "Kabala",
-    "Waterloo",
-    "Bonthe",
-  ],
-  gambie: [
-    "Banjul",
-    "Serekunda",
-    "Brikama",
-    "Bakau",
-    "Farafenni",
-    "Lamin",
-    "Sukuta",
-    "Gunjur",
-    "Soma",
-    "Basse Santa Su",
-  ],
-  "guinee-bissau": [
-    "Bissau",
-    "Bafatá",
-    "Gabú",
-    "Bissorã",
-    "Bolama",
-    "Cacheu",
-    "Bubaque",
-    "Catió",
-    "Mansôa",
-    "Buba",
-  ],
-  "cap-vert": [
-    "Praia",
-    "Mindelo",
-    "Santa Maria",
-    "Assomada",
-    "Pedra Badejo",
-    "São Filipe",
-    "Tarrafal",
-    "Porto Novo",
-    "Espargos",
-    "Ribeira Grande",
-  ],
-  mauritanie: [
-    "Nouakchott",
-    "Nouadhibou",
-    "Kiffa",
-    "Kaédi",
-    "Rosso",
-    "Zouérat",
-    "Atar",
-    "Néma",
-    "Sélibaby",
-    "Aleg",
-  ],
-};
+const allPaymentProviders = settingsMockData.allPaymentProviders
 
-const countryNames: Record<string, string> = {
-  "cote-divoire": "Côte d'Ivoire",
-  senegal: "Sénégal",
-  mali: "Mali",
-  "burkina-faso": "Burkina Faso",
-  niger: "Niger",
-  guinee: "Guinée",
-  benin: "Bénin",
-  togo: "Togo",
-  ghana: "Ghana",
-  nigeria: "Nigeria",
-  liberia: "Liberia",
-  "sierra-leone": "Sierra Leone",
-  gambie: "Gambie",
-  "guinee-bissau": "Guinée-Bissau",
-  "cap-vert": "Cap-Vert",
-  mauritanie: "Mauritanie",
-};
+const westAfricanCountries: Record<string, string[]> = settingsMockData.westAfricanCountries
+
+const countryNames: Record<string, string> = settingsMockData.countryNames
 
 export default function SettingsView() {
   const [selectedCountry, setSelectedCountry] =
@@ -513,7 +268,7 @@ export default function SettingsView() {
             <span>Paiement</span>
           </TabsTrigger>
           <TabsTrigger
-            value="delivery"
+            value="Reco"
             className="gap-2 data-[state=active]:bg-background data-[state=active]:shadow-sm"
           >
             <Truck className="size-4" />
@@ -585,7 +340,7 @@ export default function SettingsView() {
                   </Label>
                   <Input
                     id="shopname"
-                    defaultValue="Xyvalis"
+                    defaultValue="event"
                     placeholder="Organisation"
                   />
                 </div>
@@ -598,7 +353,7 @@ export default function SettingsView() {
                   </Label>
                   <Input
                     id="email"
-                    defaultValue="admin@xyvalis.com"
+                    defaultValue="admin@event.com"
                     className="bg-muted/50 text-muted-foreground"
                     disabled
                   />
@@ -943,8 +698,8 @@ export default function SettingsView() {
           </Card>
         </TabsContent>
 
-        {/* Delivery Tab */}
-        <TabsContent value="delivery" className="mt-6">
+        {/* Reco Tab */}
+        <TabsContent value="Reco" className="mt-6">
           <Card>
             <CardHeader className="flex flex-row items-center gap-3 border-b pb-4">
               <Truck className="size-5 text-muted-foreground" />
@@ -968,7 +723,7 @@ export default function SettingsView() {
                 </div>
               </div>
 
-              {/* Delivery info cards */}
+              {/* Reco info cards */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="rounded-lg border p-4 space-y-2">
                   <div className="flex items-center gap-2">
@@ -1259,7 +1014,7 @@ export default function SettingsView() {
               <div className="flex flex-col items-center justify-center space-y-4 py-4">
                 <div className="p-4 bg-white rounded-lg border shadow-sm">
                   <QRCodeSVG
-                    value={`otpauth://totp/Xyvalis-Seller:Vendeur?secret=${tempSecret}&issuer=Xyvalis`}
+                    value={`otpauth://totp/event-Seller:Vendeur?secret=${tempSecret}&issuer=event`}
                     size={200}
                     level="H"
                   />

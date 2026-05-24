@@ -75,7 +75,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 type Role =
   | "super_admin"
-  | "gestionnaire_livreurs"
+  | "gestionnaire_prestataires"
   | "gestionnaire_clients"
   | "gestionnaire_relais"
   | "marketing"
@@ -90,8 +90,8 @@ type PagePermissions = Record<Permission, boolean>;
 const PAGES = [
   { key: "dashboard", label: "Dashboard" },
   { key: "commandes", label: "Commandes" },
-  { key: "utilisateurs", label: "Utilisateurs" },
-  { key: "livreurs", label: "Livreurs" },
+  { key: "organisateurs", label: "Organisateurs" },
+  { key: "prestataires", label: "Prestataires" },
   { key: "points-relais", label: "Points relais" },
   { key: "litiges", label: "Litiges" },
   { key: "validations", label: "Validations" },
@@ -101,7 +101,7 @@ const PAGES = [
   { key: "contenu", label: "Contenu" },
   { key: "analytics", label: "Statistiques" },
   { key: "admins", label: "Admins" },
-  { key: "Xyvalis", label: "Xyvalis" },
+  { key: "event", label: "event" },
 ];
 
 const PERMS: { key: Permission; label: string }[] = [
@@ -142,163 +142,11 @@ type Activite = {
   ip: string;
 };
 
-const adminsData: Admin[] = [
-  {
-    id: "ADM-001",
-    nom: "Aminata Koné",
-    email: "aminata.kone@xyvalis.ci",
-    telephone: "+225 07 11 22 33",
-    role: "super_admin",
-    statut: "actif",
-    derniereConnexion: "2026-04-26T13:42:00",
-    creeLe: "2025-09-12",
-  },
-  {
-    id: "ADM-002",
-    nom: "Kouassi Stéphane",
-    email: "kouassi.s@xyvalis.ci",
-    telephone: "+225 05 44 55 66",
-    role: "gestionnaire_livreurs",
-    statut: "actif",
-    derniereConnexion: "2026-04-26T10:15:00",
-    creeLe: "2025-11-03",
-  },
-  {
-    id: "ADM-003",
-    nom: "Diallo Fatoumata",
-    email: "diallo.f@xyvalis.ci",
-    telephone: "+225 07 88 99 00",
-    role: "gestionnaire_clients",
-    statut: "actif",
-    derniereConnexion: "2026-04-26T09:32:00",
-    creeLe: "2025-12-18",
-  },
-  {
-    id: "ADM-004",
-    nom: "Bamba Mariam",
-    email: "bamba.m@xyvalis.ci",
-    telephone: "+225 01 22 33 44",
-    role: "gestionnaire_relais",
-    statut: "actif",
-    derniereConnexion: "2026-04-25T17:48:00",
-    creeLe: "2026-01-22",
-  },
-  {
-    id: "ADM-005",
-    nom: "Touré Ibrahim",
-    email: "toure.i@xyvalis.ci",
-    telephone: "+225 05 66 77 88",
-    role: "marketing",
-    statut: "actif",
-    derniereConnexion: "2026-04-26T08:11:00",
-    creeLe: "2026-02-05",
-  },
-  {
-    id: "ADM-006",
-    nom: "N'Guessan Paul",
-    email: "nguessan.p@xyvalis.ci",
-    telephone: "+225 07 33 44 55",
-    role: "comptable",
-    statut: "actif",
-    derniereConnexion: "2026-04-26T11:05:00",
-    creeLe: "2026-02-20",
-  },
-  {
-    id: "ADM-007",
-    nom: "Adjoua Kouassi",
-    email: "adjoua.k@xyvalis.ci",
-    telephone: "+225 07 12 34 56",
-    role: "chef_relais",
-    statut: "actif",
-    derniereConnexion: "2026-04-26T07:55:00",
-    creeLe: "2026-03-08",
-  },
-  {
-    id: "ADM-008",
-    nom: "Ouattara Drissa",
-    email: "ouattara.d@xyvalis.ci",
-    telephone: "+225 01 55 66 77",
-    role: "gestionnaire_livreurs",
-    statut: "desactive",
-    derniereConnexion: "2026-04-15T14:20:00",
-    creeLe: "2025-10-30",
-  },
-];
+import adminsMockData from "@/data/mock/admins.json";
 
-const activitesData: Activite[] = [
-  {
-    id: "ACT-2604-12",
-    admin: "Aminata Koné",
-    role: "super_admin",
-    action: "Validation livreur",
-    cible: "DLV-001 — Kouassi Arnaud",
-    date: "2026-04-26T13:42:00",
-    ip: "192.168.1.42",
-  },
-  {
-    id: "ACT-2604-11",
-    admin: "Kouassi Stéphane",
-    role: "gestionnaire_livreurs",
-    action: "Suspension compte",
-    cible: "LIV-007 — N'Guessan Kouamé",
-    date: "2026-04-26T11:18:00",
-    ip: "192.168.1.55",
-  },
-  {
-    id: "ACT-2604-10",
-    admin: "N'Guessan Paul",
-    role: "comptable",
-    action: "Approbation retrait",
-    cible: "TXN-0042 — 25 000 FCFA",
-    date: "2026-04-26T10:55:00",
-    ip: "192.168.1.61",
-  },
-  {
-    id: "ACT-2604-09",
-    admin: "Diallo Fatoumata",
-    role: "gestionnaire_clients",
-    action: "Note interne ajoutée",
-    cible: "USR-009 — Ouattara Seydou",
-    date: "2026-04-26T09:33:00",
-    ip: "192.168.1.48",
-  },
-  {
-    id: "ACT-2604-08",
-    admin: "Touré Ibrahim",
-    role: "marketing",
-    action: "Création code promo",
-    cible: "PRM-005 — MAI2026",
-    date: "2026-04-26T08:14:00",
-    ip: "192.168.1.74",
-  },
-  {
-    id: "ACT-2604-07",
-    admin: "Bamba Mariam",
-    role: "gestionnaire_relais",
-    action: "Modification horaires",
-    cible: "PR-003 — Livraison Pro Abobo",
-    date: "2026-04-25T18:02:00",
-    ip: "192.168.1.81",
-  },
-  {
-    id: "ACT-2604-06",
-    admin: "Aminata Koné",
-    role: "super_admin",
-    action: "Création compte admin",
-    cible: "ADM-007 — Adjoua Kouassi",
-    date: "2026-04-25T16:30:00",
-    ip: "192.168.1.42",
-  },
-  {
-    id: "ACT-2604-05",
-    admin: "Aminata Koné",
-    role: "super_admin",
-    action: "Résolution litige",
-    cible: "LTG-003 — Adjoua Kouassi",
-    date: "2026-04-24T15:48:00",
-    ip: "192.168.1.42",
-  },
-];
+const adminsData: Admin[] = adminsMockData.adminsData as Admin[];
+
+const activitesData: Activite[] = adminsMockData.activitesData as Activite[];
 
 const roleConfig: Record<
   Role,
@@ -309,8 +157,8 @@ const roleConfig: Record<
     icon: Crown,
     className: "bg-purple-600/10 text-purple-600",
   },
-  gestionnaire_livreurs: {
-    label: "Gestion livreurs",
+  gestionnaire_prestataires: {
+    label: "Gestion prestataires",
     icon: Truck,
     className: "bg-blue-600/10 text-blue-600",
   },
@@ -578,7 +426,7 @@ export default function AdminsView() {
                       onChange={(e) =>
                         setForm({ ...form, email: e.target.value })
                       }
-                      placeholder="prenom@xyvalis.ci"
+                      placeholder="prenom@event.ci"
                     />
                   </div>
                   <div className="grid gap-2">

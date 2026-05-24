@@ -22,8 +22,8 @@ export default function NotFound() {
       <div className="text-center max-w-md">
         <div className="flex justify-center mb-8">
           <Image
-            src="/assets/logo/logo-xyvalis-w.png"
-            alt="Xyvalis Delivery"
+            src="/brand/logo-event-reco.png"
+            alt="Event Reco"
             width={320}
             height={200}
             className="object-contain"

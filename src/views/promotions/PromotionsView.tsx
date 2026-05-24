@@ -72,7 +72,7 @@ import {
 
 type StatutPromo = "actif" | "expire" | "epuise" | "planifie"
 type TypePromo = "pourcentage" | "montant"
-type CiblePromo = "tous" | "nouveaux" | "fidels" | "livreurs"
+type CiblePromo = "tous" | "nouveaux" | "fidels" | "prestataires"
 
 type CodePromo = {
   id: string
@@ -87,92 +87,9 @@ type CodePromo = {
   statut: StatutPromo
 }
 
-const promosData: CodePromo[] = [
-  {
-    id: "PRM-001",
-    code: "BIENVENUE20",
-    type: "pourcentage",
-    valeur: 20,
-    cible: "nouveaux",
-    utilisations: 124,
-    utilisationsMax: 500,
-    dateDebut: "2026-04-01",
-    dateFin: "2026-05-31",
-    statut: "actif",
-  },
-  {
-    id: "PRM-002",
-    code: "RAMADAN15",
-    type: "pourcentage",
-    valeur: 15,
-    cible: "tous",
-    utilisations: 458,
-    utilisationsMax: 1000,
-    dateDebut: "2026-03-15",
-    dateFin: "2026-04-30",
-    statut: "actif",
-  },
-  {
-    id: "PRM-003",
-    code: "FCFA1000",
-    type: "montant",
-    valeur: 1000,
-    cible: "fidels",
-    utilisations: 67,
-    utilisationsMax: 200,
-    dateDebut: "2026-04-10",
-    dateFin: "2026-05-10",
-    statut: "actif",
-  },
-  {
-    id: "PRM-004",
-    code: "LIVREUR2X",
-    type: "pourcentage",
-    valeur: 100,
-    cible: "livreurs",
-    utilisations: 89,
-    utilisationsMax: null,
-    dateDebut: "2026-04-15",
-    dateFin: "2026-04-30",
-    statut: "actif",
-  },
-  {
-    id: "PRM-005",
-    code: "MAI2026",
-    type: "pourcentage",
-    valeur: 10,
-    cible: "tous",
-    utilisations: 0,
-    utilisationsMax: 2000,
-    dateDebut: "2026-05-01",
-    dateFin: "2026-05-31",
-    statut: "planifie",
-  },
-  {
-    id: "PRM-006",
-    code: "PAQUES25",
-    type: "pourcentage",
-    valeur: 25,
-    cible: "tous",
-    utilisations: 200,
-    utilisationsMax: 200,
-    dateDebut: "2026-03-25",
-    dateFin: "2026-04-15",
-    statut: "epuise",
-  },
-  {
-    id: "PRM-007",
-    code: "MARS500",
-    type: "montant",
-    valeur: 500,
-    cible: "nouveaux",
-    utilisations: 312,
-    utilisationsMax: 500,
-    dateDebut: "2026-03-01",
-    dateFin: "2026-03-31",
-    statut: "expire",
-  },
-]
+import promotionsMockData from "@/data/mock/promotions.json"
+
+const promosData: CodePromo[] = promotionsMockData as CodePromo[]
 
 const statutConfig: Record<StatutPromo, { label: string; className: string }> = {
   actif: { label: "Actif", className: "bg-green-600/10 text-green-600" },
@@ -185,7 +102,7 @@ const cibleLabel: Record<CiblePromo, string> = {
   tous: "Tous les clients",
   nouveaux: "Nouveaux clients",
   fidels: "Clients fidèles",
-  livreurs: "Livreurs",
+  prestataires: "Prestataires",
 }
 
 export default function PromotionsView() {
@@ -461,7 +378,7 @@ export default function PromotionsView() {
                     <SelectItem value="tous">Tous les clients</SelectItem>
                     <SelectItem value="nouveaux">Nouveaux clients</SelectItem>
                     <SelectItem value="fidels">Clients fidèles</SelectItem>
-                    <SelectItem value="livreurs">Livreurs</SelectItem>
+                    <SelectItem value="prestataires">Prestataires</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

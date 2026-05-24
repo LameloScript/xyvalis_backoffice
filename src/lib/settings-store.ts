@@ -13,8 +13,8 @@ export type ShopSettings = {
   rccmDoc?: string
   providerLogos?: Record<string, string>
   paymentProviders?: string[]
-  deliveryByPlatform?: boolean
-  deliveryPlatformName?: string
+  RecoByPlatform?: boolean
+  RecoPlatformName?: string
   twoFactorEnabled?: boolean
   twoFactorSecret?: string
 }
@@ -22,8 +22,8 @@ export type ShopSettings = {
 const KEY = "shopSettings"
 
 const defaults: ShopSettings = {
-  name: "Xyvalis Delivery",
-  email: "contact@xyvalis.com",
+  name: "event Reco",
+  email: "contact@event.com",
   phone: "+225 07 11 22 33",
   country: "CI",
   currency: "fcfa",
@@ -35,15 +35,15 @@ const defaults: ShopSettings = {
   identityDoc: "",
   rccmDoc: "",
   providerLogos: {
-    "Orange Money": "/assets/logo-brand/logo.png",
+    "Orange Money": "/assets/logo-brand/logo-orange.svg",
     "Moov Money": "/assets/logo-brand/logo-moov.png",
     "MTN Mobile Money": "/assets/logo-brand/logo-mtn.png",
     "Wave": "/assets/logo-brand/logo-wave.png",
     "Carte bancaire": "",
   },
   paymentProviders: ["Orange Money", "Moov Money", "MTN Mobile Money", "Wave", "Carte bancaire"],
-  deliveryByPlatform: true,
-  deliveryPlatformName: "Xyvalis Delivery",
+  RecoByPlatform: true,
+  RecoPlatformName: "event Reco",
   twoFactorEnabled: false,
 }
 

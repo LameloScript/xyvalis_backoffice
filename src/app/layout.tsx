@@ -3,6 +3,7 @@ import { Geist_Mono, Nunito_Sans, Oxanium } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/contexts/auth-context";
 import { NotFoundProvider } from "@/contexts/not-found-context";
+import { BreadcrumbProvider } from "@/contexts/breadcrumb-context";
 import ConditionalHeader from "@/components/conditional-header";
 import ConditionalFooter from "@/components/conditional-footer";
 import DynamicBreadcrumb from "@/components/dynamic-breadcrumb";
@@ -21,10 +22,10 @@ const fontMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Xyvalis Delivery",
-  description: "Plateforme de livraison Xyvalis Delivery",
+  title: "event Reco",
+  description: "Plateforme de livraison event Reco",
   icons: {
-    icon: '/assets/xyvalis-logo.png',
+    icon: '/assets/favicon.ico',
   },
 };
 
@@ -43,7 +44,9 @@ export default function RootLayout({
         <ThemeProvider>
           <AuthProvider>
             <NotFoundProvider>
-              <LayoutContent>{children}</LayoutContent>
+              <BreadcrumbProvider>
+                <LayoutContent>{children}</LayoutContent>
+              </BreadcrumbProvider>
             </NotFoundProvider>
           </AuthProvider>
         </ThemeProvider>

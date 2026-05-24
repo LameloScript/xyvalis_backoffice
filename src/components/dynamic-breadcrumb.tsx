@@ -4,6 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home } from "lucide-react";
 import { useNotFound } from "@/contexts/not-found-context";
+import { useAuth } from "@/contexts/auth-context";
+import { useBreadcrumb } from "@/contexts/breadcrumb-context";
 import {
   Breadcrumb,
   BreadcrumbEllipsis,
@@ -21,6 +23,8 @@ const routeNames: Record<string, string> = {
   orders: "Commandes",
   commandes: "Commandes",
   customers: "Clients",
+  organisateurs: "Organisateurs",
+  prestataires: "Prestataires",
   reviews: "Avis",
   analytics: "Statistiques",
   wallet: "Portefeuille",
@@ -31,9 +35,13 @@ const routeNames: Record<string, string> = {
 export default function DynamicBreadcrumb() {
   const pathname = usePathname();
   const { isNotFound } = useNotFound();
+  const { isAuthenticated, isLoading } = useAuth();
+  const { customLabels } = useBreadcrumb();
 
-  // Ne pas afficher sur la page de login, la page d'accueil ou la page 404
+  // Ne pas afficher sur la page de login, la page d'accueil, si non authentifié ou la page 404
   if (
+    isLoading ||
+    !isAuthenticated ||
     pathname === "/" ||
     pathname === "/login" ||
     pathname === "/otp" ||
@@ -53,17 +61,17 @@ export default function DynamicBreadcrumb() {
 
   const firstSegment = segments[0];
   const lastSegment = segments[segments.length - 1];
-  const firstLabel = routeNames[firstSegment] || firstSegment;
-  const lastLabel = routeNames[lastSegment] || lastSegment;
+  const firstLabel = customLabels[firstSegment] || routeNames[firstSegment] || firstSegment;
+  const lastLabel = customLabels[lastSegment] || routeNames[lastSegment] || lastSegment;
   const firstHref = "/" + firstSegment;
 
   return (
-    <div className="border-b bg-white">
-      <div className="max-w-360 mx-auto px-4 md:px-6 py-3">
+    <div className="bg-primary border-b border-primary/20">
+      <div className="max-w-360 mx-auto px-4 lg:px-6 py-2.5">
         <Breadcrumb>
-          <BreadcrumbList>
+          <BreadcrumbList className="text-primary-foreground/70 [&_svg]:text-primary-foreground/50">
             <BreadcrumbItem>
-              <BreadcrumbLink asChild>
+              <BreadcrumbLink asChild className="text-primary-foreground/70 hover:text-white transition-colors">
                 <Link href="/" aria-label="Accueil">
                   <Home className="size-4" />
                 </Link>
@@ -74,7 +82,7 @@ export default function DynamicBreadcrumb() {
               <>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbPage className="text-primary font-medium">
+                  <BreadcrumbPage className="text-white font-semibold">
                     {firstLabel}
                   </BreadcrumbPage>
                 </BreadcrumbItem>
@@ -83,19 +91,23 @@ export default function DynamicBreadcrumb() {
               <>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbLink asChild>
+                  <BreadcrumbLink asChild className="text-primary-foreground/70 hover:text-white transition-colors">
                     <Link href={firstHref}>{firstLabel}</Link>
                   </BreadcrumbLink>
                 </BreadcrumbItem>
 
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbEllipsis />
-                </BreadcrumbItem>
+                {segments.length > 2 && (
+                  <>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                      <BreadcrumbEllipsis className="text-primary-foreground/70" />
+                    </BreadcrumbItem>
+                  </>
+                )}
 
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbPage className="text-primary font-medium">
+                  <BreadcrumbPage className="text-white font-semibold">
                     {lastLabel}
                   </BreadcrumbPage>
                 </BreadcrumbItem>

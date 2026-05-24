@@ -832,13 +832,7 @@ export default function OrganisateurDetailView({ id }: OrganisateurDetailViewPro
                     <TableRow 
                       key={c.id} 
                       className="cursor-pointer hover:bg-slate-50/50 transition-all"
-                      onClick={() => {
-                        if (c.versions && c.versions.length > 0) {
-                          router.push(`/organisateurs/${id}/devis/${c.reference}`)
-                        } else {
-                          setSelectedCommande(c)
-                        }
-                      }}
+                      onClick={() => router.push(`/organisateurs/${id}/devis/${c.reference}`)}
                     >
                       <TableCell className="text-sm text-muted-foreground">
                         {new Intl.DateTimeFormat("fr-FR", {
@@ -926,88 +920,71 @@ export default function OrganisateurDetailView({ id }: OrganisateurDetailViewPro
                 </Badge>
               </div>
             </CardHeader>
-            <CardContent className="p-4 space-y-4 text-sm">
-              {/* Profile Header section */}
-              <div className="flex items-center gap-4 p-3 bg-gradient-to-r from-blue-50/40 via-indigo-50/30 to-transparent rounded-xl border border-slate-100/50">
-                <div className="h-14 w-14 rounded-xl bg-gradient-to-tr from-indigo-500 via-blue-500 to-sky-400 text-white flex items-center justify-center font-extrabold text-xl shadow-md ring-4 ring-indigo-50/50 shrink-0">
+            <CardContent className="p-0 text-sm">
+              {/* En-tête profil */}
+              <div className="flex items-center gap-3 px-4 py-4 border-b">
+                <div className="h-10 w-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-base shrink-0">
                   {org.nom.charAt(0).toUpperCase()}
                 </div>
-                <div className="space-y-1 min-w-0">
-                  <p className="font-bold text-slate-800 text-base leading-snug truncate">{org.nom}</p>
-                  <div className="flex items-center gap-1.5">
-                    <span className="inline-flex size-2 rounded-full bg-green-500 animate-pulse"></span>
-                    <span className="text-xs text-slate-500 font-medium">Compte Organisateur</span>
-                  </div>
+                <div className="min-w-0">
+                  <p className="font-semibold truncate">{org.nom}</p>
+                  <p className="text-xs text-muted-foreground">Compte Organisateur</p>
                 </div>
               </div>
 
-              {/* Vertical Detailed list top-to-bottom */}
-              <div className="space-y-3">
-                {/* Email Row */}
-                <div className="flex items-center justify-between p-3 rounded-xl border border-slate-100/80 bg-slate-50/20 hover:bg-slate-50/50 transition-all">
+              {/* Lignes d'infos */}
+              <div className="divide-y divide-border">
+                {/* Email */}
+                <div className="flex items-center justify-between px-4 py-3">
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="size-9 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
-                      <Mail className="size-4.5" />
-                    </div>
+                    <Mail className="size-4 text-muted-foreground shrink-0" />
                     <div className="min-w-0">
-                      <p className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Adresse E-mail</p>
-                      <p className="text-sm font-semibold text-slate-700 truncate">{org.email}</p>
+                      <p className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">E-mail</p>
+                      <p className="text-sm font-medium truncate">{org.email}</p>
                     </div>
                   </div>
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="size-8 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg shrink-0 transition-colors"
+                    className="size-7 text-muted-foreground hover:text-foreground shrink-0"
                     onClick={() => {
                       navigator.clipboard.writeText(org.email);
                       toast.success("Adresse e-mail copiée !");
                     }}
                   >
-                    <Copy className="size-4" />
+                    <Copy className="size-3.5" />
                   </Button>
                 </div>
 
-                {/* Phone Row */}
-                <div className="flex items-center justify-between p-3 rounded-xl border border-slate-100/80 bg-slate-50/20 hover:bg-slate-50/50 transition-all">
-                  <div className="flex items-center gap-3 min-w-0">
-                    <div className="size-9 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
-                      <Phone className="size-4.5" />
-                    </div>
-                    <div className="min-w-0">
-                      <p className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Numéro de Téléphone</p>
-                      {org.telephone && org.telephone !== "Non renseigné" ? (
-                        <p className="text-sm font-semibold text-slate-700">{org.telephone}</p>
-                      ) : (
-                        <span className="inline-flex items-center text-xs font-semibold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-md mt-0.5">
-                          Non renseigné
-                        </span>
-                      )}
-                    </div>
+                {/* Téléphone */}
+                <div className="flex items-center gap-3 px-4 py-3">
+                  <Phone className="size-4 text-muted-foreground shrink-0" />
+                  <div className="min-w-0">
+                    <p className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">Téléphone</p>
+                    {org.telephone && org.telephone !== "Non renseigné" ? (
+                      <p className="text-sm font-medium">{org.telephone}</p>
+                    ) : (
+                      <span className="text-xs text-amber-600 font-medium">Non renseigné</span>
+                    )}
                   </div>
                 </div>
 
-                {/* Location Row */}
-                <div className="flex items-start gap-3 p-3 rounded-xl border border-slate-100/80 bg-slate-50/20 hover:bg-slate-50/50 transition-all">
-                  <div className="size-9 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center shrink-0 mt-0.5">
-                    <MapPin className="size-4.5" />
-                  </div>
+                {/* Localisation */}
+                <div className="flex items-start gap-3 px-4 py-3">
+                  <MapPin className="size-4 text-muted-foreground shrink-0 mt-0.5" />
                   <div className="min-w-0">
-                    <p className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Localisation & Adresse</p>
-                    <p className="text-sm font-semibold text-slate-700 mt-0.5 leading-snug">{org.adresse}</p>
-                    <p className="text-xs font-semibold text-sky-700 mt-1.5 bg-sky-50 px-2.5 py-0.5 rounded-full inline-block border border-sky-100/80">
-                      {org.commune}
-                    </p>
+                    <p className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">Adresse</p>
+                    <p className="text-sm font-medium leading-snug">{org.adresse}</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">{org.commune}</p>
                   </div>
                 </div>
 
-                {/* Last Activity Row */}
-                <div className="flex items-center gap-3 p-3 rounded-xl border border-slate-100/80 bg-slate-50/20 hover:bg-slate-50/50 transition-all">
-                  <div className="size-9 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
-                    <Calendar className="size-4.5" />
-                  </div>
+                {/* Dernière activité */}
+                <div className="flex items-center gap-3 px-4 py-3">
+                  <Calendar className="size-4 text-muted-foreground shrink-0" />
                   <div className="min-w-0">
-                    <p className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Dernière activité</p>
-                    <p className="text-xs font-bold text-slate-600 font-mono mt-1">
+                    <p className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">Dernière activité</p>
+                    <p className="text-sm font-medium">
                       {new Intl.DateTimeFormat("fr-FR", {
                         day: "2-digit", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit",
                       }).format(new Date(org.derniereConnexion))}
