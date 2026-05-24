@@ -86,6 +86,23 @@ const fallbackClient = {
   ],
   commandes: [
     { 
+      id: "CMD-2605-999", 
+      reference: "DEV-2605-999", 
+      date: "2026-05-24", 
+      prestataire: "Marie-Claire Déco", 
+      montant: 470000, 
+      statut: "Négociation",
+      typeeventement: "Mariage",
+      lieu: "Sofitel Abidjan, Cocody",
+      nbInvites: "350",
+      message: "Bonjour, je recherche une prestation de décoration florale et d'installation de scène haut de gamme pour mon mariage au Sofitel, tons pastel uniquement.",
+      reponsePresta: "Proposition sur-mesure pour une décoration florale prestige de la salle d'honneur et des tables, avec arche florale d'extérieur. Une réduction commerciale de 10% a été appliquée sur l'ensemble.",
+      lignes: [
+        { id: "lm1", designation: "Décoration florale de table haute couture (Centre de table XXL)", quantite: 10, prixUnitaire: 35000, totalLigne: 350000 },
+        { id: "lm2", designation: "Arche florale géante pour la cérémonie laïque d'extérieur", quantite: 1, prixUnitaire: 120000, totalLigne: 120000 }
+      ]
+    },
+    { 
       id: "CMD-2604-002", 
       reference: "DEV-2604-002", 
       date: "2026-04-25", 
