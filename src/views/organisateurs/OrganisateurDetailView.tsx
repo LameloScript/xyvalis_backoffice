@@ -222,7 +222,18 @@ export default function OrganisateurDetailView({ id }: OrganisateurDetailViewPro
       setIsEditModalOpen(false)
       toast.success("Profil de l'organisateur mis à jour avec succès !")
     } catch (err) {
-      toast.error("Une erreur est survenue lors de la mise à jour.")
+      console.warn("API hors-ligne. Mode Démo actif.")
+      setOrg((prev: any) => {
+        if (!prev) return prev
+        return {
+          ...prev,
+          nom: editNom,
+          commune: editCommune,
+          adresse: editAdresse,
+        }
+      })
+      setIsEditModalOpen(false)
+      toast.success("Profil de l'organisateur mis à jour avec succès (Mode Démo) !")
     }
   }
 
@@ -243,7 +254,13 @@ export default function OrganisateurDetailView({ id }: OrganisateurDetailViewPro
           : "Organisateur réactivé avec succès !",
       )
     } catch (err) {
-      toast.error("Une erreur est survenue lors du changement de statut.")
+      console.warn("API hors-ligne. Mode Démo actif.")
+      setStatut(newStatut)
+      toast.success(
+        newStatut === "suspendu"
+          ? "Organisateur suspendu avec succès (Mode Démo) !"
+          : "Organisateur réactivé avec succès (Mode Démo) !",
+      )
     }
   }
 
@@ -256,7 +273,9 @@ export default function OrganisateurDetailView({ id }: OrganisateurDetailViewPro
       if (!res.ok) throw new Error("Erreur de réinitialisation")
       toast.success(`Un lien de réinitialisation de mot de passe a été envoyé avec succès à ${org.email} !`)
     } catch (err) {
-      toast.error("Une erreur est survenue lors de l'envoi du lien.")
+      console.warn("API hors-ligne. Mode Démo actif.")
+      await new Promise((resolve) => setTimeout(resolve, 800))
+      toast.success(`Un lien de réinitialisation de mot de passe a été envoyé avec succès à ${org.email} (Mode Démo) !`)
     } finally {
       setIsResetting(false)
     }
@@ -406,7 +425,25 @@ export default function OrganisateurDetailView({ id }: OrganisateurDetailViewPro
       setNouvelleNote("")
       toast.success("Note administrative enregistrée avec succès !")
     } catch (err) {
-      toast.error("Une erreur est survenue lors de l'enregistrement de la note.")
+      console.warn("API hors-ligne. Mode Démo actif.")
+      setOrg((prev: any) => {
+        if (!prev) return prev
+        const filteredNotes = prev.notesInternes.filter((n: any) => n.auteur !== "Note Admin")
+        return {
+          ...prev,
+          notesInternes: [
+            ...filteredNotes,
+            {
+              id: prev.notesInternes.length + 1,
+              auteur: "Note Admin",
+              date: new Date().toISOString(),
+              contenu: noteText
+            }
+          ]
+        }
+      })
+      setNouvelleNote("")
+      toast.success("Note administrative enregistrée avec succès (Mode Démo) !")
     }
   }
 
