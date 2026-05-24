@@ -164,54 +164,6 @@ const fallbackClient = {
       versions: MC_DECO_VERSIONS
     },
     { 
-      id: "CMD-2605-002", 
-      reference: "DEV-2605-002", 
-      date: "2026-05-15", 
-      prestataire: "Marie-Claire Déco", 
-      montant: 520000, 
-      statut: "Négociation",
-      typeeventement: "Mariage",
-      lieu: "Sofitel Abidjan, Cocody",
-      nbInvites: "350",
-      message: "Nous souhaiterions baisser le prix de l'arche florale ou trouver une alternative moins onéreuse, notre budget max pour l'arche est de 120 000 F au lieu de 170 000 F. Nous avons également retiré l'option du bouquet de mariée premium.",
-      reponsePresta: "Proposition intermédiaire révisée : nous avons retiré le bouquet de mariée premium. L'arche florale reste en version prestige à 170 000 F. Nous attendons votre retour pour la simplifier si nécessaire.",
-      lignes: [
-        { id: "l002-1", designation: "Décoration florale de table haute couture (Centre de table XXL)", quantite: 10, prixUnitaire: 35000, totalLigne: 350000 },
-        { id: "l002-2", designation: "Arche florale prestige d'extérieur (En attente de simplification)", quantite: 1, prixUnitaire: 170000, totalLigne: 170000 }
-      ],
-      historique: [
-        { date: "2026-05-10T10:00:00", action: "Demande de Devis", description: "Demande initiale créée par l'organisateur." },
-        { date: "2026-05-12T14:30:00", action: "Proposition Envoyée", description: "Devis V1 proposé par Marie-Claire Déco à 600 000 F (Réf. DEV-2605-001)." },
-        { date: "2026-05-14T11:15:00", action: "Demande de Négociation", description: "L'organisateur demande une réduction sur l'arche et retire le bouquet de mariée." },
-        { date: "2026-05-15T16:00:00", action: "Devis Renvoyé (V2)", description: "Proposition révisée en cours de négociation active (Réf. DEV-2605-002)." }
-      ],
-      versions: MC_DECO_VERSIONS
-    },
-    { 
-      id: "CMD-2605-001", 
-      reference: "DEV-2605-001", 
-      date: "2026-05-10", 
-      prestataire: "Marie-Claire Déco", 
-      montant: 600000, 
-      statut: "Annulé",
-      typeeventement: "Mariage",
-      lieu: "Sofitel Abidjan, Cocody",
-      nbInvites: "350",
-      message: "Bonjour, je recherche une prestation de décoration florale et d'installation de scène haut de gamme pour mon mariage au Sofitel, tons pastel uniquement.",
-      reponsePresta: "Proposition initiale complète avec arche florale d'extérieur prestige, décoration de table haute couture et bouquet de mariée premium.",
-      lignes: [
-        { id: "l001-1", designation: "Décoration florale de table haute couture (Centre de table XXL)", quantite: 10, prixUnitaire: 35000, totalLigne: 350000 },
-        { id: "l001-2", designation: "Arche florale d'extérieur prestige", quantite: 1, prixUnitaire: 170000, totalLigne: 170000 },
-        { id: "l001-3", designation: "Bouquet de mariée premium tons pastel", quantite: 1, prixUnitaire: 80000, totalLigne: 80000 }
-      ],
-      historique: [
-        { date: "2026-05-10T10:00:00", action: "Demande de Devis", description: "Demande initiale créée par l'organisateur." },
-        { date: "2026-05-12T14:30:00", action: "Proposition Envoyée", description: "Devis V1 proposé par Marie-Claire Déco à 600 000 F (Réf. DEV-2605-001)." },
-        { date: "2026-05-14T11:15:00", action: "Remplacé par V2 (Annulé)", description: "Ce devis initial a été annulé et remplacé par le devis révisé V2 suite à négociation." }
-      ],
-      versions: MC_DECO_VERSIONS
-    },
-    { 
       id: "CMD-2604-002", 
       reference: "DEV-2604-002", 
       date: "2026-04-25", 
@@ -880,7 +832,13 @@ export default function OrganisateurDetailView({ id }: OrganisateurDetailViewPro
                     <TableRow 
                       key={c.id} 
                       className="cursor-pointer hover:bg-slate-50/50 transition-all"
-                      onClick={() => setSelectedCommande(c)}
+                      onClick={() => {
+                        if (c.versions && c.versions.length > 0) {
+                          router.push(`/organisateurs/${id}/devis/${c.reference}`)
+                        } else {
+                          setSelectedCommande(c)
+                        }
+                      }}
                     >
                       <TableCell className="text-sm text-muted-foreground">
                         {new Intl.DateTimeFormat("fr-FR", {
